@@ -1,4 +1,4 @@
-import HeroSlider from "@/components/HeroSlider";
+import { HeroSlider } from "@/components/HeroSlider";
 import ProductsSection from "@/components/ProductsSection";
 import MachineSlider from "@/components/MachineSlider";
 import BrandSlider from "@/components/BrandSlider";
@@ -11,12 +11,14 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#e6e6e6]">
+    <div className="min-h-screen bg-[#022c75]">
       <HeroSlider />
-      <ProductsSection />
+       <BrandSlider />
+      
       <MachineSlider />
-      <BrandSlider />
-      <FeaturesSection />
+     
+       <FeaturesSection />
+     <ProductsSection />
       <AboutSection />
       <div className="relative w-full h-[80vh]">
         <Image

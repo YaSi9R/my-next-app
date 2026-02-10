@@ -31,7 +31,7 @@ const AboutSection = () => {
                         <h2 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-6">
                             Meet TekMart, Your Robust SMT Partner
                         </h2>
-                        <p className="text-gray-600 leading-relaxed">
+                        <p className="text-[#022c75]/80 leading-relaxed">
                             Since 2000, TekMart has been a leading supplier of reliable SMT machines and SMT parts in India. Our dedication to providing global electronics manufacturing enterprises with all-in-one PCB assembly equipment solutions has resulted in many successful and long-term partnerships with leading brands worldwide.
                         </p>
                     </div>
@@ -54,7 +54,7 @@ const AboutSection = () => {
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                <div className="w-20 h-20 rounded-full bg-[#022c75] flex items-center justify-center text-white shadow-xl transform group-hover:scale-110 transition-transform">
+                                <div className="w-20 h-20 rounded-full bg-[#e6e6e6] flex items-center justify-center text-white shadow-xl transform group-hover:scale-110 transition-transform">
                                     <Play size={32} fill="currentColor" />
                                 </div>
                             </div>
@@ -72,7 +72,7 @@ const AboutSection = () => {
                                     <h3 className="text-xl font-bold text-[#022c75] mb-3">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-gray-600 leading-relaxed text-sm">
+                                    <p className="text-[#022c75]/80 leading-relaxed text-sm">
                                         {feature.description}
                                     </p>
                                     {index < features.length - 1 && (

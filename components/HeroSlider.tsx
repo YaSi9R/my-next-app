@@ -1,222 +1,120 @@
-"use client";
-
-import React, { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Award, Zap, Users, CheckCircle2, ArrowRight } from 'lucide-react'
+import Link from 'next/link';
 import Image from "next/image";
-import image1 from "@/public/image1 (1).png";
-import image2 from "@/public/image1 (2).png";
-import image3 from "@/public/image1 (3).png";
+import image1 from "../public/image1 (3).png";
+import machine from "../public/machine.png";
 
-const slides = [
-    {
-        id: 1,
+export function HeroSlider() {
+  return (
+    <section className="relative overflow-hidden bg-[#e6e6e6]  pt-12 pb-16 md:pt-20 md:pb-24">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 z-0 h-full w-full pointer-events-none">
+        <Image
+          src={image1}
+          alt="Contact Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-[#e6e6e6]/80 backdrop-blur-[2px]" />
+      </div>
 
-        subtitle: "Your Reliable Dearest Partner",
-        image: image1,
-    },
-    {
-        id: 2,
-
-        subtitle: "Precision and Speed Reimagined",
-        image: image2,
-    },
-    {
-        id: 3,
-
-        subtitle: "Optimizing Your Production Efficiency",
-        image: image3,
-    },
-];
-
-const HeroSlider = () => {
-    const [current, setCurrent] = useState(0);
-    const [direction, setDirection] = useState(0);
-
-    const nextSlide = useCallback(() => {
-        setDirection(1);
-        setCurrent((prev) => (prev + 1) % slides.length);
-    }, []);
-
-    const prevSlide = useCallback(() => {
-        setDirection(-1);
-        setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-    }, []);
-
-    useEffect(() => {
-        const timer = setInterval(nextSlide, 5000);
-        return () => clearInterval(timer);
-    }, [nextSlide]);
-
-    const variants = {
-        enter: (direction: number) => ({
-            x: direction > 0 ? 1000 : -1000,
-            opacity: 0,
-        }),
-        center: {
-            zIndex: 1,
-            x: 0,
-            opacity: 1,
-        },
-        exit: (direction: number) => ({
-            zIndex: 0,
-            x: direction < 0 ? 1000 : -1000,
-            opacity: 0,
-        }),
-    };
-
-    return (
-        <section className="relative h-screen w-full overflow-hidden bg-white">
-            {/* Static Teal Overlay - Reduced opacity for clarity */}
-            <div className="absolute inset-0 z-10 bg-[#4fd1c5]/20 backdrop-blur-[1px]"></div>
-            {/* Background Decorative Pattern (Waves/Circles) */}
-            <div className="absolute inset-0 z-0 opacity-10">
-                <svg
-                    className="h-full w-full"
-                    viewBox="0 0 1000 1000"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <circle cx="500" cy="500" r="100" fill="none" stroke="white" strokeWidth="2" />
-                    <circle cx="500" cy="500" r="200" fill="none" stroke="white" strokeWidth="2" />
-                    <circle cx="500" cy="500" r="300" fill="none" stroke="white" strokeWidth="2" />
-                    <circle cx="500" cy="500" r="400" fill="none" stroke="white" strokeWidth="2" />
-                    <circle cx="500" cy="500" r="500" fill="none" stroke="white" strokeWidth="2" />
-                    <circle cx="500" cy="500" r="600" fill="none" stroke="white" strokeWidth="2" />
-                </svg>
+      <div className="mx-auto max-w-7xl px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+          {/* Left Content */}
+          <div className="flex flex-col justify-center space-y-3">
+            {/* Tag */}
+            <div className="inline-flex items-center gap-2 w-fit px-4 py-2 rounded-full bg-[#ff9f1a]/15 border border-accent/30">
+              <div className="h-2 w-2 rounded-full bg-[#FF9F1A] animate-pulse"></div>
+              <span className="text-sm font-semibold text-[#FF9F1A]">Tekmart India Exim Pvt. Ltd.</span>
             </div>
 
-            <AnimatePresence initial={false} custom={direction}>
-                <motion.div
-                    key={current}
-                    custom={direction}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{
-                        x: { type: "tween", duration: 1, ease: "easeInOut" },
-                        opacity: { duration: 0.5 },
-                    }}
-                    className="absolute inset-0"
-                >
-                    <motion.div
-                        initial={{ scale: 1.2 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 6, ease: "linear" }}
-                        className="absolute inset-0"
-                    >
-                        <Image
-                            src={slides[current].image}
-                            alt="Background SMT"
-                            fill
-                            style={{ objectFit: "cover" }}
-                            priority
-                        />
-                    </motion.div>
-                </motion.div>
-            </AnimatePresence>
+            {/* Headline */}
+            <div className="space-y-4">
+              <h1 className="text-4xl md:text-4xl lg:text-5xl font-bold text-[#022c75] leading-tight tracking-tight">
+                Your Trusted Partner for SMT & PCB <span className="text-[#FF9F1A]">Manufacturing Solutions</span>
+              </h1>
+              <p className="text-md md:text-md text-[#022c75]/80 leading-relaxed max-w-xl">
+                We specialize in supplying used and refurbished SMT machines, new spare parts, and board handling equipment with comprehensive after-sales support for EMS and OEM manufacturers across India.
+              </p>
+            </div>
 
-            {/* Static Teal Overlay and Content - Reduced opacity for clarity */}
-            <div className="absolute inset-0 z-20 flex items-center justify-center text-center px-4">
-                <div className="w-full max-w-5xl flex flex-col items-center">
-
-                    <motion.h1
-                        initial={{ y: 30, opacity: 0.4 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-                        className="
-        text-white
-        font-bold
-        drop-shadow-xl
-        tracking-tight
-        text-center
-        text-[clamp(1.75rem,5vw,4.5rem)]
-        leading-tight
-        whitespace-normal
-        md:whitespace-nowrap
-      "
-                    >
-                        We bring you impactful SMT solution
-                    </motion.h1>
-
-                    <motion.p
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-                        className="bg-black/45 backdrop-blur-md rounded-2xl px-6 py-10 md:px-12 md:py-14 text-center max-w-5xl 
-        mt-6
-        text-white/90
-        text-base
-        md:text-lg
-        leading-relaxed
-        max-w-3xl
-        drop-shadow-md
-      "
-                    >
-                        Providing the global market with practical and comprehensive SMT solutions is what Tekmart is all about.
-                        As a supplier of SMT machines and SMT parts, we have ensured unparalleled satisfaction since 2006.
-                    </motion.p>
-
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="cursor-pointer bg-[#022c75]
-        mt-10
-        inline-flex items-center justify-center
-        rounded-full
-        bg-primary
-        hover:bg-primary/90
-        px-10
-        py-4
-        text-base
-        md:text-lg
-        font-semibold
-        tracking-wide
-        text-white
-        shadow-2xl
-        transition-all
-      "
-                    >
-                        Get instant quote
-                    </motion.button>
-
+            {/* Trust Badges - Extracted Insights */}
+            <div className="space-y-1 ">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#FF9F1A]/20 flex items-center justify-center">
+                  <CheckCircle2 className="h-3 w-3 text-[#FF9F1A]" />
                 </div>
+                <span className="text-[#022c75]/90 font-medium">Build & Expand Production Lines</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#FF9F1A]/20 flex items-center justify-center">
+                  <CheckCircle2 className="h-3 w-3 text-[#FF9F1A]" />
+                </div>
+                <span className="text-[#022c75]/90 font-medium">Complete Equipment & Parts Solutions</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#FF9F1A]/20 flex items-center justify-center">
+                  <CheckCircle2 className="h-3 w-3 text-[#FF9F1A]" />
+                </div>
+                <span className="text-[#022c75]/90 font-medium">Technical Expertise & Dependable Support</span>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mt-2 ">
+
+              {/* Primary button */}
+              <Link
+                href="/contact"
+                className="bg-[#022c75] hover:bg-[#022c75]/90
+               text-[#e6e6e6] font-light
+               px-4 py-2
+               rounded-lg shadow-lg hover:shadow-xl
+               transition-all flex items-center gap-2"
+              >
+                Get Free Consultation
+                <ArrowRight className="h-2 w-5 text-8xl" />
+              </Link>
+
+              {/* Secondary button */}
+              <Link
+                href="/solutions"
+                className="bg-[#FF9F1A]/15 hover:bg-[#FF9F1A]/25
+               text-[#FF9F1A]
+               border border-[#FF9F1A]/40
+               font-bold px-8 py-4
+               rounded-lg transition-all"
+              >
+                View Solutions
+              </Link>
+
             </div>
 
 
-            {/* Navigation Arrows */}
-            <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
-            >
-                <ChevronLeft size={48} />
-            </button>
-            <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white"
-            >
-                <ChevronRight size={48} />
-            </button>
 
-            {/* Pagination Dots */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
-                {slides.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => {
-                            setDirection(index > current ? 1 : -1);
-                            setCurrent(index);
-                        }}
-                        className={`w-3 h-3 rounded-full transition-all ${current === index ? "bg-white scale-125" : "bg-white/50"
-                            }`}
-                    />
-                ))}
+            {/* Trust Indicator */}
+            <div className="text-[#FF9F1A] text-sm font-medium pt-4">
+              ✓ No hidden costs  •  ✓ Free consultation  •  ✓ Instant quote
             </div>
+          </div>
 
+          {/* Right Side - Creative Card Layout */}
+          <div className="relative h-full  lg:flex items-center ">
+            <div className="relative w-full max-w-md lg:ml-12">
+              <Image
+                src={machine}
+                alt="SMT & PCB Manufacturing Equipment"
+                width={500}
+                height={600}
+                priority
+                className="object-contain"
+              />
+            </div>
+          </div>
 
-
-        </section>
-    );
-};
-
-export default HeroSlider;
+        </div>
+      </div>
+    </section>
+  )
+}

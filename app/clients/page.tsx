@@ -14,7 +14,7 @@ export default function ClientsPage() {
     const oemClients = clients.filter((c) => c.category === 'OEM');
 
     return (
-        <div className="min-h-screen bg-[#e6e6e6] py-12">
+        <div className="min-h-screen bg-[#022c75] py-12">
             <div className="container mx-auto px-4 max-w-7xl">
                 {/* Page Header */}
                 <div className="text-center mb-16">
@@ -29,7 +29,7 @@ export default function ClientsPage() {
                 {/* EMS Manufacturers Section */}
                 <div id="ems" className="mb-16">
                     <div className="flex items-center gap-3 mb-8">
-                        <Factory className="w-8 h-8 text-[#022c75]" />
+                        <Factory className="w-8 h-8 text-[#e6e6e6]" />
                         <h2 className="text-3xl font-bold text-gray-900">EMS Manufacturers</h2>
                     </div>
 
@@ -54,7 +54,7 @@ export default function ClientsPage() {
                 {/* OEM Manufacturers Section */}
                 <div id="oem" className="mb-16">
                     <div className="flex items-center gap-3 mb-8">
-                        <Building2 className="w-8 h-8 text-[#022c75]" />
+                        <Building2 className="w-8 h-8 text-[#e6e6e6]" />
                         <h2 className="text-3xl font-bold text-gray-900">OEM Manufacturers</h2>
                     </div>
 
@@ -108,14 +108,14 @@ export default function ClientsPage() {
                 </div>
 
                 {/* CTA Section */}
-                <div className="mt-16 bg-[#022c75] rounded-2xl p-8 md:p-12 text-center text-white">
+                <div className="mt-16 bg-[#e6e6e6] rounded-2xl p-8 md:p-12 text-center text-white">
                     <h2 className="text-3xl font-bold mb-4">Join Our Growing Client Base</h2>
                     <p className="text-lg mb-6 opacity-90">
                         Partner with Tekmart for your SMT equipment and production line needs
                     </p>
                     <Link
                         href="/contact"
-                        className="inline-block bg-white text-[#022c75] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition"
+                        className="inline-block bg-white text-[#e6e6e6] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition"
                     >
                         Become a Client
                     </Link>

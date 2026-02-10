@@ -32,7 +32,7 @@ const ServicesSection = () => {
                     <h2 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-4">
                         Unparalleled Services Get You all Covered
                     </h2>
-                    <p className="text-gray-600 max-w-4xl mx-auto text-sm md:text-base leading-relaxed">
+                    <p className="text-[#022c75]/80 max-w-4xl mx-auto text-sm md:text-base leading-relaxed">
                         More than a source for premium SMT machines and parts, TekMart offers a scope of services that brings more value to your brand.
                     </p>
                 </div>
@@ -40,13 +40,13 @@ const ServicesSection = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                     {services.map((service, index) => (
                         <div key={index} className="flex flex-col items-center text-center group">
-                            <div className="mb-6 p-4 rounded-2xl  group-hover:bg-teal-50 transition-colors duration-300">
+                            <div className="mb-6 p-4 rounded-2xl  group-hover:bg-[#022c75]/10 transition-colors duration-300">
                                 {service.icon}
                             </div>
                             <h3 className="text-xl font-bold text-[#022c75] mb-4 leading-tight min-h-[3.5rem] flex items-center justify-center">
                                 {service.title}
                             </h3>
-                            <p className="text-gray-600 text-sm leading-relaxed px-2">
+                            <p className="text-[#022c75]/80 text-sm leading-relaxed px-2">
                                 {service.description}
                             </p>
                         </div>

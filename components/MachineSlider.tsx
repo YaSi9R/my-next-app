@@ -4,12 +4,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import imae from "../public/image1 (1).png";
+import imae from "../public/image.png";
 
 const machines = [
     { id: 1, name: "SMT Reflow Oven", image: imae },
-    { id: 2, name: "Solder Paste Inspection & Automated Optical Inspection Machine", image: imae},
-    { id: 3, name: "X-ray Machine", image:imae},
+    { id: 2, name: "Solder Paste Inspection & Automated Optical Inspection Machine", image: imae },
+    { id: 3, name: "X-ray Machine", image: imae },
     { id: 4, name: "PCB Conveyor", image: imae },
     { id: 5, name: "Pick and Place Machine", image: imae },
     { id: 6, name: "Stencil Printer", image: imae },
@@ -34,7 +34,7 @@ const MachineSlider = () => {
     }, []);
 
     return (
-        <section className="py-16 bg-white overflow-hidden relative group">
+        <section className="py-16 bg-[#e6e6e6] overflow-hidden relative group">
             <div className="container mx-auto px-4">
                 <div className="relative">
                     {/* Slider Container */}
@@ -49,7 +49,7 @@ const MachineSlider = () => {
                                     key={`${machine.id}-${index}`}
                                     className="w-full md:w-[calc(50%-12px)] lg:w-[calc(25%-12px)] flex-shrink-0"
                                 >
-                                    <div className="bg-white rounded-lg p-2 transition-all duration-300 hover:shadow-xl border border-transparent hover:border-gray-100 cursor-pointer">
+                                    <div className="bg-[#e6e6e6] rounded-lg p-2 transition-all duration-300 hover:shadow-xl border border-transparent hover:border-gray-100 cursor-pointer">
                                         <div className="relative aspect-[4/3] overflow-hidden rounded-md">
                                             <Image
                                                 src={machine.image}
@@ -70,13 +70,13 @@ const MachineSlider = () => {
                     {/* Navigation Arrows */}
                     <button
                         onClick={handlePrev}
-                        className="absolute left-[-20px] top-1/2 -translate-y-1/2 z-10 p-2 md:p-3 rounded-full bg-white shadow-lg text-gray-800 hover:bg-gray-100 transition-colors opacity-0 group-hover:opacity-100"
+                        className="absolute left-[-20px] top-1/2 -translate-y-1/2 z-10 p-2 md:p-3 rounded-full bg-[#022c75] shadow-lg text-gray-800 hover:bg-gray-100 transition-colors opacity-0 group-hover:opacity-100"
                     >
                         <ChevronLeft size={20} className="md:w-6 md:h-6" />
                     </button>
                     <button
                         onClick={handleNext}
-                        className="absolute right-[-20px] top-1/2 -translate-y-1/2 z-10 p-2 md:p-3 rounded-full bg-white shadow-lg text-gray-800 hover:bg-gray-100 transition-colors opacity-0 group-hover:opacity-100"
+                        className="absolute right-[-20px] top-1/2 -translate-y-1/2 z-10 p-2 md:p-3 rounded-full bg-[#022c75] shadow-lg text-gray-800 hover:bg-gray-100 transition-colors opacity-0 group-hover:opacity-100"
                     >
                         <ChevronRight size={20} className="md:w-6 md:h-6" />
                     </button>

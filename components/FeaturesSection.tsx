@@ -4,17 +4,17 @@ import React from "react";
 import { ChevronRight, MessageSquare } from "lucide-react";
 
 const FeatureCard = ({ title, items, linkText, linkHref }: { title: string, items: string[], linkText: string, linkHref: string }) => (
-    <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 h-full flex flex-col">
-        <h3 className="text-xl font-bold text-[#022c75] mb-6">{title}</h3>
-        <ul className="space-y-3 mb-8 flex-grow">
+    <div className="bg-[#022c75] p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 h-full flex flex-col">
+        <h3 className="text-xl font-bold text-[#e6e6e6] mb-6">{title}</h3>
+        <ul className="space-y-4  mb-12">
             {items.map((item, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-gray-600 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-1.5 flex-shrink-0" />
+                <li key={idx} className="flex items-start gap-3 text-[#e6e6e6] text-sm">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#e6e6e6] mt-1.5 flex-shrink-0" />
                     {item}
                 </li>
             ))}
         </ul>
-        <a href={linkHref} className="text-[#2d3748] font-bold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all  hover:text-[#022c75]">
+        <a href={linkHref} className="text-[#e6e6e6] font-bold text-sm inline-flex items-center gap-1 hover:gap-2 transition-all  hover:text-[#e6e6e6]">
             {linkText} <ChevronRight size={16} />
         </a>
     </div>
@@ -24,10 +24,10 @@ const FeaturesSection = () => {
     return (
         <section className="bg-[#e6e6e6] py-20 relative overflow-hidden">
             <div className="container mx-auto px-4 max-w-7xl">
-                <div className="flex flex-col lg:flex-row gap-12 text-[#022c75]">
+                <div className="flex flex-col lg:flex-row gap-12 text-[#e6e6e6]">
 
                     {/* Left Grid: Features */}
-                    <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-6 text-[#022c75]">
+                    <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-6 text-[#e6e6e6]">
                         <FeatureCard
                             title="Find Your Product"
                             items={["Wide Product Coverage", "Responsive Product Finding", "100% Product Matching"]}
@@ -55,13 +55,13 @@ const FeaturesSection = () => {
                     </div>
 
                     {/* Right Block: Stats */}
-                    <div className="lg:w-1/2 bg-[#022c75] rounded-3xl p-10 md:p-16 text-[#e6e6e6] relative">
+                    <div className="lg:w-1/2 bg-[#e6e6e6] rounded-3xl p-10 md:p-16 text-[#022c75] relative">
                         <div className="max-w-md">
-                            <p className="text-sm font-medium mb-4 opacity-90">Rapid, Simple and Reliable</p>
-                            <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-8">
+                            <p className="text-sm font-medium mb-2 opacity-90">Rapid, Simple and Reliable</p>
+                            <h2 className="text-3xl md:text-5xl font-bold leading-tight mb-4">
                                 Purchasing SMT Product Has Never Been this Easy
                             </h2>
-                            <p className="text-sm opacity-90 leading-relaxed mb-12">
+                            <p className="text-sm opacity-90 leading-relaxed mb-4">
                                 From sourcing the right products to safe and on-time delivery, Tekmart takes care of purchasing so you can focus on expanding your business.
                             </p>
 
@@ -89,7 +89,7 @@ const FeaturesSection = () => {
                             </div>
                         </div>
 
-                        
+
                     </div>
 
                 </div>

@@ -13,15 +13,15 @@ export default function YamahaPartsPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-[#e6e6e6] py-12">
+        <div className="min-h-screen bg-[#022c75] py-12">
             <div className="container mx-auto px-4 max-w-7xl">
                 {/* Breadcrumb */}
                 <div className="text-sm text-gray-600 mb-6">
-                    <Link href="/" className="hover:text-[#022c75]">Home</Link>
+                    <Link href="/" className="hover:text-[#e6e6e6]">Home</Link>
                     <span className="mx-2">/</span>
-                    <Link href="/smt-parts" className="hover:text-[#022c75]">SMT Parts</Link>
+                    <Link href="/smt-parts" className="hover:text-[#e6e6e6]">SMT Parts</Link>
                     <span className="mx-2">/</span>
-                    <span className="text-[#022c75] font-semibold">Yamaha Parts</span>
+                    <span className="text-[#e6e6e6] font-semibold">Yamaha Parts</span>
                 </div>
 
                 {/* Page Header */}
@@ -43,12 +43,12 @@ export default function YamahaPartsPage() {
                             className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group"
                         >
                             <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-[#022c75] transition-colors">
-                                    <category.icon className="w-6 h-6 text-[#022c75] group-hover:text-white transition-colors" />
+                                <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-[#e6e6e6] transition-colors">
+                                    <category.icon className="w-6 h-6 text-[#e6e6e6] group-hover:text-white transition-colors" />
                                 </div>
                                 <div className="flex-1">
                                     <h3 className="font-bold text-gray-900 mb-1">{category.name}</h3>
-                                    <span className="text-sm text-[#022c75] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                                    <span className="text-sm text-[#e6e6e6] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                                         Browse Parts
                                         <ArrowRight className="w-4 h-4" />
                                     </span>
@@ -102,7 +102,7 @@ export default function YamahaPartsPage() {
                                     {/* Price & Availability */}
                                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                                         <div>
-                                            <p className="text-2xl font-bold text-[#022c75]">{part.price}</p>
+                                            <p className="text-2xl font-bold text-[#e6e6e6]">{part.price}</p>
                                             <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
                                                 <CheckCircle className="w-3 h-3" />
                                                 {part.availability}
@@ -110,7 +110,7 @@ export default function YamahaPartsPage() {
                                         </div>
                                         <Link
                                             href="/quote"
-                                            className="px-4 py-2 bg-[#022c75] text-white rounded-full text-sm font-semibold hover:bg-[#033a95] transition"
+                                            className="px-4 py-2 bg-[#e6e6e6] text-white rounded-full text-sm font-semibold hover:bg-[#033a95] transition"
                                         >
                                             Order Now
                                         </Link>
@@ -122,7 +122,7 @@ export default function YamahaPartsPage() {
                 </div>
 
                 {/* Info Banner */}
-                <div className="bg-blue-50 border-l-4 border-[#022c75] rounded-lg p-6 mb-12">
+                <div className="bg-blue-50 border-l-4 border-[#e6e6e6] rounded-lg p-6 mb-12">
                     <h3 className="font-bold text-gray-900 mb-2">Need Help Finding the Right Part?</h3>
                     <p className="text-gray-700 mb-4">
                         Our parts specialists can help you identify the exact part you need. Send us your machine model and part requirements.
@@ -130,14 +130,14 @@ export default function YamahaPartsPage() {
                     <div className="flex gap-4">
                         <Link
                             href="/contact"
-                            className="inline-flex items-center gap-2 px-6 py-2 bg-[#022c75] text-white rounded-full font-semibold hover:bg-[#033a95] transition"
+                            className="inline-flex items-center gap-2 px-6 py-2 bg-[#e6e6e6] text-white rounded-full font-semibold hover:bg-[#033a95] transition"
                         >
                             Contact Parts Team
                             <ArrowRight className="w-4 h-4" />
                         </Link>
                         <Link
                             href="mailto:parts@tekmart.com"
-                            className="inline-flex items-center gap-2 px-6 py-2 border-2 border-[#022c75] text-[#022c75] rounded-full font-semibold hover:bg-[#022c75] hover:text-white transition"
+                            className="inline-flex items-center gap-2 px-6 py-2 border-2 border-[#e6e6e6] text-[#e6e6e6] rounded-full font-semibold hover:bg-[#e6e6e6] hover:text-white transition"
                         >
                             Email Us
                         </Link>
@@ -145,14 +145,14 @@ export default function YamahaPartsPage() {
                 </div>
 
                 {/* Bulk Order CTA */}
-                <div className="bg-[#022c75] rounded-2xl p-8 md:p-12 text-center text-white">
+                <div className="bg-[#e6e6e6] rounded-2xl p-8 md:p-12 text-center text-white">
                     <h2 className="text-3xl font-bold mb-4">Bulk Orders & Special Pricing</h2>
                     <p className="text-lg mb-6 opacity-90">
                         Contact us for volume discounts and customized parts packages for your facility
                     </p>
                     <Link
                         href="/contact"
-                        className="inline-block bg-white text-[#022c75] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition"
+                        className="inline-block bg-white text-[#e6e6e6] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition"
                     >
                         Request Bulk Quote
                     </Link>

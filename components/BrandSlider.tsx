@@ -39,7 +39,7 @@ const BrandSlider = () => {
     }, []);
 
     return (
-        <section className="py-20 bg-white overflow-hidden">
+        <section className="py-20 bg-[#e6e6e6] overflow-hidden">
             <div className="container mx-auto px-4 max-w-6xl">
                 <h2 className="text-3xl md:text-5xl font-bold text-center text-[#022c75] mb-16">
                     Brands We Support, But Are Not Limited to
@@ -61,7 +61,7 @@ const BrandSlider = () => {
                             {[...brands, ...brands].map((brand, index) => (
                                 <div
                                     key={index}
-                                    className="flex-shrink-0 w-1/2 md:w-1/5 flex items-center justify-center p-4 grayscale hover:grayscale-0 transition-all duration-300"
+                                    className="flex-shrink-0 w-1/2 md:w-1/5 flex items-center justify-center p-4 grayscale-0 transition-all duration-300"
                                 >
                                     <div className="relative w-full aspect-[2/1] max-w-[140px]">
                                         <Image
@@ -79,13 +79,13 @@ const BrandSlider = () => {
                     {/* Navigation Arrows */}
                     <button
                         onClick={prevSlide}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full border border-gray-200 text-gray-400 hover:bg-[#022c75] hover:text-white transition-colors cursor-pointer"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full border border-gray-200 text-gray-400 hover:bg-[#e6e6e6] hover:text-white transition-colors cursor-pointer"
                     >
                         <ChevronLeft size={24} />
                     </button>
                     <button
                         onClick={nextSlide}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full border border-gray-200 text-gray-400 hover:bg-[#022c75] hover:text-white transition-colors cursor-pointer"
+                        className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full border border-gray-200 text-gray-400 hover:bg-[#e6e6e6] hover:text-white transition-colors cursor-pointer"
                     >
                         <ChevronRight size={24} />
                     </button>

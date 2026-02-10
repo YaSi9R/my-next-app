@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../public/TEKMARTTRANSPARENT.png";
+import logo from "../public/TEKMART LOGO.png";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
 interface SubMenuItem {
@@ -161,16 +161,16 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-[#022c75] text-[#e6e6e6] sticky top-0 z-50 shadow-lg">
+        <nav className="bg-[#e6e6e6] text-[#022c75] sticky top-0 z-50 shadow-lg">
             {/* Main Navbar */}
             <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center">
-                    <div className="h-24 md:h-24 flex items-center">
+                    <div className="h-20 md:h-20 flex items-center pb-2">
                         <Image
                             src={logo}
                             alt="Tekmart Logo"
-                            className="invert brightness-0 h-full w-auto scale-150"
+                            className=" h-full w-auto scale-150"
                             priority
                         />
                     </div>
@@ -190,12 +190,12 @@ const Navbar = () => {
 
                             {/* First Level Dropdown */}
                             {item.children && (
-                                <div className="absolute left-0 top-full mt-1 w-64 bg-white text-[#022c75] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-200">
+                                <div className="absolute left-0 top-full mt-1 w-64 bg-[#e6e6e6] text-[#022c75] rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-200">
                                     {item.children.map((subItem) => (
                                         <div key={subItem.name} className="relative group/sub">
                                             <Link
                                                 href={subItem.href}
-                                                className="flex items-center justify-between px-4 py-3 hover:bg-gray-100 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                                                className="flex items-center justify-between px-4 py-3 hover:bg-[#022c75] hover:text-[#e6e6e6] first:rounded-t-lg last:rounded-b-lg transition-colors"
                                             >
                                                 <span>{subItem.name}</span>
                                                 {subItem.children && <ChevronRight className="h-4 w-4" />}
@@ -203,12 +203,12 @@ const Navbar = () => {
 
                                             {/* Second Level Dropdown */}
                                             {subItem.children && (
-                                                <div className="absolute left-full top-0 ml-1 w-64 bg-white text-[#022c75] rounded-lg shadow-xl opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 border border-gray-200">
+                                                <div className="absolute left-full top-0 ml-1 w-64 bg-[#e6e6e6] text-[#022c75] rounded-lg shadow-xl opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 border border-gray-200">
                                                     {subItem.children.map((nestedItem) => (
                                                         <Link
                                                             key={nestedItem.name}
                                                             href={nestedItem.href}
-                                                            className="block px-4 py-3 hover:bg-gray-100 first:rounded-t-lg last:rounded-b-lg transition-colors"
+                                                            className="block px-4 py-3 hover:bg-[#022c75] hover:text-[#e6e6e6] first:rounded-t-lg last:rounded-b-lg transition-colors"
                                                         >
                                                             {nestedItem.name}
                                                         </Link>
@@ -225,7 +225,7 @@ const Navbar = () => {
                     {/* CTA */}
                     <Link
                         href="/quote"
-                        className="bg-white text-[#022c75] px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition ml-4"
+                        className="bg-[#022c75] text-[#e6e6e6] px-6 py-2 rounded-full font-semibold hover:bg-[#022c75]/90 transition ml-4"
                     >
                         Get A Quote
                     </Link>
@@ -248,7 +248,7 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             <div
-                className={`lg:hidden bg-[#022c75] border-t border-blue-800 overflow-y-auto transition-all duration-300 ${isMobileMenuOpen ? "max-h-[80vh] py-4" : "max-h-0"
+                className={`lg:hidden bg-[#e6e6e6] border-t border-blue-800 overflow-y-auto transition-all duration-300 ${isMobileMenuOpen ? "max-h-[80vh] py-4" : "max-h-0"
                     }`}
             >
                 <div className="px-4 space-y-2">
@@ -325,7 +325,7 @@ const Navbar = () => {
 
                     <Link
                         href="/quote"
-                        className="block bg-white text-[#022c75] text-center py-3 rounded-full font-bold mt-4"
+                        className="block bg-white text-[#e6e6e6] text-center py-3 rounded-full font-bold mt-4"
                         onClick={() => setIsMobileMenuOpen(false)}
                     >
                         Get A Quote
