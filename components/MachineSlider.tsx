@@ -88,7 +88,7 @@ const MachineSlider = () => {
                         <button
                             key={index}
                             onClick={() => setCurrentIndex(index)}
-                            className={`w-2.5 h-2.5 rounded-full transition-all ${currentIndex === index ? "bg-[#4fd1c5] w-6" : "bg-gray-300"
+                            className={`w-2.5 h-2.5 rounded-full transition-all ${currentIndex === index ? "bg-[#022c75] w-6" : "bg-gray-300"
                                 }`}
                         />
                     ))}

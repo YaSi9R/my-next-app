@@ -26,7 +26,7 @@ const services = [
 
 const ServicesSection = () => {
     return (
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-[#e6e6e6]">
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="text-center mb-16 px-4">
                     <h2 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-4">
@@ -40,7 +40,7 @@ const ServicesSection = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                     {services.map((service, index) => (
                         <div key={index} className="flex flex-col items-center text-center group">
-                            <div className="mb-6 p-4 rounded-2xl bg-gray-50 group-hover:bg-teal-50 transition-colors duration-300">
+                            <div className="mb-6 p-4 rounded-2xl  group-hover:bg-teal-50 transition-colors duration-300">
                                 {service.icon}
                             </div>
                             <h3 className="text-xl font-bold text-[#022c75] mb-4 leading-tight min-h-[3.5rem] flex items-center justify-center">
