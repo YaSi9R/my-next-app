@@ -6,7 +6,7 @@ import logo from "../public/TEKMARTTRANSPARENT.png"
 
 const Footer = () => {
     return (
-        <footer className="bg-[#1a1a1a] text-white pt-12 pb-6">
+        <footer className="bg-[#022c75] text-white pt-12 pb-6">
             <div className="container mx-auto px-4 w-9/11">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Column 1: Keep in touch */}
@@ -137,7 +137,7 @@ const Footer = () => {
                 <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row  justify-center items-center">
 
 
-                    <p className="text-sm text-gray-500">Copyright © 2026, tekmartindia. All rights reserved.</p>
+                    <p className="text-sm text-white">Copyright © 2026, tekmartindia. All rights reserved.</p>
 
                 </div>
             </div>
