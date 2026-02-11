@@ -5,7 +5,7 @@ const FloatingContactBar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-50 flex-col bg-red-600 shadow-lg" style={{ borderTopLeftRadius: '4px', borderBottomLeftRadius: '4px' }}>
+            <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-50 flex-col bg-[#022c75] shadow-lg" style={{ borderTopLeftRadius: '4px', borderBottomLeftRadius: '4px' }}>
 
                 {/* Phone */}
                 <a href="tel:+" className="flex items-center justify-center w-12 h-12 hover:bg-red-700 transition-colors border-b border-white/20">
@@ -38,7 +38,7 @@ const FloatingContactBar = () => {
             </div>
 
             {/* Mobile View */}
-            <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-red-600 h-16 shadow-lg">
+            <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[white] border-t-2 border-red-600 h-16 shadow-lg">
                 <div className="grid grid-cols-4 h-full">
 
                     {/* Phone */}

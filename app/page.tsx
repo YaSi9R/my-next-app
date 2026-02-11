@@ -1,4 +1,5 @@
 import { HeroSlider } from "@/components/HeroSlider";
+import CategoryGrid from "@/components/CategoryGrid";
 import ProductsSection from "@/components/ProductsSection";
 import MachineSlider from "@/components/MachineSlider";
 import BrandSlider from "@/components/BrandSlider";
@@ -11,16 +12,18 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#022c75]">
+    <div className="min-h-screen bg-[#e6e6e6]">
       <HeroSlider />
-       <BrandSlider />
+      <CategoryGrid />
       
+
+      
+
+      <FeaturesSection />
       <MachineSlider />
-     
-       <FeaturesSection />
-     <ProductsSection />
+      <ProductsSection />
       <AboutSection />
-      <div className="relative w-full h-[80vh]">
+      {/* <div className="relative w-full h-[80vh]">
         <Image
           src={heroBanner}
           alt="Contact"
@@ -28,7 +31,8 @@ export default function Home() {
           priority
           className="object-cover"
         />
-      </div>
+      </div> */}
+      <BrandSlider />
       <ServicesSection />
 
       <ContactSection />
