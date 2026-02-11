@@ -249,7 +249,7 @@ const Navbar = () => {
                         href="/quote"
                         className="bg-[#022c75] text-white px-6 py-2 rounded-full font-bold hover:bg-[#033a95] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-95 ml-6"
                     >
-                        Get A Quote
+                        Contact Us
                     </Link>
                 </div>
 

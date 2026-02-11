@@ -20,7 +20,7 @@ export default function Home() {
       
 
       <FeaturesSection />
-      <MachineSlider />
+      {/* <MachineSlider /> */}
       <ProductsSection />
       <AboutSection />
       {/* <div className="relative w-full h-[80vh]">

@@ -15,7 +15,7 @@ const Footer = () => {
 
                         <ul className="space-y-3">
                             <li className="flex items-center space-x-2">
-                                <div className="w-6 h-6 rounded-full border border-red-600 flex items-center justify-center text-red-600">
+                                <div className="w-6 h-6 rounded-full border border-[#022c75] flex items-center justify-center text-[#022c75]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
                                     </svg>
@@ -23,7 +23,7 @@ const Footer = () => {
                                 <span className='text-[#022c75]'>+86 123 4567 8910</span>
                             </li>
                             <li className="flex items-center space-x-2">
-                                <div className="w-6 h-6 rounded-full border border-red-600 flex items-center justify-center text-red-600">
+                                <div className="w-6 h-6 rounded-full border border-[#022c75] flex items-center justify-center text-[#022c75]">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
                                     </svg>
@@ -44,7 +44,7 @@ const Footer = () => {
 
                     {/* Column 2: Quick Links */}
                     <div>
-                        <h3 className="text-red-600 font-bold text-lg mb-4">Quick Links</h3>
+                        <h3 className="text-[#022c75] font-bold text-lg mb-4">Quick Links</h3>
                         <ul className="space-y-2 text-sm text-[#022c75]">
                             <li><Link href="/faq" className="hover:text-[#FF9F1A]">FAQ</Link></li>
                             <li><Link href="/join-us" className="hover:text-[#FF9F1A]">Join Us</Link></li>
@@ -60,7 +60,7 @@ const Footer = () => {
 
                     {/* Column 3: Product List */}
                     <div>
-                        <h3 className="text-red-600 font-bold text-lg mb-4">Product List</h3>
+                        <h3 className="text-[#022c75] font-bold text-lg mb-4">Product List</h3>
                         <ul className="space-y-2 text-sm text-[#022c75]">
                             <li><Link href="/products/smt-production-line" className="hover:text-[#FF9F1A]">SMT Production Line</Link></li>
                             <li><Link href="/products/reflow-oven" className="hover:text-[#FF9F1A]">Reflow Oven</Link></li>
@@ -75,7 +75,7 @@ const Footer = () => {
 
                     {/* Column 4: Get inspired */}
                     <div>
-                        <h3 className="text-red-600 font-bold text-lg mb-4">Get inspired</h3>
+                        <h3 className="text-[#022c75] font-bold text-lg mb-4">Get inspired</h3>
                         <p className="text-sm text-[#022c75] mb-4">Subscribe for our newsletter</p>
                         <div className="flex mb-6">
                             <input
@@ -83,7 +83,7 @@ const Footer = () => {
                                 placeholder=""
                                 className="bg-white text-[#022c75] px-4 py-2 w-full focus:outline-none"
                             />
-                            <button className="bg-red-700 px-4 py-2 text-white hover:bg-red-800 transition-colors">
+                            <button className="bg-[#022c75] px-4 py-2 text-white hover:bg-red-800 transition-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                                 </svg>
