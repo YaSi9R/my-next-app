@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import { Send, MapPin, Phone, Mail } from "lucide-react";
 import { motion } from "framer-motion";
-import image1 from "../public/image1 (3).png";
+import image1 from "../../public/image1 (3).png";
 import { h2 } from "framer-motion/client";
 
 const ContactSection = () => {
@@ -32,7 +32,7 @@ const ContactSection = () => {
             <section className="relative py-24 min-h-screen flex items-center overflow-hidden" style={{ clipPath: 'inset(0)' }}>
                 {/* Fixed Background Container */}
 
-               
+
 
                 <div className="container mx-auto px-4 max-w-7xl relative z-10">
                     <div className="text-center mb-16">
@@ -128,7 +128,7 @@ const ContactSection = () => {
 
                 </div>
             </section>
-             <div className="h-[80px] bg-[#022c75]"></div>
+            <div className="h-[80px] bg-[#022c75]"></div>
         </div>
     );
 };

@@ -5,11 +5,11 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useAnimation, useMotionValue } from "framer-motion";
 
-import yamahalogo from "../public/yamaha.jpg";
-import fuji from "../public/fuji.png";
-import goldland from "../public/goldland.png";
-import panasonic from "../public/panasonic.jpg";
-import asm from "../public/asm.png";
+import yamahalogo from "../../public/yamaha.jpg";
+import fuji from "../../public/fuji.png";
+import goldland from "../../public/goldland.png";
+import panasonic from "../../public/panasonic.jpg";
+import asm from "../../public/asm.png";
 
 const brands = [
     { name: "Goldland", logo: goldland },

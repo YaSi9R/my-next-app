@@ -5,14 +5,14 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 // Placeholder images from the public directory
-import machine1 from "../public/image.png";
-import machine2 from "../public/image copy.png";
-import machine3 from "../public/image copy1.png";
-import machine4 from "../public/image copy2.png";
-import machine5 from "../public/image1 (1).png";
-import machine6 from "../public/image1 (2).png";
-import machine7 from "../public/machine.png";
-import machine8 from "../public/heroBanner.jpg";
+import machine1 from "../../public/image.png";
+import machine2 from "../../public/image copy.png";
+import machine3 from "../../public/image copy1.png";
+import machine4 from "../../public/image copy2.png";
+import machine5 from "../../public/image1 (1).png";
+import machine6 from "../../public/image1 (2).png";
+import machine7 from "../../public/machine.png";
+import machine8 from "../../public/heroBanner.jpg";
 
 const categories = [
     {

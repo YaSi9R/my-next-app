@@ -5,8 +5,8 @@ import Link from 'next/link';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import machine from "../public/image copy1.png";
-import machine2 from "../public/image_copy3-.png";
+import machine from "../../public/image copy1.png";
+import machine2 from "../../public/image_copy3-.png";
 
 const images = [
   { src: machine, alt: "SMT & PCB Manufacturing Equipment 1" },
@@ -29,8 +29,8 @@ export function HeroSlider() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="flex flex-col justify-center space-y-3">
-           
-            
+
+
 
             {/* Headline */}
             <div className="space-y-4">
@@ -161,7 +161,7 @@ export function HeroSlider() {
               </div>
             </div>
 
-            
+
           </div>
         </div>
       </div>

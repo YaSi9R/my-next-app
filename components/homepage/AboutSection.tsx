@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { CheckCircle2, Play } from "lucide-react";
 import { motion } from "framer-motion";
-import warehouseImage from "../public/image1 (3).png"
+import warehouseImage from "../../public/image1 (3).png"
 
 const features = [
     {

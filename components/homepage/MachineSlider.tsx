@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
-import imae from "../public/image.png";
+import imae from "../../public/image.png";
 
 const machines = [
     { id: 1, name: "SMT Reflow Oven", image: imae },
