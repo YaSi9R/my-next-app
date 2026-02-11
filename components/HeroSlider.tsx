@@ -29,16 +29,8 @@ export function HeroSlider() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="flex flex-col justify-center space-y-3">
-            {/* Tag */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 w-fit px-4 py-2 rounded-full bg-[#022c75] border border-accent/30"
-            >
-              <div className="h-2 w-2 rounded-full bg-[#e6e6e6] animate-pulse"></div>
-              <span className="text-sm font-semibold text-[#e6e6e6]">Tekmart India Exim Pvt. Ltd.</span>
-            </motion.div>
+           
+            
 
             {/* Headline */}
             <div className="space-y-4">
