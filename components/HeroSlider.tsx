@@ -1,47 +1,72 @@
-import { Award, Zap, Users, CheckCircle2, ArrowRight, Shield, ZapIcon } from 'lucide-react'
+"use client";
+
+import { CheckCircle2, ArrowRight, Zap } from 'lucide-react'
 import Link from 'next/link';
 import Image from "next/image";
-import image1 from "../public/image1 (3).png";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import machine from "../public/image copy1.png";
+import machine2 from "../public/image_copy3-.png";
 
+const images = [
+  { src: machine, alt: "SMT & PCB Manufacturing Equipment 1" },
+  { src: machine2, alt: "SMT & PCB Manufacturing Equipment 2" },
+];
 
 export function HeroSlider() {
-  return (
-    <section className="relative overflow-hidden bg-[#e6e6e6]  pt-12 pb-16 md:pt-20 md:pb-24">
-      {/* Decorative background elements */}
-      {/* <div className="absolute inset-0 z-0 h-full w-full pointer-events-none">
-        <Image
-          src={image1}
-          alt="Contact Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-[#e6e6e6]/80 backdrop-blur-[2px]" />
-      </div> */}
+  const [currentImage, setCurrentImage] = useState(0);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <section className="relative overflow-hidden bg-[#e6e6e6] pt-12 pb-16 md:pt-20 md:pb-24">
       <div className="mx-auto max-w-7xl px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="flex flex-col justify-center space-y-3">
             {/* Tag */}
-            <div className="inline-flex items-center gap-2 w-fit px-4 py-2 rounded-full bg-[#022c75] border border-accent/30">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 w-fit px-4 py-2 rounded-full bg-[#022c75] border border-accent/30"
+            >
               <div className="h-2 w-2 rounded-full bg-[#e6e6e6] animate-pulse"></div>
               <span className="text-sm font-semibold text-[#e6e6e6]">Tekmart India Exim Pvt. Ltd.</span>
-            </div>
+            </motion.div>
 
             {/* Headline */}
             <div className="space-y-4">
-              <h1 className="text-4xl md:text-4xl lg:text-5xl font-bold text-[#022c75] leading-tight tracking-tight">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-4xl md:text-4xl lg:text-5xl font-bold text-[#022c75] leading-tight tracking-tight"
+              >
                 Your Trusted Partner for SMT & PCB <br /> <span className="text-[#022c75] text-3xl">Manufacturing Solutions</span>
-              </h1>
-              <p className="text-md md:text-md text-[#022c75] leading-relaxed max-w-xl">
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-md md:text-md text-[#022c75] leading-relaxed max-w-xl"
+              >
                 We specialize in supplying used and refurbished SMT machines, new spare parts, and board handling equipment with comprehensive after-sales support for EMS and OEM manufacturers across India.
-              </p>
+              </motion.p>
             </div>
 
-            {/* Trust Badges - Extracted Insights */}
-            <div className="space-y-1 ">
+            {/* Trust Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="space-y-1 "
+            >
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#022c75] flex items-center justify-center">
                   <CheckCircle2 className="h-3 w-3 text-[#e6e6e6]" />
@@ -60,11 +85,15 @@ export function HeroSlider() {
                 </div>
                 <span className="text-[#022c75]/90 font-medium">Technical Expertise & Dependable Support</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-2 ">
-
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="flex flex-col sm:flex-row gap-4 mt-2 "
+            >
               {/* Primary button */}
               <Link
                 href="/contact"
@@ -89,34 +118,61 @@ export function HeroSlider() {
               >
                 View Solutions
               </Link>
-
-            </div>
-
-
+            </motion.div>
 
             {/* Trust Indicator */}
-            <div className="text-[#022c75] text-sm font-medium pt-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="text-[#022c75] text-sm font-medium pt-4"
+            >
               ✓ No hidden costs  •  ✓ Free consultation  •  ✓ Instant quote
-            </div>
+            </motion.div>
           </div>
 
-          {/* Right Side - Creative Card Layout */}
-          <div className="relative h-full  lg:flex items-center ">
-            <div className="relative w-full max-w-md lg:ml-12">
-              <Image
-                src={machine}
-                alt="SMT & PCB Manufacturing Equipment"
-                width={500}
-                height={600}
-                priority
-                className="object-contain"
-              />
+          {/* Right Side - Image Carousel */}
+          <div className="relative h-[400px] lg:h-[500px] w-full flex items-center justify-center lg:justify-end">
+            <div className="relative w-full h-full max-w-lg">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImage}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={images[currentImage].src}
+                      alt={images[currentImage].alt}
+                      fill
+                      className="object-contain drop-shadow-2xl"
+                      priority
+                    />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Navigation Indicators */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentImage ? "bg-[#022c75] w-6" : "bg-[#022c75]/30 hover:bg-[#022c75]/50"
+                      }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
-            </div>
+
+            
+          </div>
         </div>
-
       </div>
-
     </section >
   )
 }
