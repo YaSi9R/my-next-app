@@ -15,7 +15,7 @@ export default function YamahaPartsPage() {
     return (
         <div className="min-h-screen bg-[#022c75] py-12">
             <div className="container mx-auto px-4 max-w-7xl">
-                {/* Breadcrumb */}
+               
                 <div className="text-sm text-gray-600 mb-6">
                     <Link href="/" className="hover:text-[#e6e6e6]">Home</Link>
                     <span className="mx-2">/</span>
@@ -24,7 +24,7 @@ export default function YamahaPartsPage() {
                     <span className="text-[#e6e6e6] font-semibold">Yamaha Parts</span>
                 </div>
 
-                {/* Page Header */}
+               
                 <div className="mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                         Yamaha SMT Parts & Accessories
@@ -34,7 +34,7 @@ export default function YamahaPartsPage() {
                     </p>
                 </div>
 
-                {/* Categories Grid */}
+                
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     {categories.map((category) => (
                         <Link
@@ -58,7 +58,7 @@ export default function YamahaPartsPage() {
                     ))}
                 </div>
 
-                {/* Featured Parts */}
+              
                 <div className="mb-12">
                     <h2 className="text-3xl font-bold text-gray-900 mb-6">Featured Parts</h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

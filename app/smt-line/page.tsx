@@ -17,7 +17,7 @@ export default function SMTLinePage() {
                     </p>
                 </div>
 
-                {/* Line Packages */}
+                
                 <div className="space-y-12">
                     {smtLinePackages.map((line, idx) => (
                         <div
@@ -25,7 +25,7 @@ export default function SMTLinePage() {
                             className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
                         >
                             <div className="grid lg:grid-cols-2 gap-8">
-                                {/* Line Diagram */}
+                                
                                 <div className="bg-gradient-to-br from-blue-50 to-gray-100 p-8 flex items-center justify-center">
                                     <div className="text-center">
                                         <Factory className="w-32 h-32 text-[#e6e6e6] mx-auto mb-4 opacity-20" />

@@ -46,8 +46,7 @@ export default function YamahaPickPlacePage() {
                                 <div className="text-6xl font-bold text-gray-300 group-hover:scale-110 transition-transform">
                                     {product.name}
                                 </div>
-                                {/* Placeholder for actual product image */}
-                                {/* <Image src={product.image} alt={product.name} fill className="object-cover" /> */}
+                                
                             </div>
 
                             {/* Product Info */}

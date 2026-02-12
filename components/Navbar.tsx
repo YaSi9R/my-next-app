@@ -151,18 +151,7 @@ const Navbar = () => {
                 { name: "What Our Clients Say", href: "/clients#say" },
             ],
         },
-        // {
-        //     name: "Contact Us",
-        //     href: "/contact",
-        //     children: [
-        //         { name: "Phone", href: "/contact#phone" },
-        //         { name: "Email", href: "/contact#email" },
-        //         { name: "Website", href: "/contact#website" },
-        //         { name: "Location", href: "/contact#location" },
-        //         { name: "WhatsApp", href: "/contact#whatsapp" },
-        //         { name: "WeChat", href: "/contact#wechat" },
-        //     ],
-        // },
+       
     ];
 
     const toggleMobileSubmenu = (itemName: string) => {

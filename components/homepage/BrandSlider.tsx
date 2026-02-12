@@ -20,7 +20,7 @@ const brands = [
 ];
 
 const BrandSlider = () => {
-    // Triple the brands array to ensure enough content for seamless loop
+   
     const duplicatedBrands = [...brands, ...brands, ...brands];
     const [currentIndex, setCurrentIndex] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);

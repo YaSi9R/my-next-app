@@ -28,9 +28,9 @@ const ContactSection = () => {
             </section>
             <div className="h-[80px] bg-[#022c75]"></div>
 
-            {/* Contact Form Section with Stuck Background */}
+            
             <section className="relative py-24 min-h-screen flex items-center overflow-hidden" style={{ clipPath: 'inset(0)' }}>
-                {/* Fixed Background Container */}
+               
 
 
 

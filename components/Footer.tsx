@@ -9,7 +9,7 @@ const Footer = () => {
         <footer className="bg-[#e6e6e6] text-white pb-6">
             <div className="container mx-auto px-4 w-9/11">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {/* Column 1: Keep in touch */}
+                   
                     <div className='-translate-y-[34px]
 '>
                         <Image src={logo} alt="logo" className="w-40 h-40 " />
@@ -43,7 +43,7 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Column 2: Quick Links */}
+                   
                     <div>
                         <h3 className="text-[#022c75] font-bold text-lg mb-4">Quick Links</h3>
                         <ul className="space-y-2 text-sm text-[#022c75]">
@@ -59,7 +59,7 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Column 3: Product List */}
+                    
                     <div>
                         <h3 className="text-[#022c75] font-bold text-lg mb-4">Product List</h3>
                         <ul className="space-y-2 text-sm text-[#022c75]">
@@ -74,7 +74,7 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Column 4: Get inspired */}
+                   
                     <div>
                         <h3 className="text-[#022c75] font-bold text-lg mb-4">Get inspired</h3>
                         <p className="text-sm text-[#022c75] mb-4">Subscribe for our newsletter</p>

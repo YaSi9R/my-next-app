@@ -19,7 +19,7 @@ const ProductsSection = () => {
 
                     {/* Right Grid - 3 Product Cards */}
                     <div className="grid grid-cols-1 gap-6">
-                        {/* SMT Machine Card - Full Width Top */}
+                       
                         <div className="bg-[#022c75] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#e6e6e6] group">
                             <div className="flex items-start gap-4">
                                 <div className="flex-shrink-0 w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
@@ -38,7 +38,7 @@ const ProductsSection = () => {
                             </div>
                         </div>
 
-                        {/* Two Column Grid for Parts and Production Line */}
+                        
                         <div className="grid md:grid-cols-2 gap-6">
                             {/* SMT Parts Card */}
                             <div className="bg-[#022c75] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#e6e6e6] group">

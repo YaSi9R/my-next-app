@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Building2, Factory } from 'lucide-react';
 
 export default function ClientsPage() {
-    // Placeholder client logos - replace with real logos later
+    
     const clients = Array.from({ length: 12 }, (_, i) => ({
         id: i + 1,
         name: `Client ${i + 1}`,
@@ -16,7 +16,7 @@ export default function ClientsPage() {
     return (
         <div className="min-h-screen bg-[#022c75] py-12">
             <div className="container mx-auto px-4 max-w-7xl">
-                {/* Page Header */}
+               
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                         Our Clients
@@ -26,7 +26,7 @@ export default function ClientsPage() {
                     </p>
                 </div>
 
-                {/* EMS Manufacturers Section */}
+                
                 <div id="ems" className="mb-16">
                     <div className="flex items-center gap-3 mb-8">
                         <Factory className="w-8 h-8 text-[#e6e6e6]" />
@@ -51,7 +51,7 @@ export default function ClientsPage() {
                     </div>
                 </div>
 
-                {/* OEM Manufacturers Section */}
+                
                 <div id="oem" className="mb-16">
                     <div className="flex items-center gap-3 mb-8">
                         <Building2 className="w-8 h-8 text-[#e6e6e6]" />
@@ -76,7 +76,7 @@ export default function ClientsPage() {
                     </div>
                 </div>
 
-                {/* All Logos Grid */}
+                
                 <div id="logos" className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
                     <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
                         All Client Logos
@@ -107,7 +107,7 @@ export default function ClientsPage() {
                     </div>
                 </div>
 
-                {/* CTA Section */}
+               
                 <div className="mt-16 bg-[#e6e6e6] rounded-2xl p-8 md:p-12 text-center text-white">
                     <h2 className="text-3xl font-bold mb-4">Join Our Growing Client Base</h2>
                     <p className="text-lg mb-6 opacity-90">
