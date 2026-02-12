@@ -33,13 +33,13 @@ export default async function SmtMachinesPage() {
     const categories = Array.from(subcategoriesMap.values());
 
     return (
-        <div className="min-h-screen bg-[#022c75] py-12">
+        <div className="min-h-screen bg-[#e6e6e6] py-12">
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="mb-12 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 text-white">
+                    <h1 className="text-4xl md:text-5xl font-bold  mb-4 text-[#022c75]">
                         SMT Machines
                     </h1>
-                    <p className="text-xl text-gray-300">
+                    <p className="text-xl text-[#022c75]">
                         Explore our range of high-quality SMT equipment
                     </p>
                 </div>
@@ -51,16 +51,16 @@ export default async function SmtMachinesPage() {
                             <Link
                                 key={category.slug}
                                 href={category.href}
-                                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group"
+                                className="bg-[#022c75] rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group"
                             >
                                 <div className="flex items-start gap-6">
                                     <div className="bg-blue-50 p-4 rounded-xl group-hover:bg-[#e6e6e6] transition-colors">
-                                        <Icon className="w-8 h-8 text-[#022c75] group-hover:text-white transition-colors" />
+                                        <Icon className="w-8 h-8 text-[#022c75]   transition-colors" />
                                     </div>
                                     <div>
-                                        <h2 className="text-2xl font-bold text-[#022c75] mb-2">{category.name}</h2>
-                                        <p className="text-gray-600 mb-4">{category.description}</p>
-                                        <span className="inline-flex items-center gap-2 text-[#022c75] font-semibold group-hover:gap-3 transition-all">
+                                        <h2 className="text-2xl font-bold text-[#e6e6e6] mb-2">{category.name}</h2>
+                                        <p className="text-gray-400 mb-4">{category.description}</p>
+                                        <span className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold group-hover:gap-3 transition-all">
                                             View Machines
                                             <ArrowRight className="w-5 h-5" />
                                         </span>
