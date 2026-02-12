@@ -19,7 +19,7 @@ const ProductsSection = () => {
 
                     {/* Right Grid - 3 Product Cards */}
                     <div className="grid grid-cols-1 gap-6">
-                       
+
                         <div className="bg-[#022c75] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#e6e6e6] group">
                             <div className="flex items-start gap-4">
                                 <div className="flex-shrink-0 w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition-colors">
@@ -30,7 +30,7 @@ const ProductsSection = () => {
                                     <p className="text-[#e6e6e6] leading-relaxed mb-4">
                                         As SMT machine supplier, Tekmart carries a range of brand-new and used SMT machines that support the most famous brands, all at amazingly competitive prices.
                                     </p>
-                                    <Link href="/products" className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold hover:gap-3 transition-all">
+                                    <Link href="/smt-machines" className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold hover:gap-3 transition-all">
                                         Learn More
                                         <ArrowRight className="w-4 h-4" />
                                     </Link>
@@ -38,7 +38,7 @@ const ProductsSection = () => {
                             </div>
                         </div>
 
-                        
+
                         <div className="grid md:grid-cols-2 gap-6">
                             {/* SMT Parts Card */}
                             <div className="bg-[#022c75] rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#e6e6e6] group">
@@ -50,7 +50,7 @@ const ProductsSection = () => {
                                     <p className="text-[#e6e6e6] leading-relaxed">
                                         Purchase all the SMT parts you need at one stop! Tekmart has new and refurbished parts that will perfectly fit your market demands.
                                     </p>
-                                    <Link href="/products" className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold hover:gap-3 transition-all">
+                                    <Link href="/smt-parts" className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold hover:gap-3 transition-all">
                                         Learn More
                                         <ArrowRight className="w-4 h-4" />
                                     </Link>
@@ -67,7 +67,7 @@ const ProductsSection = () => {
                                     <p className="text-[#e6e6e6] leading-relaxed">
                                         With Tekmart's robust experience in SMT construction and abundant resources, we offer professional bespoke electronic production line solutions and unmatched service.
                                     </p>
-                                    <Link href="/products" className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold hover:gap-3 transition-all">
+                                    <Link href="/smt-line" className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold hover:gap-3 transition-all">
                                         Learn More
                                         <ArrowRight className="w-4 h-4" />
                                     </Link>

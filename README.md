@@ -33,4 +33,72 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Data Schemas
+
+The following schemas describe the data structure for Products, Parts, and SMT Line Packages. Use these references when building the Admin Portal / Backend.
+
+### Product (Machines)
+Represents SMT Machines (Pick & Place, Reflow Ovens, etc.).
+
+```json
+{
+  "id": "string (unique-slug)",
+  "name": "string",
+  "brand": "string",
+  "category": "string (e.g., 'SMT Machines')",
+  "subcategory": "string (e.g., 'Pick & Place Machines', 'Reflow Ovens')",
+  "condition": "'New' | 'Used' | 'Refurbished'",
+  "yearOfManufacture": "number (optional)",
+  "price": "string",
+  "image": "string (url)",
+  "images": "string[] (optional)",
+  "shortDescription": "string",
+  "longDescription": "string",
+  "specifications": [
+    { "label": "string", "value": "string" }
+  ],
+  "features": "string[]",
+  "availability": "string"
+}
+```
+
+### Part (SMT Parts)
+Represents Spare Parts and Consumables.
+
+```json
+{
+  "id": "string (unique-slug)",
+  "name": "string",
+  "brand": "string",
+  "category": "string (e.g., 'SMT Parts')",
+  "subcategory": "string (e.g., 'Feeders & Feeder Parts', 'Nozzles')",
+  "partNumber": "string",
+  "condition": "'New' | 'Used' | 'Refurbished'",
+  "price": "string",
+  "image": "string (url)",
+  "compatibleModels": "string[]",
+  "description": "string",
+  "specifications": [
+    { "label": "string", "value": "string" }
+  ],
+  "availability": "string"
+}
+```
+
+### SMT Line Package
+Represents a complete SMT production line configuration.
+
+```json
+{
+  "id": "string (unique-slug)",
+  "name": "string",
+  "price": "string",
+  "image": "string (url)",
+  "machines": "string[] (list of machine names included)",
+  "suitableFor": "string",
+  "capacity": "string",
+  "floorSpace": "string",
+  "description": "string",
+  "features": "string[]"
+}
+```

@@ -18,42 +18,42 @@ const categories = [
     {
         title: "Pick & Place",
         image: machine1,
-        href: "/products/pick-and-place",
+        href: "/smt-machines/pick-and-place",
     },
     {
         title: "Feeders",
         image: machine2,
-        href: "/products/feeders",
+        href: "/smt-parts/yamaha", // Pointing to Yamaha parts hub for now
     },
     {
         title: "Inspection - AOI/SPI",
         image: machine3,
-        href: "/products/inspection",
+        href: "/smt-machines", // General machines page
     },
     {
         title: "Screen Printer",
         image: machine4,
-        href: "/products/screen-printer",
+        href: "/smt-machines",
     },
     {
         title: "Oven",
         image: machine5,
-        href: "/products/oven",
+        href: "/smt-machines/reflow-ovens",
     },
     {
         title: "Soldering Systems",
         image: machine6,
-        href: "/products/soldering",
+        href: "/smt-machines",
     },
     {
         title: "PTH / Auto Insertion",
         image: machine7,
-        href: "/products/pth",
+        href: "/smt-machines",
     },
     {
         title: "Board Handling",
         image: machine8,
-        href: "/products/board-handling",
+        href: "/smt-machines",
     },
 ];
 

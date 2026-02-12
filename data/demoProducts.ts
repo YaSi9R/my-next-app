@@ -4,8 +4,11 @@ export interface Product {
     id: string;
     name: string;
     brand: string;
+    brandSlug: string; // New
     category: string;
+    categorySlug: string; // New
     subcategory?: string;
+    subcategorySlug?: string; // New
     condition: 'New' | 'Used' | 'Refurbished';
     yearOfManufacture?: number;
     price?: string;
@@ -24,8 +27,11 @@ export const demoProducts: Product[] = [
         id: 'yamaha-ys12',
         name: 'YS12',
         brand: 'Yamaha',
+        brandSlug: 'yamaha',
         category: 'SMT Machines',
+        categorySlug: 'smt-machines',
         subcategory: 'Pick & Place Machines',
+        subcategorySlug: 'pick-and-place',
         condition: 'Used',
         yearOfManufacture: 2018,
         price: 'Contact for Quote',
@@ -55,8 +61,11 @@ export const demoProducts: Product[] = [
         id: 'yamaha-ysm20',
         name: 'YSM20',
         brand: 'Yamaha',
+        brandSlug: 'yamaha',
         category: 'SMT Machines',
+        categorySlug: 'smt-machines',
         subcategory: 'Pick & Place Machines',
+        subcategorySlug: 'pick-and-place',
         condition: 'New',
         price: 'Contact for Quote',
         image: '/demo-products/yamaha-ysm20.jpg',
@@ -84,8 +93,11 @@ export const demoProducts: Product[] = [
         id: 'fuji-nxt-iii',
         name: 'NXT III',
         brand: 'Fuji',
+        brandSlug: 'fuji',
         category: 'SMT Machines',
+        categorySlug: 'smt-machines',
         subcategory: 'Pick & Place Machines',
+        subcategorySlug: 'pick-and-place',
         condition: 'Used',
         yearOfManufacture: 2017,
         price: 'Contact for Quote',
@@ -106,14 +118,44 @@ export const demoProducts: Product[] = [
         ],
         availability: 'In Stock',
     },
+    {
+        id: 'fuji-aimex-iii',
+        name: 'AIMEX III',
+        brand: 'Fuji',
+        brandSlug: 'fuji',
+        category: 'SMT Machines',
+        categorySlug: 'smt-machines',
+        subcategory: 'Pick & Place Machines',
+        subcategorySlug: 'pick-and-place',
+        condition: 'Refurbished',
+        yearOfManufacture: 2020,
+        price: 'Contact for Quote',
+        image: '/demo-products/fuji-aimex3.jpg',
+        shortDescription: 'Flexible all-in-one placement platform',
+        longDescription: 'The AIMEX III is designed for flexibility, allowing it to handle a wide range of component types and board sizes with ease.',
+        specifications: [
+            { label: 'Placement Speed', value: '45,000 CPH' },
+            { label: 'Board Size', value: 'Up to 774mm x 610mm' },
+            { label: 'Component Range', value: '0402 to 74mm x 74mm' },
+        ],
+        features: [
+            'Large board support',
+            'High feeder capacity',
+            'Quick changeover'
+        ],
+        availability: 'In Stock',
+    },
 
     // Panasonic
     {
         id: 'panasonic-npm-d3',
         name: 'NPM-D3',
         brand: 'Panasonic',
+        brandSlug: 'panasonic',
         category: 'SMT Machines',
+        categorySlug: 'smt-machines',
         subcategory: 'Pick & Place Machines',
+        subcategorySlug: 'pick-and-place',
         condition: 'New',
         price: 'Contact for Quote',
         image: '/demo-products/panasonic-npmd3.jpg',
@@ -134,13 +176,16 @@ export const demoProducts: Product[] = [
         availability: 'Pre-Order (8-10 weeks)',
     },
 
-    // Reflow Ovens
+    // Reflow Ovens - Heller
     {
         id: 'heller-1913-mk5',
         name: '1913 MK5',
         brand: 'Heller',
+        brandSlug: 'heller',
         category: 'SMT Machines',
+        categorySlug: 'smt-machines',
         subcategory: 'Reflow Ovens',
+        subcategorySlug: 'reflow-ovens',
         condition: 'Used',
         yearOfManufacture: 2019,
         price: 'Contact for Quote',
@@ -161,13 +206,43 @@ export const demoProducts: Product[] = [
         ],
         availability: 'In Stock',
     },
+    {
+        id: 'heller-1707-mk5',
+        name: '1707 MK5',
+        brand: 'Heller',
+        brandSlug: 'heller',
+        category: 'SMT Machines',
+        categorySlug: 'smt-machines',
+        subcategory: 'Reflow Ovens',
+        subcategorySlug: 'reflow-ovens',
+        condition: 'New',
+        price: 'Contact for Quote',
+        image: '/demo-products/heller-1707.jpg',
+        shortDescription: 'Efficient 7-zone reflow oven',
+        longDescription: 'Optimized for efficiency, the 1707 MK5 is perfect for medium-volume production lines requiring reliable thermal performance.',
+        specifications: [
+            { label: 'Heating Zones', value: '7 zones' },
+            { label: 'Heating Length', value: '1.8m' },
+            { label: 'Cooling Zones', value: '2 zones' }
+        ],
+        features: [
+            'Compact footprint',
+            'Lead-free process ready',
+            'Low energy consumption'
+        ],
+        availability: 'In Stock',
+    },
 
+    // Reflow Ovens - BTU
     {
         id: 'btu-pyramax-150n',
         name: 'Pyramax 150N',
         brand: 'BTU',
+        brandSlug: 'btu',
         category: 'SMT Machines',
-        subcategory: 'Reflow Ovens',
+        categorySlug: 'smt-machines',
+        subcategory: 'Screen Printers',
+        subcategorySlug: 'screen-printers',
         condition: 'New',
         price: 'Contact for Quote',
         image: '/demo-products/btu-pyramax.jpg',
@@ -187,6 +262,140 @@ export const demoProducts: Product[] = [
         ],
         availability: 'In Stock',
     },
+    {
+        id: 'spi dummy data',
+        name: 'SPI Dummy Data',
+        brand: 'SPI Dummy Data',
+        brandSlug: 'spi-dummy-data',
+        category: 'SMT Machines',
+        categorySlug: 'smt-machines',
+        subcategory: 'SPI',
+        subcategorySlug: 'spi',
+        condition: 'New',
+        price: 'Contact for Quote',
+        image: '/demo-products/btu-pyramax.jpg',
+        shortDescription: 'High-performance convection reflow oven with nitrogen',
+        longDescription: 'The BTU Pyramax 150N offers superior thermal performance with advanced closed-loop control for consistent, repeatable results.',
+        specifications: [
+            { label: 'Heating Zones', value: '10 zones' },
+            { label: 'Conveyor Width', value: '508mm (20")' },
+            { label: 'Heating Length', value: '3.8m' },
+            { label: 'Temperature Range', value: 'Up to 400°C' },
+        ],
+        features: [
+            'Closed-loop zone control',
+            'Nitrogen atmosphere',
+            'Real-time profiling',
+            'Industry 4.0 connectivity',
+        ],
+        availability: 'In Stock',
+    },
+
+    // SMT Parts
+    {
+        id: 'yamaha-cl-8mm-feeder',
+        name: 'CL 8mm Feeder',
+        brand: 'Yamaha',
+        brandSlug: 'yamaha',
+        category: 'SMT Parts',
+        categorySlug: 'smt-parts',
+        subcategory: 'Feeders & Feeder Parts',
+        subcategorySlug: 'feeders',
+        condition: 'New',
+        price: '$450',
+        image: '/demo-products/yamaha-feeder.jpg',
+        shortDescription: 'Genuine Yamaha CL-type 8mm tape feeder for high-speed component feeding',
+        longDescription: 'Original Yamaha CL 8mm feeder (KHJ-MC100-000) compatible with YS and YSM series machines. Ensures stable and precise component supply.',
+        specifications: [
+            { label: 'Part Number', value: 'KHJ-MC100-000' },
+            { label: 'Tape Width', value: '8mm' },
+            { label: 'Pitch', value: '2mm, 4mm' },
+            { label: 'Component Height', value: 'Up to 6.5mm' },
+        ],
+        features: [
+            'Compatible with YS12, YS24, YSM20, YSM40',
+            'High reliability',
+            'Easy maintenance'
+        ],
+        availability: 'In Stock (50+ units)',
+    },
+    {
+        id: 'yamaha-502-nozzle',
+        name: '502 Nozzle Set',
+        brand: 'Yamaha',
+        brandSlug: 'yamaha',
+        category: 'SMT Parts',
+        categorySlug: 'smt-parts',
+        subcategory: 'Nozzles',
+        subcategorySlug: 'nozzles',
+        condition: 'New',
+        price: '$85/piece',
+        image: '/demo-products/yamaha-nozzle.jpg',
+        shortDescription: 'High-precision 502 nozzle for 0402-0603 chip components',
+        longDescription: 'Standard Yamaha 502 nozzle (KV8-M7710-00X) designed for reliable pickup and placement of small chips.',
+        specifications: [
+            { label: 'Part Number', value: 'KV8-M7710-00X' },
+            { label: 'Nozzle Type', value: '502' },
+            { label: 'Component Size', value: '0402, 0603' },
+            { label: 'Material', value: 'Ceramic tip' },
+        ],
+        features: [
+            'Compatible with YS12, YS24, YSM20',
+            'Ceramic tip for long life',
+            'High precision'
+        ],
+        availability: 'In Stock (100+ pieces)',
+    },
+    {
+        id: 'fuji-nxt-feeder-8mm',
+        name: 'NXT W08f Feeder',
+        brand: 'Fuji',
+        brandSlug: 'fuji',
+        category: 'SMT Parts',
+        categorySlug: 'smt-parts',
+        subcategory: 'Feeders & Feeder Parts',
+        subcategorySlug: 'feeders',
+        condition: 'Used',
+        price: '$350',
+        image: '/demo-products/fuji-feeder.jpg',
+        shortDescription: 'Original Fuji NXT W08f intelligent feeder',
+        longDescription: 'Fuji NXT W08f 8mm intelligent feeder for NXT and AIMEX series machines. Fully tested and calibrated.',
+        specifications: [
+            { label: 'Type', value: 'Intelligent Feeder' },
+            { label: 'Width', value: '8mm' },
+            { label: 'Compatibility', value: 'NXT I/II/III, AIMEX' }
+        ],
+        features: [
+            'Fast loading',
+            'Splice detection',
+            'High accuracy'
+        ],
+        availability: 'In Stock'
+    },
+    {
+        id: 'panasonic-cm-nozzle-110',
+        name: 'CM 110 Nozzle',
+        brand: 'Panasonic',
+        brandSlug: 'panasonic',
+        category: 'SMT Parts',
+        categorySlug: 'smt-parts',
+        subcategory: 'Nozzles',
+        subcategorySlug: 'nozzles',
+        condition: 'New',
+        price: '$120',
+        image: '/demo-products/pana-nozzle.jpg',
+        shortDescription: 'Panasonic CM Series Type 110 Nozzle',
+        longDescription: 'High-quality nozzle for Panasonic CM402/CM602/NPM machines. Type 110 for small chips.',
+        specifications: [
+            { label: 'Type', value: '110' },
+            { label: 'Machine', value: 'CM/NPM' }
+        ],
+        features: [
+            'Durable construction',
+            'Precise pickup'
+        ],
+        availability: 'In Stock'
+    }
 ];
 
 export const smtLinePackages = [
@@ -240,43 +449,4 @@ export const smtLinePackages = [
     },
 ];
 
-export const smtParts = [
-    {
-        id: 'yamaha-cl-8mm-feeder',
-        name: 'CL 8mm Feeder',
-        brand: 'Yamaha',
-        category: 'SMT Parts',
-        subcategory: 'Feeders & Feeder Parts',
-        partNumber: 'KHJ-MC100-000',
-        condition: 'New' as const,
-        price: '$450',
-        image: '/demo-products/yamaha-feeder.jpg',
-        compatibleModels: ['YS12', 'YS24', 'YSM20', 'YSM40'],
-        description: 'Genuine Yamaha CL-type 8mm tape feeder for high-speed component feeding',
-        specifications: [
-            { label: 'Tape Width', value: '8mm' },
-            { label: 'Pitch', value: '2mm, 4mm' },
-            { label: 'Component Height', value: 'Up to 6.5mm' },
-        ],
-        availability: 'In Stock (50+ units)',
-    },
-    {
-        id: 'yamaha-502-nozzle',
-        name: '502 Nozzle Set',
-        brand: 'Yamaha',
-        category: 'SMT Parts',
-        subcategory: 'Nozzles',
-        partNumber: 'KV8-M7710-00X',
-        condition: 'New' as const,
-        price: '$85/piece',
-        image: '/demo-products/yamaha-nozzle.jpg',
-        compatibleModels: ['YS12', 'YS24', 'YSM20'],
-        description: 'High-precision 502 nozzle for 0402-0603 chip components',
-        specifications: [
-            { label: 'Nozzle Type', value: '502' },
-            { label: 'Component Size', value: '0402, 0603' },
-            { label: 'Material', value: 'Ceramic tip' },
-        ],
-        availability: 'In Stock (100+ pieces)',
-    },
-];
+export const smtParts: Product[] = [];
