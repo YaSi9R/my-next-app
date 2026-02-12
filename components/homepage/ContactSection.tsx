@@ -28,19 +28,19 @@ const ContactSection = () => {
             </section>
             <div className="h-[80px] bg-[#022c75]"></div>
 
-            
+
             <section className="relative py-24 min-h-screen flex items-center overflow-hidden" style={{ clipPath: 'inset(0)' }}>
-               
+
 
 
 
                 <div className="container mx-auto px-4 max-w-7xl relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-4">
-                            Contact Us
+                            Request a Quote
                         </h2>
                         <p className="text-[#022c75] max-w-2xl mx-auto">
-                            Have questions or need a custom solution? Reach out to us and our team of experts will get back to you within 24 hours.
+                            Submit your technical requirements and our specialized engineers will provide a customized solution and formal quote within 24 hours.
                         </p>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

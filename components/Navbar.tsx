@@ -51,7 +51,7 @@ const Navbar = () => {
                 { name: "AOI", href: "/smt-machines/aoi" },
             ],
         },
-       
+
         {
             name: "SMT Line",
             href: "/smt-line",
@@ -119,14 +119,14 @@ const Navbar = () => {
                 { name: "Other Brands", href: "/smt-parts/other" },
             ],
         },
-         {
+        {
             name: "Board Handling",
-            href: "/smt-machines",
+            href: "/board-handling",
             children: [
 
-                { name: "Loaders", href: "/smt-machines/loaders" },
-                { name: "Unloaders", href: "/smt-machines/unloaders" },
-                { name: "Conveyors", href: "/smt-machines/conveyors" },
+                { name: "Loaders", href: "/board-handling/loaders" },
+                { name: "Unloaders", href: "/board-handling/unloaders" },
+                { name: "Conveyors", href: "/board-handling/conveyors" },
 
             ],
         },
@@ -151,7 +151,7 @@ const Navbar = () => {
                 { name: "What Our Clients Say", href: "/clients#say" },
             ],
         },
-       
+
     ];
 
     const toggleMobileSubmenu = (itemName: string) => {
@@ -238,7 +238,7 @@ const Navbar = () => {
                         href="/quote"
                         className="bg-[#022c75] text-white px-6 py-2 rounded-full font-bold hover:bg-[#033a95] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-95 ml-6"
                     >
-                        Contact Us
+                        Request Quote
                     </Link>
                 </div>
 

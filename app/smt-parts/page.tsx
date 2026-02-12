@@ -1,32 +1,46 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Settings, Wrench, CircleDot } from 'lucide-react';
+import { ArrowRight, Settings, Wrench, CircleDot, Check, Printer, Cpu } from 'lucide-react';
 import { getAllParts } from '@/lib/api';
 
 const iconMap: Record<string, any> = {
-    'feeders': Settings,
-    'nozzles': CircleDot,
-    'spare-parts': Wrench,
+    'yamaha': Settings,
+    'fuji': Printer,
+    'panasonic': Cpu,
+    'others': Wrench,
 };
 
 export default async function SmtPartsPage() {
     const parts = await getAllParts();
 
-    // Extract unique subcategories
-    const subcategoriesMap = new Map();
+    // Extract unique brands with counts
+    const brandsMap = new Map();
+    const priorityBrands = ['yamaha', 'fuji', 'panasonic'];
 
     parts.forEach(part => {
-        if (part.subcategorySlug && !subcategoriesMap.has(part.subcategorySlug)) {
-            subcategoriesMap.set(part.subcategorySlug, {
-                name: part.subcategory || 'Parts',
-                description: `High-quality ${part.subcategory || 'parts'} for your SMT line.`,
-                href: `/smt-parts/${part.subcategorySlug}`,
-                slug: part.subcategorySlug
+        const brandSlug = part.brandSlug?.toLowerCase() || 'others';
+        const targetSlug = priorityBrands.includes(brandSlug) ? brandSlug : 'others';
+        const targetName = priorityBrands.includes(brandSlug) ? part.brand : 'Others';
+
+        const existing = brandsMap.get(targetSlug);
+        if (!existing) {
+            brandsMap.set(targetSlug, {
+                name: targetName || 'Others',
+                description: `High-quality spare parts for ${targetName} SMT equipment.`,
+                href: `/smt-parts/${targetSlug}`,
+                slug: targetSlug,
+                count: 1
             });
+        } else {
+            existing.count++;
         }
     });
 
-    const categories = Array.from(subcategoriesMap.values());
+    // Ensure they appear in order: Yamaha, Fuji, Panasonic, Others
+    const categories = [
+        ...priorityBrands.map(b => brandsMap.get(b)).filter(Boolean),
+        brandsMap.get('others')
+    ].filter(Boolean);
 
     return (
         <div className="min-h-screen bg-[#022c75] py-12">
@@ -50,11 +64,14 @@ export default async function SmtPartsPage() {
                                 className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 group"
                             >
                                 <div className="flex items-start gap-6">
-                                    <div className="bg-blue-50 p-4 rounded-xl group-hover:bg-[#e6e6e6] transition-colors">
+                                    <div className="bg-blue-50 p-4 rounded-xl group-hover:bg-[#022c75] transition-colors">
                                         <Icon className="w-8 h-8 text-[#022c75] group-hover:text-white transition-colors" />
                                     </div>
-                                    <div>
-                                        <h2 className="text-2xl font-bold text-[#022c75] mb-2">{category.name}</h2>
+                                    <div className="flex-1">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <h2 className="text-2xl font-bold text-[#022c75]">{category.name}</h2>
+                                            <span className="text-gray-400 text-xs font-bold">{category.count} ITEMS</span>
+                                        </div>
                                         <p className="text-gray-600 mb-4">{category.description}</p>
                                         <span className="inline-flex items-center gap-2 text-[#022c75] font-semibold group-hover:gap-3 transition-all">
                                             Browse Parts

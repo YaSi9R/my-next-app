@@ -8,11 +8,9 @@ interface Props {
 }
 
 export default function ProductDetail({ product }: Props) {
-    // Determine back link based on hierarchy
-    // If brandSlug exists, go back to brand page. Else go to subcategory.
     const backLink = product.brandSlug
-        ? `/smt-machines/${product.subcategorySlug}/${product.brandSlug}`
-        : `/smt-machines/${product.subcategorySlug}`;
+        ? `/${product.categorySlug}/${product.subcategorySlug}/${product.brandSlug}`
+        : `/${product.categorySlug}/${product.subcategorySlug}`;
 
     const backLabel = product.brandSlug
         ? `Back to ${product.brand} Machines`
@@ -59,15 +57,15 @@ export default function ProductDetail({ product }: Props) {
                     <div>
                         <div className="bg-white rounded-2xl p-8 shadow-lg mb-6">
                             {/* Header */}
-                            <div className="flex items-start justify-between mb-4">
+                            <div className="flex items-start justify-between mb-6">
                                 <div>
-                                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                                    <h1 className="text-4xl font-bold text-gray-900 mb-2 leading-tight">
                                         {product.brand} {product.name}
                                     </h1>
-                                    <p className="text-gray-600">{product.subcategory}</p>
+                                    <p className="text-blue-600 font-bold uppercase tracking-widest text-xs">{product.subcategory}</p>
                                 </div>
                                 <span
-                                    className={`px-4 py-2 rounded-full text-sm font-semibold ${product.condition === 'New'
+                                    className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest ${product.condition === 'New'
                                         ? 'bg-green-100 text-green-700'
                                         : product.condition === 'Used'
                                             ? 'bg-blue-100 text-blue-700'
@@ -79,85 +77,77 @@ export default function ProductDetail({ product }: Props) {
                             </div>
 
                             {product.yearOfManufacture && (
-                                <p className="text-sm text-gray-500 mb-4">
+                                <div className="inline-block bg-gray-100 px-3 py-1 rounded-lg text-xs font-bold text-gray-500 mb-6">
                                     Year of Manufacture: {product.yearOfManufacture}
-                                </p>
+                                </div>
                             )}
 
-                            <p className="text-gray-700 mb-6 leading-relaxed">
-                                {product.longDescription}
-                            </p>
-
-                            {/* Price & Availability */}
-                            <div className="flex items-center justify-between py-4 border-t border-b border-gray-200 mb-6">
-                                <div>
-                                    <p className="text-sm text-gray-600 mb-1">Price</p>
-                                    <p className="text-3xl font-bold text-[#022c75]">{product.price}</p>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-sm text-gray-600 mb-1">Availability</p>
-                                    <p className="text-lg font-semibold text-green-600">{product.availability}</p>
-                                </div>
+                            <div className="prose prose-blue max-w-none mb-8">
+                                <h3 className="text-lg font-bold text-gray-900 mb-2">Description</h3>
+                                <p className="text-gray-600 leading-relaxed">
+                                    {product.longDescription}
+                                </p>
                             </div>
 
-                            {/* CTA Buttons */}
-                            <div className="grid grid-cols-2 gap-4">
+                            {/* CTA Section */}
+                            <div className="pt-8 border-t border-gray-100">
                                 <Link
                                     href="/quote"
-                                    className="bg-[#022c75] text-white text-center py-3 rounded-full font-bold hover:bg-[#033a95] transition"
+                                    className="block w-full bg-[#022c75] text-white text-center py-4 rounded-xl font-bold hover:bg-[#033a95] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 capitalize tracking-wide"
                                 >
-                                    Request Quote
+                                    Request Technical Quote
                                 </Link>
-                                <Link
-                                    href="/contact"
-                                    className="border-2 border-[#022c75] text-[#022c75] text-center py-3 rounded-full font-bold hover:bg-[#e6e6e6] hover:text-white transition"
-                                >
-                                    Contact Us
-                                </Link>
+                                <p className="text-center text-[10px] text-gray-400 mt-4 uppercase tracking-[0.2em]">
+                                    Direct inquiry to administrator
+                                </p>
                             </div>
                         </div>
 
-                        {/* Quick Contact */}
-                        <div className="bg-white rounded-2xl p-6 shadow-lg">
-                            <h3 className="font-bold text-gray-900 mb-4">Quick Contact</h3>
-                            <div className="space-y-3">
-                                <a href="tel:+911234567890" className="flex items-center gap-3 text-gray-700 hover:text-[#022c75]">
-                                    <Phone className="w-5 h-5" />
-                                    <span>+91 123 456 7890</span>
-                                </a>
-                                <a href="mailto:sales@tekmart.com" className="flex items-center gap-3 text-gray-700 hover:text-[#022c75]">
-                                    <Mail className="w-5 h-5" />
-                                    <span>sales@tekmart.com</span>
-                                </a>
+                        {/* Availability Info */}
+                        <div className="bg-white/10 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm font-bold text-white/50 uppercase tracking-widest">Stock Status</span>
+                                <span className="text-green-400 font-bold uppercase tracking-widest text-sm">{product.availability}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Specifications */}
-                <div className="mt-12 bg-white rounded-2xl p-8 shadow-lg">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Technical Specifications</h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {product.specifications.map((spec, idx) => (
-                            <div key={idx} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
-                                <div className="w-2 h-2 bg-[#022c75] rounded-full mt-2"></div>
-                                <div>
-                                    <p className="font-semibold text-gray-900">{spec.label}</p>
-                                    <p className="text-gray-600">{spec.value}</p>
-                                </div>
-                            </div>
-                        ))}
+                {/* Specifications - Professional Table */}
+                <div className="mt-12 bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100">
+                    <div className="px-8 py-6 bg-gray-50 border-b border-gray-100">
+                        <h2 className="text-2xl font-bold text-gray-900">Technical Specifications</h2>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-white">
+                                    <th className="px-8 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100 w-1/3">Parameter</th>
+                                    <th className="px-8 py-4 text-xs font-bold text-gray-400 uppercase tracking-widest border-b border-gray-100">Description / Value</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-50">
+                                {product.specifications.map((spec, idx) => (
+                                    <tr key={idx} className="hover:bg-blue-50/30 transition-colors">
+                                        <td className="px-8 py-5 text-sm font-bold text-gray-600 bg-gray-50/50">{spec.label}</td>
+                                        <td className="px-8 py-5 text-sm text-gray-900 font-medium">{spec.value}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                {/* Features */}
-                <div className="mt-12 bg-white rounded-2xl p-8 shadow-lg">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Key Features</h2>
-                    <div className="grid md:grid-cols-2 gap-4">
+                {/* Key Features */}
+                <div className="mt-12 bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-8 border-l-4 border-[#022c75] pl-4">Key Performance Features</h2>
+                    <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
                         {product.features.map((feature, idx) => (
-                            <div key={idx} className="flex items-start gap-3">
-                                <Check className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
-                                <p className="text-gray-700">{feature}</p>
+                            <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100">
+                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center mt-0.5">
+                                    <Check className="w-4 h-4 text-green-600" />
+                                </div>
+                                <p className="text-sm text-gray-700 font-medium leading-relaxed">{feature}</p>
                             </div>
                         ))}
                     </div>

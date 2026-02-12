@@ -30,75 +30,88 @@ interface Props {
 
 export default async function SmtMachinesDynamicPage({ params }: Props) {
     const { slug } = await params;
+    const allProducts = await getAllProducts();
 
-    // Case 1: Product Detail Page (Length 3: /subcategory/brand/id)
-    // We check this first or last? 
-    // If we follow strict hierarchy:
-    // [0] = subcategory
-    // [1] = brand
-    // [2] = product id
+    // Helper to identify slug types
+    const findBrand = (s: string) => allProducts.find(p => p.brandSlug === s)?.brandSlug;
+    const findSubcat = (s: string) => allProducts.find(p => p.subcategorySlug === s)?.subcategorySlug;
 
-    if (slug.length === 3) {
-        const productId = slug[2];
-        const product = await getProductById(productId);
-
-        if (product) {
+    // Case 1: Product Detail Page (Try segments for ID)
+    for (const segment of [...slug].reverse()) {
+        const product = await getProductById(segment);
+        if (product && product.categorySlug === 'smt-machines') {
             return <ProductDetail product={product} />;
         }
     }
 
-    // Case 2: Subcategory Page (Length 1: /subcategory)
-    if (slug.length === 1) {
-        const subcategorySlug = slug[0];
-        // Fetch products for this subcategory
-        const products = await getProductsBySubcategorySlug(subcategorySlug);
-
-        if (products.length > 0) {
-            // Derive title from the first product or a lookup map (simplified here)
-            const title = products[0].subcategory || 'Machine Listing';
-
-            return (
-                <ProductListing
-                    title={title}
-                    description={`Explore our range of ${title}.`}
-                    products={products}
-                    breadcrumbs={[
-                        { label: 'SMT Machines', href: '/smt-machines' },
-                        { label: title, href: `/smt-machines/${subcategorySlug}` }
-                    ]}
-                />
-            );
-        }
-    }
-
-    // Case 3: Brand Page (Length 2: /subcategory/brand)
+    // Case 2: Listing Page (Length 2: brand/subcat or subcat/brand)
     if (slug.length === 2) {
-        const subcategorySlug = slug[0];
-        const brandSlug = slug[1];
+        let brandSlug: string | undefined;
+        let subcatSlug: string | undefined;
 
-        const products = await getProductsByFilters({
-            subcategorySlug,
-            brandSlug
-        });
+        const s0_isBrand = findBrand(slug[0]);
+        const s0_isSubcat = findSubcat(slug[0]);
+        const s1_isBrand = findBrand(slug[1]);
+        const s1_isSubcat = findSubcat(slug[1]);
+
+        if (s0_isBrand && s1_isSubcat) {
+            brandSlug = s0_isBrand;
+            subcatSlug = s1_isSubcat;
+        } else if (s0_isSubcat && s1_isBrand) {
+            subcatSlug = s0_isSubcat;
+            brandSlug = s1_isBrand;
+        }
+
+        if (brandSlug || subcatSlug) {
+            const products = allProducts.filter(p =>
+                (!brandSlug || p.brandSlug === brandSlug) &&
+                (!subcatSlug || p.subcategorySlug === subcatSlug)
+            );
+
+            if (products.length > 0) {
+                const title = brandSlug && subcatSlug
+                    ? `${products[0].brand} ${products[0].subcategory}`
+                    : (brandSlug ? `${products[0].brand} Machines` : products[0].subcategory);
+
+                return (
+                    <ProductListing
+                        title={title || 'Machine Listing'}
+                        description={`Browse our range of ${title || 'machines'}.`}
+                        products={products}
+                        breadcrumbs={[
+                            { label: 'SMT Machines', href: '/smt-machines' },
+                            { label: (brandSlug ? products[0].brand : (products[0].subcategory || 'Machines')) || 'Machines', href: `/smt-machines/${slug[0]}` },
+                            { label: (subcatSlug && brandSlug ? (slug[0] === brandSlug ? products[0].subcategory : products[0].brand) : '') || '', href: `/smt-machines/${slug[0]}/${slug[1]}` }
+                        ].filter(b => b.label)}
+                    />
+                );
+            }
+        }
+    }
+
+    // Case 3: Single segment (Brand or Subcategory)
+    if (slug.length === 1) {
+        const s = slug[0];
+        const isBrand = findBrand(s);
+        const isSubcat = findSubcat(s);
+
+        const products = allProducts.filter(p => p.brandSlug === s || p.subcategorySlug === s);
 
         if (products.length > 0) {
-            const title = `${products[0].brand} ${products[0].subcategory}`;
-
+            const title = isBrand ? `${products[0].brand} Machines` : (products[0].subcategory || 'Machine Listing');
             return (
                 <ProductListing
                     title={title}
-                    description={`Browse detailed specifications for ${title}.`}
+                    description={`Explore our collection of ${title}.`}
                     products={products}
                     breadcrumbs={[
                         { label: 'SMT Machines', href: '/smt-machines' },
-                        { label: products[0].subcategory || subcategorySlug, href: `/smt-machines/${subcategorySlug}` },
-                        { label: products[0].brand, href: `/smt-machines/${subcategorySlug}/${brandSlug}` }
+                        { label: title, href: `/smt-machines/${s}` }
                     ]}
                 />
             );
         }
     }
 
-    // If nothing matched
     return notFound();
 }

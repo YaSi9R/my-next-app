@@ -11,7 +11,6 @@ export interface Product {
     subcategorySlug?: string; // New
     condition: 'New' | 'Used' | 'Refurbished';
     yearOfManufacture?: number;
-    price?: string;
     image: string;
     images?: string[];
     shortDescription: string;
@@ -34,7 +33,7 @@ export const demoProducts: Product[] = [
         subcategorySlug: 'pick-and-place',
         condition: 'Used',
         yearOfManufacture: 2018,
-        price: 'Contact for Quote',
+
         image: '/demo-products/yamaha-ys12.jpg',
         images: ['/demo-products/yamaha-ys12.jpg', '/demo-products/yamaha-ys12-2.jpg'],
         shortDescription: 'High-speed modular pick and place machine with excellent flexibility',
@@ -67,7 +66,7 @@ export const demoProducts: Product[] = [
         subcategory: 'Pick & Place Machines',
         subcategorySlug: 'pick-and-place',
         condition: 'New',
-        price: 'Contact for Quote',
+
         image: '/demo-products/yamaha-ysm20.jpg',
         shortDescription: 'Ultra-high-speed modular mounter for maximum productivity',
         longDescription: 'The YSM20 represents the pinnacle of Yamaha\'s modular mounting technology, delivering industry-leading speed and precision for high-volume production.',
@@ -100,7 +99,7 @@ export const demoProducts: Product[] = [
         subcategorySlug: 'pick-and-place',
         condition: 'Used',
         yearOfManufacture: 2017,
-        price: 'Contact for Quote',
+
         image: '/demo-products/fuji-nxt3.jpg',
         shortDescription: 'Versatile high-speed modular mounter with proven reliability',
         longDescription: 'The Fuji NXT III offers exceptional versatility and reliability, making it ideal for diverse production requirements from prototyping to high-volume manufacturing.',
@@ -129,7 +128,7 @@ export const demoProducts: Product[] = [
         subcategorySlug: 'pick-and-place',
         condition: 'Refurbished',
         yearOfManufacture: 2020,
-        price: 'Contact for Quote',
+
         image: '/demo-products/fuji-aimex3.jpg',
         shortDescription: 'Flexible all-in-one placement platform',
         longDescription: 'The AIMEX III is designed for flexibility, allowing it to handle a wide range of component types and board sizes with ease.',
@@ -157,7 +156,7 @@ export const demoProducts: Product[] = [
         subcategory: 'Pick & Place Machines',
         subcategorySlug: 'pick-and-place',
         condition: 'New',
-        price: 'Contact for Quote',
+
         image: '/demo-products/panasonic-npmd3.jpg',
         shortDescription: 'Next-generation modular mounter with AI capabilities',
         longDescription: 'The NPM-D3 combines Panasonic\'s legendary reliability with cutting-edge AI technology for unmatched performance and efficiency.',
@@ -188,7 +187,7 @@ export const demoProducts: Product[] = [
         subcategorySlug: 'reflow-ovens',
         condition: 'Used',
         yearOfManufacture: 2019,
-        price: 'Contact for Quote',
+
         image: '/demo-products/heller-1913.jpg',
         shortDescription: '13-zone reflow oven with nitrogen capability',
         longDescription: 'The Heller 1913 MK5 delivers precise thermal profiling with 13 heating zones and optional nitrogen atmosphere for lead-free soldering.',
@@ -216,7 +215,7 @@ export const demoProducts: Product[] = [
         subcategory: 'Reflow Ovens',
         subcategorySlug: 'reflow-ovens',
         condition: 'New',
-        price: 'Contact for Quote',
+
         image: '/demo-products/heller-1707.jpg',
         shortDescription: 'Efficient 7-zone reflow oven',
         longDescription: 'Optimized for efficiency, the 1707 MK5 is perfect for medium-volume production lines requiring reliable thermal performance.',
@@ -244,7 +243,7 @@ export const demoProducts: Product[] = [
         subcategory: 'Screen Printers',
         subcategorySlug: 'screen-printers',
         condition: 'New',
-        price: 'Contact for Quote',
+
         image: '/demo-products/btu-pyramax.jpg',
         shortDescription: 'High-performance convection reflow oven with nitrogen',
         longDescription: 'The BTU Pyramax 150N offers superior thermal performance with advanced closed-loop control for consistent, repeatable results.',
@@ -272,7 +271,7 @@ export const demoProducts: Product[] = [
         subcategory: 'SPI',
         subcategorySlug: 'spi',
         condition: 'New',
-        price: 'Contact for Quote',
+
         image: '/demo-products/btu-pyramax.jpg',
         shortDescription: 'High-performance convection reflow oven with nitrogen',
         longDescription: 'The BTU Pyramax 150N offers superior thermal performance with advanced closed-loop control for consistent, repeatable results.',
@@ -291,7 +290,60 @@ export const demoProducts: Product[] = [
         availability: 'In Stock',
     },
 
-    // SMT Parts
+];
+
+export const smtLinePackages = [
+    {
+        id: 'entry-level-line',
+        name: 'Entry Level SMT Line',
+
+        image: '/demo-products/entry-line-diagram.jpg',
+        machines: [
+            'Manual Stencil Printer',
+            'Yamaha YS12 Pick & Place',
+            'Heller 1913 Reflow Oven',
+            'Basic AOI System',
+        ],
+        suitableFor: 'Small to medium production runs, prototyping, low-volume manufacturing',
+        capacity: '500-1000 boards/day',
+        floorSpace: '15m x 3m',
+        description: 'Perfect starter package for companies entering SMT production or expanding capabilities. Includes all essential equipment with Tekmart installation and training.',
+        features: [
+            'Complete turnkey solution',
+            'Installation & commissioning included',
+            '3-day operator training',
+            '1-year warranty on all equipment',
+            'Technical support package',
+        ],
+    },
+    {
+        id: 'high-speed-line',
+        name: 'High-Speed SMT Line',
+
+        image: '/demo-products/highspeed-line-diagram.jpg',
+        machines: [
+            'Automatic Stencil Printer with SPI',
+            'Yamaha YSM20 Pick & Place (x2)',
+            'BTU Pyramax 150N Reflow Oven',
+            'Advanced 3D AOI',
+            'Automatic Loader/Unloader',
+        ],
+        suitableFor: 'High-volume production, automotive, medical devices, consumer electronics',
+        capacity: '5000-10000 boards/day',
+        floorSpace: '25m x 4m',
+        description: 'Premium high-speed production line for demanding manufacturing environments. Fully automated with Industry 4.0 connectivity.',
+        features: [
+            'Fully automated operation',
+            'Real-time quality monitoring',
+            'MES integration ready',
+            'Complete installation & setup',
+            '5-day comprehensive training',
+            '2-year warranty package',
+        ],
+    },
+];
+
+export const smtParts: Product[] = [
     {
         id: 'yamaha-cl-8mm-feeder',
         name: 'CL 8mm Feeder',
@@ -302,7 +354,7 @@ export const demoProducts: Product[] = [
         subcategory: 'Feeders & Feeder Parts',
         subcategorySlug: 'feeders',
         condition: 'New',
-        price: '$450',
+
         image: '/demo-products/yamaha-feeder.jpg',
         shortDescription: 'Genuine Yamaha CL-type 8mm tape feeder for high-speed component feeding',
         longDescription: 'Original Yamaha CL 8mm feeder (KHJ-MC100-000) compatible with YS and YSM series machines. Ensures stable and precise component supply.',
@@ -329,7 +381,7 @@ export const demoProducts: Product[] = [
         subcategory: 'Nozzles',
         subcategorySlug: 'nozzles',
         condition: 'New',
-        price: '$85/piece',
+
         image: '/demo-products/yamaha-nozzle.jpg',
         shortDescription: 'High-precision 502 nozzle for 0402-0603 chip components',
         longDescription: 'Standard Yamaha 502 nozzle (KV8-M7710-00X) designed for reliable pickup and placement of small chips.',
@@ -349,14 +401,14 @@ export const demoProducts: Product[] = [
     {
         id: 'fuji-nxt-feeder-8mm',
         name: 'NXT W08f Feeder',
-        brand: 'Fuji',
+        brand: 'Fuji-Parts',
         brandSlug: 'fuji',
         category: 'SMT Parts',
         categorySlug: 'smt-parts',
         subcategory: 'Feeders & Feeder Parts',
         subcategorySlug: 'feeders',
         condition: 'Used',
-        price: '$350',
+
         image: '/demo-products/fuji-feeder.jpg',
         shortDescription: 'Original Fuji NXT W08f intelligent feeder',
         longDescription: 'Fuji NXT W08f 8mm intelligent feeder for NXT and AIMEX series machines. Fully tested and calibrated.',
@@ -382,7 +434,31 @@ export const demoProducts: Product[] = [
         subcategory: 'Nozzles',
         subcategorySlug: 'nozzles',
         condition: 'New',
-        price: '$120',
+
+        image: '/demo-products/pana-nozzle.jpg',
+        shortDescription: 'Panasonic CM Series Type 110 Nozzle',
+        longDescription: 'High-quality nozzle for Panasonic CM402/CM602/NPM machines. Type 110 for small chips.',
+        specifications: [
+            { label: 'Type', value: '110' },
+            { label: 'Machine', value: 'CM/NPM' }
+        ],
+        features: [
+            'Durable construction',
+            'Precise pickup'
+        ],
+        availability: 'In Stock'
+    },
+    {
+        id: 'others dummy',
+        name: 'CM 110 Nozzle',
+        brand: 'other',
+        brandSlug: 'other',
+        category: 'SMT Parts',
+        categorySlug: 'smt-parts',
+        subcategory: 'Nozzles',
+        subcategorySlug: 'nozzles',
+        condition: 'New',
+
         image: '/demo-products/pana-nozzle.jpg',
         shortDescription: 'Panasonic CM Series Type 110 Nozzle',
         longDescription: 'High-quality nozzle for Panasonic CM402/CM602/NPM machines. Type 110 for small chips.',
@@ -397,56 +473,3 @@ export const demoProducts: Product[] = [
         availability: 'In Stock'
     }
 ];
-
-export const smtLinePackages = [
-    {
-        id: 'entry-level-line',
-        name: 'Entry Level SMT Line',
-        price: 'Contact for Quote',
-        image: '/demo-products/entry-line-diagram.jpg',
-        machines: [
-            'Manual Stencil Printer',
-            'Yamaha YS12 Pick & Place',
-            'Heller 1913 Reflow Oven',
-            'Basic AOI System',
-        ],
-        suitableFor: 'Small to medium production runs, prototyping, low-volume manufacturing',
-        capacity: '500-1000 boards/day',
-        floorSpace: '15m x 3m',
-        description: 'Perfect starter package for companies entering SMT production or expanding capabilities. Includes all essential equipment with Tekmart installation and training.',
-        features: [
-            'Complete turnkey solution',
-            'Installation & commissioning included',
-            '3-day operator training',
-            '1-year warranty on all equipment',
-            'Technical support package',
-        ],
-    },
-    {
-        id: 'high-speed-line',
-        name: 'High-Speed SMT Line',
-        price: 'Contact for Quote',
-        image: '/demo-products/highspeed-line-diagram.jpg',
-        machines: [
-            'Automatic Stencil Printer with SPI',
-            'Yamaha YSM20 Pick & Place (x2)',
-            'BTU Pyramax 150N Reflow Oven',
-            'Advanced 3D AOI',
-            'Automatic Loader/Unloader',
-        ],
-        suitableFor: 'High-volume production, automotive, medical devices, consumer electronics',
-        capacity: '5000-10000 boards/day',
-        floorSpace: '25m x 4m',
-        description: 'Premium high-speed production line for demanding manufacturing environments. Fully automated with Industry 4.0 connectivity.',
-        features: [
-            'Fully automated operation',
-            'Real-time quality monitoring',
-            'MES integration ready',
-            'Complete installation & setup',
-            '5-day comprehensive training',
-            '2-year warranty package',
-        ],
-    },
-];
-
-export const smtParts: Product[] = [];

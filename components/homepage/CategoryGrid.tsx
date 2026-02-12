@@ -23,7 +23,7 @@ const categories = [
     {
         title: "Feeders",
         image: machine2,
-        href: "/smt-parts/yamaha", // Pointing to Yamaha parts hub for now
+        href: "/smt-parts/yamaha/feeders", // Pointing to Yamaha parts hub for now
     },
     {
         title: "Inspection - AOI/SPI",
@@ -33,7 +33,7 @@ const categories = [
     {
         title: "Screen Printer",
         image: machine4,
-        href: "/smt-machines",
+        href: "/smt-machines/screen-printers",
     },
     {
         title: "Oven",
@@ -53,7 +53,7 @@ const categories = [
     {
         title: "Board Handling",
         image: machine8,
-        href: "/smt-machines",
+        href: "/board-handling",
     },
 ];
 

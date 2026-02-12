@@ -88,15 +88,15 @@ export function HeroSlider() {
             >
               {/* Primary button */}
               <Link
-                href="/contact"
-                className="bg-[#022c75] hover:bg-[#022c75]/90
-               text-[#e6e6e6] font-semibold
-               px-4 py-2
-               rounded-lg shadow-lg hover:shadow-xl
-               transition-all flex items-center gap-2"
+                href="/quote"
+                className="bg-[#022c75] hover:bg-[#033a95]
+               text-white font-bold
+               px-8 py-4
+               rounded-xl shadow-lg hover:shadow-2xl
+               transition-all flex items-center gap-3 group"
               >
-                Get Free Consultation
-                <ArrowRight className="h-2 w-5 text-8xl" />
+                Request Free Quote
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-transform" />
               </Link>
 
               {/* Secondary button */}

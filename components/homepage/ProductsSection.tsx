@@ -28,7 +28,7 @@ const ProductsSection = () => {
                                 <div className="flex-1">
                                     <h3 className="text-2xl font-bold text-[#e6e6e6] mb-3">SMT Machine</h3>
                                     <p className="text-[#e6e6e6] leading-relaxed mb-4">
-                                        As SMT machine supplier, Tekmart carries a range of brand-new and used SMT machines that support the most famous brands, all at amazingly competitive prices.
+                                        As SMT machine supplier, Tekmart carries a range of brand-new and used SMT machines that support the most famous brands, all with professional support.
                                     </p>
                                     <Link href="/smt-machines" className="inline-flex items-center gap-2 text-[#e6e6e6] font-semibold hover:gap-3 transition-all">
                                         Learn More

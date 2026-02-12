@@ -101,16 +101,16 @@ export default async function SMTLinePage() {
                                         </div>
                                     </div>
 
-                                    {/* Price & CTA */}
+                                    {/* CTA */}
                                     <div className="flex items-center justify-between pt-6 border-t border-gray-200">
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">Investment</p>
-                                            <p className="text-2xl font-bold text-[#e6e6e6]">{line.price}</p>
+                                        <div className="flex flex-col">
+                                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Pricing</span>
+                                            <span className="text-sm font-bold text-blue-600 uppercase tracking-widest">Request Technical Quote</span>
                                         </div>
                                         <div className="flex gap-3">
                                             <Link
                                                 href={`/smt-line/${line.id}`}
-                                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#e6e6e6] text-white rounded-full font-semibold hover:bg-[#033a95] transition"
+                                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#022c75] text-white rounded-xl font-bold hover:bg-[#033a95] transition shadow-lg hover:shadow-xl"
                                             >
                                                 View Details
                                                 <ArrowRight className="w-4 h-4" />
@@ -124,23 +124,17 @@ export default async function SMTLinePage() {
                 </div>
 
                 {/* Contact CTA */}
-                <div className="mt-16 bg-[#e6e6e6] rounded-2xl p-8 md:p-12 text-center text-white">
-                    <h2 className="text-3xl font-bold mb-4">Need a Custom SMT Line Configuration?</h2>
-                    <p className="text-lg mb-6 opacity-90">
-                        Our engineers can design a bespoke production line tailored to your specific requirements
+                <div className="mt-16 bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-16 text-center text-white backdrop-blur-sm shadow-2xl">
+                    <h2 className="text-4xl font-bold mb-6 tracking-tight">Need a Custom SMT Line Configuration?</h2>
+                    <p className="text-lg mb-10 text-blue-100/70 max-w-2xl mx-auto leading-relaxed">
+                        Our specialized engineers can design a bespoke production line tailored to your specific manufacturing volume and technical requirements.
                     </p>
-                    <div className="flex gap-4 justify-center">
+                    <div className="flex justify-center">
                         <Link
-                            href="/contact"
-                            className="inline-block bg-white text-[#e6e6e6] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition"
+                            href="/quote"
+                            className="inline-block bg-white text-[#022c75] px-12 py-4 rounded-2xl font-bold text-lg hover:bg-blue-50 transition shadow-2xl hover:scale-105"
                         >
-                            Contact Engineering Team
-                        </Link>
-                        <Link
-                            href="https://wa.me/911234567890"
-                            className="inline-block border-2 border-white text-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-[#e6e6e6] transition"
-                        >
-                            WhatsApp Us
+                            Request Custom Line Quote
                         </Link>
                     </div>
                 </div>
