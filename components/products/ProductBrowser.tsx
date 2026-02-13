@@ -59,7 +59,7 @@ export default function ProductBrowser({
         setCurrentPage(1);
 
         // Construct new URL
-        const parts = [rootCategorySlug];
+        const parts: string[] = [rootCategorySlug];
         if (slug) parts.push(slug);
 
         // If there is exactly one brand selected, try to preserve it in the URL
