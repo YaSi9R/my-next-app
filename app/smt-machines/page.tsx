@@ -1,9 +1,9 @@
 import React from 'react';
-import SmtMachineBrowser from '@/components/products/SmtMachineBrowser';
+import ProductBrowser from '@/components/products/ProductBrowser';
 import { getAllProducts } from '@/lib/api';
 
 export default async function SmtMachinesPage() {
-    const products = await getAllProducts();
+    const products = await getAllProducts(); // Data includes both machines and parts, ProductBrowser filters it.
 
     return (
         <div className="min-h-screen bg-[#e6e6e6]">
@@ -14,7 +14,7 @@ export default async function SmtMachinesPage() {
                     Explore our comprehensive range of high-quality SMT equipment tailored for your production needs.
                 </p>
             </div>
-            <SmtMachineBrowser products={products} />
+            <ProductBrowser products={products} rootCategorySlug="smt-machines" />
         </div>
     );
 }

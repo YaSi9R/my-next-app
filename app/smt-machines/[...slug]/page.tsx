@@ -5,16 +5,41 @@ import {
     getAllProducts
 } from '@/lib/api';
 import ProductDetail from '@/components/products/ProductDetail';
-import SmtMachineBrowser from '@/components/products/SmtMachineBrowser';
+import ProductBrowser from '@/components/products/ProductBrowser';
+
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
     const products = await getAllProducts();
+    const machines = products.filter(p => p.categorySlug === 'smt-machines');
 
-    const productPaths = products.map(p => ({
-        slug: [p.subcategorySlug || 'other', p.brandSlug, p.id]
-    }));
+    const paths = [];
 
-    return productPaths;
+    // 1. Product Detail Pages: [subcat, brand, id]
+    for (const p of machines) {
+        paths.push({ slug: [p.subcategorySlug || 'other', p.brandSlug, p.id] });
+    }
+
+    // 2. Listing Pages (Deduplicated)
+    const subcats = new Set(machines.map(p => p.subcategorySlug).filter(Boolean));
+    const brands = new Set(machines.map(p => p.brandSlug).filter(Boolean));
+
+    // [subcat]
+    subcats.forEach(s => paths.push({ slug: [s!] }));
+    // [brand]
+    brands.forEach(b => paths.push({ slug: [b!] }));
+    // [subcat, brand]
+    subcats.forEach(s => {
+        brands.forEach(b => {
+            // Only if such permutation exists
+            const exists = machines.some(p => p.subcategorySlug === s && p.brandSlug === b);
+            if (exists) {
+                paths.push({ slug: [s!, b!] });
+            }
+        });
+    });
+
+    return paths;
 }
 
 interface Props {
@@ -28,7 +53,7 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
     const allProducts = await getAllProducts();
 
     // Helper to identify slug types
-    const findBrand = (s: string) => allProducts.find(p => p.brandSlug === s)?.brandSlug;
+    const findBrand = (s: string) => allProducts.find(p => p.brandSlug === s)?.brand; // Return Name not Slug
     const findSubcat = (s: string) => allProducts.find(p => p.subcategorySlug === s)?.subcategorySlug;
 
     // Case 1: Product Detail Page (Try segments for ID)
@@ -74,8 +99,9 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
                         Explore our comprehensive range of high-quality SMT equipment tailored for your production needs.
                     </p>
                 </div>
-                <SmtMachineBrowser
+                <ProductBrowser
                     products={allProducts}
+                    rootCategorySlug="smt-machines"
                     initialCategory={initialCategory}
                     initialBrand={initialBrand}
                 />
