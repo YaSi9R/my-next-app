@@ -80,13 +80,13 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
     if (initialCategory || initialBrand) {
         return (
             <div className="min-h-screen bg-[#e6e6e6]">
-                <div className="bg-[#022c75] py-12 text-center text-white mb-8">
+                <div className="bg-[#e6e6e6] py-12 text-center text-[#022c75] mb-8">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
                         {initialCategory
                             ? allProducts.find(p => p.subcategorySlug === initialCategory)?.subcategory
                             : (initialBrand ? `${allProducts.find(p => p.brandSlug === initialBrand)?.brand} Parts` : 'SMT Parts')}
                     </h1>
-                    <p className="text-xl text-white/80 max-w-2xl mx-auto px-4">
+                    <p className="text-xl text-[#022c75] max-w-2xl mx-auto px-4">
                         Find the perfect parts for your {initialCategory || initialBrand || 'SMT'} equipment.
                     </p>
                 </div>
