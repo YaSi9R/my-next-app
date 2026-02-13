@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Brand {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String    @unique
+  slug     String    @unique
+  products Product[] // ✅ opposite relation added
+}
+
+model Category {
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
+  name          String        @unique
+  slug          String        @unique
+  subcategories Subcategory[]
+  products      Product[] // ✅ VERY IMPORTANT (fix)
+}
+
+model Subcategory {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  slug String
+
+  categoryId String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  products Product[]
+}
+
+model Product {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  slug             String @unique
+  condition        String
+  image            String
+  shortDescription String
+  longDescription  String
+  availability     String
+
+  brandId String @db.ObjectId
+  brand   Brand  @relation(fields: [brandId], references: [id])
+
+  categoryId String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  subcategoryId String      @db.ObjectId
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
+
+  specifications Json
+  features       String[]
+  createdAt      DateTime @default(now())
+}
+
+model CustomerQuery {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  phone     String
+  message   String
+  createdAt DateTime @default(now())
+}
