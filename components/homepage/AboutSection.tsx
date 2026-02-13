@@ -54,7 +54,7 @@ const AboutSection = () => {
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                             <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                <div className="w-20 h-20 rounded-full bg-[#e6e6e6] flex items-center justify-center text-white shadow-xl transform group-hover:scale-110 transition-transform">
+                                <div className="w-20 h-20 rounded-full bg-[#022c75] flex items-center justify-center text-white shadow-xl transform group-hover:scale-110 transition-transform">
                                     <Play size={32} fill="currentColor" />
                                 </div>
                             </div>
