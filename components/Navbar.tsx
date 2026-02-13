@@ -25,7 +25,7 @@ const Navbar = () => {
     const navItems: NavItem[] = [
         {
             name: "About Us",
-            href: "/about",
+            href: "/about/company",
             children: [
                 { name: "Company Overview", href: "/about/company" },
                 { name: "Why Tekmart", href: "/about/why-tekmart" },
