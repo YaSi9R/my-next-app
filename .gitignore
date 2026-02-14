@@ -43,3 +43,5 @@ node_modules/
 complete.md
 .gitignore
 
+
+/lib/generated/prisma
