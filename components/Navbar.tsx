@@ -114,9 +114,45 @@ const Navbar = () => {
                         },
                     ],
                 },
-                { name: "Fuji Parts", href: "/smt-parts/fuji" },
-                { name: "Panasonic Parts", href: "/smt-parts/panasonic" },
-                { name: "Other Brands", href: "/smt-parts/other" },
+                { name: "Fuji Parts", href: "/smt-parts/fuji" ,
+                    children: [
+                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/fuji" },
+                        { name: "Nozzles", href: "/smt-parts/nozzles/fuji" },
+                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/fuji" },
+                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/fuji" },
+                        {
+                            name: "Consumables",
+                            href: "/smt-parts/consumables/fuji",
+                            
+                        },
+                    ],
+                },
+                { name: "Panasonic Parts", href: "/smt-parts/panasonic",
+                     children: [
+                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/panasonic" },
+                        { name: "Nozzles", href: "/smt-parts/nozzles/panasonic" },
+                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/panasonic" },
+                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/panasonic" },
+                        {
+                            name: "Consumables",
+                            href: "/smt-parts/consumables/panasonic",
+                            
+                        },
+                    ],
+                 },
+                { name: "Other Brands", href: "/smt-parts/other" ,
+                     children: [
+                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/other" },
+                        { name: "Nozzles", href: "/smt-parts/nozzles/other" },
+                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/other" },
+                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/other" },
+                        {
+                            name: "Consumables",
+                            href: "/smt-parts/consumables/other",
+                            
+                        },
+                    ],
+                },
             ],
         },
         {

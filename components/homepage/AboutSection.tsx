@@ -5,6 +5,7 @@ import Image from "next/image";
 import { CheckCircle2, Play } from "lucide-react";
 import { motion } from "framer-motion";
 import warehouseImage from "../../public/image1 (3).png"
+import Link from "next/link";
 
 const features = [
     {
@@ -36,9 +37,12 @@ const AboutSection = () => {
                         </p>
                     </div>
                     <div className="flex-shrink-0">
-                        <button className="bg-[#022c75] hover:bg-[#0441ac] text-white font-bold py-4 px-10 rounded-full transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                        <Link
+                            href="/about/company"
+                            className="bg-[#022c75] hover:bg-[#0441ac] text-white font-bold py-4 px-10 rounded-full transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1 inline-block"
+                        >
                             Explore TekMart
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

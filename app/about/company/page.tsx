@@ -66,19 +66,13 @@ export default function CompanyOverview() {
         <main className="bg-[#e6e6e6] min-h-screen">
             {/* Hero Section */}
             <section className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
-                <Image
-                    src={heroImage}
-                    alt="Tekmart Facility"
-                    fill
-                    className="object-cover brightness-40"
-                    priority
-                />
+                
                 <div className="container mx-auto px-4 relative z-10 text-center">
                     <motion.h1
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8 }}
-                        className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#e6e6e6] mb-6 tracking-tight"
+                        className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-[#022c75] mb-6 tracking-tight"
                     >
                         Pioneering <span className="text-[#022c75]">SMT Excellence</span> Since 2000
                     </motion.h1>
@@ -86,7 +80,7 @@ export default function CompanyOverview() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.3, duration: 0.8 }}
-                        className="text-lg md:text-xl text-[#e6e6e6] max-w-3xl mx-auto mb-10 leading-relaxed font-medium"
+                        className="text-lg md:text-xl text-[#022c75] max-w-3xl mx-auto mb-10 leading-relaxed font-medium"
                     >
                         Tekmart is a global leader in providing consolidated SMT manufacturing solutions, bridging the gap between quality equipment and efficient production lines.
                     </motion.p>
