@@ -16,7 +16,6 @@ export async function proxy(req: NextRequest) {
     "/api/brands",
     "/api/categories",
     "/api/subcategories",
-    "/api/queries",
   ];
 
   const isProtected = protectedPaths.some((path) =>
@@ -54,6 +53,5 @@ export const config = {
     "/api/brands/:path*",
     "/api/categories/:path*",
     "/api/subcategories/:path*",
-    "/api/queries/:path*",
   ],
 };

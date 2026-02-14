@@ -69,6 +69,8 @@ model CustomerQuery {
   name      String
   email     String
   phone     String
+  company   String
+  interest  String
   message   String
   createdAt DateTime @default(now())
 }
