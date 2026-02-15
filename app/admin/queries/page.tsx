@@ -7,6 +7,8 @@ interface Query {
   name: string;
   email: string;
   phone: string;
+  company?: string;
+  interest?: string;
   message: string;
   createdAt: string;
 }
@@ -14,13 +16,34 @@ interface Query {
 export default function QueriesPage() {
   const [queries, setQueries] = useState<Query[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchQueries = async () => {
     setLoading(true);
-    const res = await fetch("/api/queries");
-    const data = await res.json();
-    setQueries(data);
-    setLoading(false);
+    setError("");
+    try {
+      const res = await fetch("/api/queries");
+      const data = await res.json();
+      console.log("Fetched queries:", data);
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to fetch queries");
+      }
+
+      if (Array.isArray(data)) {
+        setQueries(data);
+      } else {
+        console.error("Data is not an array:", data);
+        setQueries([]);
+        setError("Invalid data format received from server");
+      }
+    } catch (err: any) {
+      console.error("Error fetching queries:", err);
+      setError(err.message || "Failed to load queries");
+      setQueries([]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -48,11 +71,19 @@ export default function QueriesPage() {
       </h1>
 
       <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
-        {queries.length === 0 ? (
+        {error && (
+          <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-4 text-center">
+            {error}
+          </div>
+        )}
+
+        {queries.length === 0 && !error ? (
           <p className="text-gray-500 text-center py-6">
             No queries found
           </p>
-        ) : (
+        ) : null}
+
+        {queries.length > 0 && (
           <div className="space-y-6">
             {queries.map((query) => (
               <div
@@ -61,13 +92,13 @@ export default function QueriesPage() {
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="font-semibold">{query.name}</p>
-                    <p className="text-sm text-gray-600">
-                      {query.email}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      {query.phone}
-                    </p>
+                    <p className="font-semibold text-lg">{query.name}</p>
+                    <div className="text-sm text-gray-600 mt-1 space-y-1">
+                      <p>Email: {query.email}</p>
+                      <p>Phone: {query.phone}</p>
+                      {query.company && <p>Company: {query.company}</p>}
+                      {query.interest && <p>Interest: {query.interest}</p>}
+                    </div>
                   </div>
 
                   <button
