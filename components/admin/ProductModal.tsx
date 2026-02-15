@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import ImageUploader from "./ImageUploader";
 
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 export default function ProductModal({
   isOpen,
