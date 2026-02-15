@@ -1,5 +1,4 @@
-"use client";
-
+import { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -21,7 +20,9 @@ export default function LayoutWrapper({
 
   return (
     <>
-      <GlobalLoader />
+      <Suspense fallback={null}>
+        <GlobalLoader />
+      </Suspense>
       {!isAdminRoute && <Navbar />}
       {children}
       {!isAdminRoute && <Footer />}
