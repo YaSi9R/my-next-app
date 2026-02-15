@@ -10,7 +10,7 @@ import { useRouter, usePathname } from "next/navigation";
 
 interface ProductBrowserProps {
     products: Product[];
-    rootCategorySlug: "smt-machines" | "smt-parts";
+    rootCategorySlug: "smt-machines" | "smt-parts" | "board-handling" | "consumables";
     initialCategory?: string;
     initialBrand?: string;
 }
@@ -32,13 +32,14 @@ export default function ProductBrowser({
     const [selectedBrands, setSelectedBrands] = useState<string[]>(
         initialBrand ? [initialBrand] : []
     );
+    const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
 
     // Derive Categories and Brands from products based on rootCategorySlug
     const categories = useMemo(() => {
         const map = new Map();
         products.forEach((p) => {
-            // Logic: Only show categories that belong to the current Root Category (e.g. smt-machines OR smt-parts)
+            // Logic: Only show categories that belong to the current Root Category
             if (p.categorySlug === rootCategorySlug && p.subcategory && p.subcategorySlug) {
                 if (!map.has(p.subcategorySlug)) {
                     map.set(p.subcategorySlug, p.subcategory);
@@ -48,6 +49,20 @@ export default function ProductBrowser({
         return Array.from(map.entries()).map(([slug, name]) => ({ name, slug }));
     }, [products, rootCategorySlug]);
 
+    // Derive Types based on selected category
+    const types = useMemo(() => {
+        if (!selectedCategory) return [];
+        const map = new Map();
+        products.forEach((p) => {
+            if (p.categorySlug === rootCategorySlug && p.subcategorySlug === selectedCategory && p.type && p.typeSlug) {
+                if (!map.has(p.typeSlug)) {
+                    map.set(p.typeSlug, p.type);
+                }
+            }
+        });
+        return Array.from(map.entries()).map(([slug, name]) => ({ name, slug }));
+    }, [products, rootCategorySlug, selectedCategory]);
+
     // Derive Brands - Only show brands relevant to the current root category
     const brands = useMemo(() => {
         const relevantProducts = products.filter(p => p.categorySlug === rootCategorySlug);
@@ -55,25 +70,26 @@ export default function ProductBrowser({
     }, [products, rootCategorySlug]);
 
     const handleCategoryChange = (slug: string | null) => {
-        // Reset page to 1 when filter changes
         setCurrentPage(1);
-
-        // Construct new URL
+        setSelectedTypes([]); // Reset types when category changes
         const parts: string[] = [rootCategorySlug];
         if (slug) parts.push(slug);
-
-        // If there is exactly one brand selected, try to preserve it in the URL
-        // (Optional: depending on UX preference. User asked for "one path". 
-        // If we switch category, maybe clear brand? Usually safer to clear brand as it might not apply)
-        // Let's clear brand on category switch for safety/simplicity unless we knew it was valid.
-        // But wait, user said "make a one path".
-
         router.push(`/${parts.join('/')}`);
+    };
+
+    const handleTypeChange = (typeSlug: string) => {
+        setCurrentPage(1);
+        setSelectedTypes(prev => {
+            if (prev.includes(typeSlug)) {
+                return prev.filter(t => t !== typeSlug);
+            } else {
+                return [...prev, typeSlug];
+            }
+        });
     };
 
     const handleBrandChange = (brand: string) => {
         setCurrentPage(1);
-
         let newBrands: string[];
         if (selectedBrands.includes(brand)) {
             newBrands = selectedBrands.filter(b => b !== brand);
@@ -81,40 +97,24 @@ export default function ProductBrowser({
             newBrands = [...selectedBrands, brand];
         }
         setSelectedBrands(newBrands);
-
-        // Update URL if exactly one brand and a category is selected
-        if (selectedCategory && newBrands.length === 1) {
-            const brandSlug = products.find(p => p.brand === newBrands[0])?.brandSlug;
-            if (brandSlug) {
-                router.push(`/${rootCategorySlug}/${selectedCategory}/${brandSlug}`);
-            }
-        } else if (selectedCategory && newBrands.length === 0) {
-            router.push(`/${rootCategorySlug}/${selectedCategory}`);
-        }
-        // If > 1 brand or no category, we might just stay on current URL (client-side only filter) 
-        // or go back to root/category.
-        // For now, let's support the specific case the user cares about: 1 Category + 1 Brand.
     };
 
     // Filter Logic
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
-            // 1. Must match Root Category
             if (product.categorySlug !== rootCategorySlug) return false;
-
-            // 2. Category Match (if selected)
             if (selectedCategory && product.subcategorySlug !== selectedCategory) {
                 return false;
             }
-
-            // 3. Brand Match (if any selected)
+            if (selectedTypes.length > 0 && (!product.typeSlug || !selectedTypes.includes(product.typeSlug))) {
+                return false;
+            }
             if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand)) {
                 return false;
             }
-
             return true;
         });
-    }, [products, rootCategorySlug, selectedCategory, selectedBrands]);
+    }, [products, rootCategorySlug, selectedCategory, selectedTypes, selectedBrands]);
 
     // Pagination Logic
     const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -124,23 +124,26 @@ export default function ProductBrowser({
     }, [filteredProducts, currentPage]);
 
 
-    // Sync state if props change (e.g. navigation)
+    // Sync state if props change
     useEffect(() => {
         setSelectedCategory(initialCategory || null);
-        setCurrentPage(1); // Reset page on category change
+        setCurrentPage(1);
     }, [initialCategory]);
 
     useEffect(() => {
         if (initialBrand) {
             setSelectedBrands([initialBrand]);
-        } else {
-            // Keep existing marks if navigating from brand deep link?
-            // Simpler to just respect the prop.
         }
     }, [initialBrand]);
 
     const getRootTitle = () => {
-        return rootCategorySlug === 'smt-machines' ? 'SMT Machines' : 'SMT Spare Parts';
+        switch (rootCategorySlug) {
+            case 'smt-machines': return 'SMT Machines';
+            case 'smt-parts': return 'SMT Spare Parts';
+            case 'board-handling': return 'Board Handling Systems';
+            case 'consumables': return 'Consumables & Cleaning';
+            default: return 'Products';
+        }
     }
 
 
@@ -151,10 +154,13 @@ export default function ProductBrowser({
                 <div className="lg:w-1/4 flex-shrink-0">
                     <SidebarFilter
                         categories={categories}
+                        types={types}
                         brands={brands}
                         selectedCategory={selectedCategory}
+                        selectedTypes={selectedTypes}
                         selectedBrands={selectedBrands}
                         onCategoryChange={handleCategoryChange}
+                        onTypeChange={handleTypeChange}
                         onBrandChange={handleBrandChange}
                     />
                 </div>

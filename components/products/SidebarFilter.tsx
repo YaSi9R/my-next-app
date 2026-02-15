@@ -5,20 +5,26 @@ import { ChevronDown, ChevronRight, X, Filter } from "lucide-react";
 
 interface SidebarFilterProps {
     categories: { name: string; slug: string }[];
+    types?: { name: string; slug: string }[];
     brands: string[];
     selectedCategory: string | null;
+    selectedTypes?: string[];
     selectedBrands: string[];
     onCategoryChange: (categorySlug: string | null) => void;
+    onTypeChange?: (typeSlug: string) => void;
     onBrandChange: (brand: string) => void;
     className?: string;
 }
 
 export default function SidebarFilter({
     categories,
+    types = [],
     brands,
     selectedCategory,
+    selectedTypes = [],
     selectedBrands,
     onCategoryChange,
+    onTypeChange,
     onBrandChange,
     className = "",
 }: SidebarFilterProps) {
@@ -60,7 +66,7 @@ export default function SidebarFilter({
                         <h3 className="text-xl font-bold text-[#022c75] mb-6 flex items-center gap-2">
                             Category
                         </h3>
-                        <ul className="space-y-2">
+                        <ul className="space-y-4">
                             <li>
                                 <button
                                     onClick={() => {
@@ -68,28 +74,47 @@ export default function SidebarFilter({
                                         setIsMobileOpen(false);
                                     }}
                                     className={`w-full text-left px-4 py-2 rounded-lg transition-colors text-sm font-medium ${selectedCategory === null
-                                            ? "bg-[#022c75] text-white"
-                                            : "text-gray-600 hover:bg-gray-100"
+                                        ? "bg-[#022c75] text-white"
+                                        : "text-gray-600 hover:bg-gray-100"
                                         }`}
                                 >
-                                    All Machines
+                                    All Categories
                                 </button>
                             </li>
                             {categories.map((cat) => (
-                                <li key={cat.slug}>
+                                <li key={cat.slug} className="space-y-2">
                                     <button
                                         onClick={() => {
-                                            onCategoryChange(selectedCategory === cat.slug ? null : cat.slug); // Toggle off if clicked again? Or just switch. Let's switch.
+                                            onCategoryChange(selectedCategory === cat.slug ? null : cat.slug);
                                             setIsMobileOpen(false);
                                         }}
-                                        className={`w-full text-left px-4 py-2 rounded-lg transition-colors text-sm font-medium flex items-center justify-between group ${selectedCategory === cat.slug
-                                                ? "bg-[#022c75] text-white"
-                                                : "text-gray-600 hover:bg-gray-100"
+                                        className={`w-full text-left px-4 py-2 rounded-lg transition-colors text-sm font-bold flex items-center justify-between group ${selectedCategory === cat.slug
+                                            ? "bg-[#022c75] text-white shadow-md"
+                                            : "text-[#022c75] hover:bg-gray-100"
                                             }`}
                                     >
                                         {cat.name}
-                                        {selectedCategory === cat.slug && <ChevronRight size={16} />}
+                                        {selectedCategory === cat.slug && <ChevronDown size={14} className="opacity-70" />}
                                     </button>
+
+                                    {/* Sub-categories (Types) */}
+                                    {selectedCategory === cat.slug && types.length > 0 && (
+                                        <ul className="ml-4 space-y-1 animate-in slide-in-from-top-2 duration-300">
+                                            {types.map((type) => (
+                                                <li key={type.slug}>
+                                                    <button
+                                                        onClick={() => onTypeChange?.(type.slug)}
+                                                        className={`w-full text-left px-3 py-1.5 rounded-md text-xs font-semibold transition-all border-l-2 ${selectedTypes.includes(type.slug)
+                                                            ? "border-[#022c75] text-[#022c75] bg-blue-50"
+                                                            : "border-transparent text-gray-500 hover:text-[#022c75] hover:bg-gray-50 hover:border-gray-200"
+                                                            }`}
+                                                    >
+                                                        {type.name}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
                                 </li>
                             ))}
                         </ul>

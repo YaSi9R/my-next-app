@@ -114,7 +114,8 @@ const Navbar = () => {
                         },
                     ],
                 },
-                { name: "Fuji Parts", href: "/smt-parts/fuji" ,
+                {
+                    name: "Fuji Parts", href: "/smt-parts/fuji",
                     children: [
                         { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/fuji" },
                         { name: "Nozzles", href: "/smt-parts/nozzles/fuji" },
@@ -123,12 +124,13 @@ const Navbar = () => {
                         {
                             name: "Consumables",
                             href: "/smt-parts/consumables/fuji",
-                            
+
                         },
                     ],
                 },
-                { name: "Panasonic Parts", href: "/smt-parts/panasonic",
-                     children: [
+                {
+                    name: "Panasonic Parts", href: "/smt-parts/panasonic",
+                    children: [
                         { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/panasonic" },
                         { name: "Nozzles", href: "/smt-parts/nozzles/panasonic" },
                         { name: "Motors / Belts", href: "/smt-parts/motors-belts/panasonic" },
@@ -136,12 +138,13 @@ const Navbar = () => {
                         {
                             name: "Consumables",
                             href: "/smt-parts/consumables/panasonic",
-                            
+
                         },
                     ],
-                 },
-                { name: "Other Brands", href: "/smt-parts/other" ,
-                     children: [
+                },
+                {
+                    name: "Other Brands", href: "/smt-parts/other",
+                    children: [
                         { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/other" },
                         { name: "Nozzles", href: "/smt-parts/nozzles/other" },
                         { name: "Motors / Belts", href: "/smt-parts/motors-belts/other" },
@@ -149,7 +152,7 @@ const Navbar = () => {
                         {
                             name: "Consumables",
                             href: "/smt-parts/consumables/other",
-                            
+
                         },
                     ],
                 },
@@ -159,11 +162,50 @@ const Navbar = () => {
             name: "Board Handling",
             href: "/board-handling",
             children: [
-
-                { name: "Loaders", href: "/board-handling/loaders" },
-                { name: "Unloaders", href: "/board-handling/unloaders" },
-                { name: "Conveyors", href: "/board-handling/conveyors" },
-
+                {
+                    name: "Loading & Unloading Systems",
+                    href: "/board-handling/loading-unloading",
+                    children: [
+                        { name: "Magazine Loaders", href: "/board-handling/loading-unloading#loaders" },
+                        { name: "Vacuum Loaders", href: "/board-handling/loading-unloading#vacuum" },
+                        { name: "Destackers", href: "/board-handling/loading-unloading#destackers" },
+                        { name: "Magazine Unloaders", href: "/board-handling/loading-unloading#unloaders" },
+                        { name: "Stackers", href: "/board-handling/loading-unloading#stackers" },
+                        { name: "NG/OK Reject Conveyors", href: "/board-handling/loading-unloading#reject" },
+                    ],
+                },
+                {
+                    name: "Transfer & Handling Systems",
+                    href: "/board-handling/transfer-handling",
+                    children: [
+                        { name: "Link Conveyors", href: "/board-handling/transfer-handling#link" },
+                        { name: "Inspection Conveyors", href: "/board-handling/transfer-handling#inspection" },
+                        { name: "Turn Conveyors", href: "/board-handling/transfer-handling#turn" },
+                        { name: "Inverters / Flippers", href: "/board-handling/transfer-handling#inverters" },
+                        { name: "Turn Units", href: "/board-handling/transfer-handling#units" },
+                    ],
+                },
+                {
+                    name: "Buffering & Accumulation Systems",
+                    href: "/board-handling/buffering-accumulation",
+                    children: [
+                        { name: "FIFO Buffers", href: "/board-handling/buffering-accumulation#fifo" },
+                        { name: "LIFO Buffers", href: "/board-handling/buffering-accumulation#lifo" },
+                        { name: "Vertical Buffers", href: "/board-handling/buffering-accumulation#vertical" },
+                        { name: "Cooling Buffers", href: "/board-handling/buffering-accumulation#cooling" },
+                    ],
+                },
+                {
+                    name: "Consumables & Cleaning",
+                    href: "/board-handling/consumables",
+                    children: [
+                        { name: "Stencil Wiping Rolls", href: "/board-handling/consumables#rolls" },
+                        { name: "Cleaning Solvents", href: "/board-handling/consumables#solvents" },
+                        { name: "Nozzle Cleaning", href: "/board-handling/consumables#nozzle" },
+                        { name: "PCB Cleaning", href: "/board-handling/consumables#pcb" },
+                        { name: "Filters & Wipers", href: "/board-handling/consumables#filters" },
+                    ],
+                },
             ],
         },
         {

@@ -9,6 +9,8 @@ export interface Product {
     categorySlug: string; // New
     subcategory?: string;
     subcategorySlug?: string; // New
+    type?: string;
+    typeSlug?: string;
     condition: 'New' | 'Used' | 'Refurbished';
     yearOfManufacture?: number;
     image: string;
@@ -469,6 +471,198 @@ export const smtParts: Product[] = [
         features: [
             'Durable construction',
             'Precise pickup'
+        ],
+        availability: 'In Stock'
+    },
+
+    // Board Handling - Loading & Unloading
+    {
+        id: 'magazine-loader-xl',
+        name: 'High-Speed Magazine Loader',
+        brand: 'Tekmart',
+        brandSlug: 'tekmart',
+        category: 'Board Handling',
+        categorySlug: 'board-handling',
+        subcategory: 'Loading & Unloading Systems',
+        subcategorySlug: 'loading-unloading',
+        type: 'Magazine Loaders',
+        typeSlug: 'loaders',
+        condition: 'New',
+        image: '/demo-products/loader.jpg',
+        shortDescription: 'Automatic PCB loader for high-volume SMT lines',
+        longDescription: 'Our High-Speed Magazine Loader is designed for seamless entry automation. It handles various magazine sizes and ensures a steady flow of PCBs into the production line.',
+        specifications: [
+            { label: 'PCB Size', value: '50x50mm - 460x400mm' },
+            { label: 'Cycle Time', value: 'Approx. 10 seconds' },
+            { label: 'Magazine Capacity', value: 'Up to 50 PCBs' }
+        ],
+        features: [
+            'SMEMA compatible',
+            'Touchscreen PLC control',
+            'Adjustable width',
+            'Fail-safe sensors'
+        ],
+        availability: 'In Stock'
+    },
+    {
+        id: 'vacuum-loader-standard',
+        name: 'Vacuum Bare Board Loader',
+        brand: 'Tekmart',
+        brandSlug: 'tekmart',
+        category: 'Board Handling',
+        categorySlug: 'board-handling',
+        subcategory: 'Loading & Unloading Systems',
+        subcategorySlug: 'loading-unloading',
+        type: 'Vacuum Loaders',
+        typeSlug: 'vacuum',
+        condition: 'New',
+        image: '/demo-products/vacuum-loader.jpg',
+        shortDescription: 'Reliable vacuum-based loading for bare PCBs',
+        longDescription: 'Ideal for loading bare boards from a stack, this vacuum loader provides gentle and precise board handling to prevent scratching or damage.',
+        specifications: [
+            { label: 'Type', value: 'Vacuum Suction' },
+            { label: 'Stack Height', value: 'Max 300mm' }
+        ],
+        features: [
+            'No board damage',
+            'High reliability',
+            'Compact footprint'
+        ],
+        availability: 'In Stock'
+    },
+
+    // Board Handling - Transfer & Handling
+    {
+        id: 'link-conveyor-1m',
+        name: '1-Meter Link Conveyor',
+        brand: 'Tekmart',
+        brandSlug: 'tekmart',
+        category: 'Board Handling',
+        categorySlug: 'board-handling',
+        subcategory: 'Transfer & Handling Systems',
+        subcategorySlug: 'transfer-handling',
+        type: 'Link Conveyors',
+        typeSlug: 'link',
+        condition: 'New',
+        image: '/demo-products/conveyor.jpg',
+        shortDescription: 'Standard 1m link conveyor for PCB movement',
+        longDescription: 'High-quality link conveyor for smooth PCB transport between machines. Features ESD-safe belts and adjustable speed.',
+        specifications: [
+            { label: 'Length', value: '1000mm' },
+            { label: 'Width', value: '50-460mm' }
+        ],
+        features: [
+            'ESD safe',
+            'Adjustable speed',
+            'SMEMA interface'
+        ],
+        availability: 'In Stock'
+    },
+    {
+        id: 'turn-unit-90',
+        name: '90-Degree Turn Unit',
+        brand: 'Tekmart',
+        brandSlug: 'tekmart',
+        category: 'Board Handling',
+        categorySlug: 'board-handling',
+        subcategory: 'Transfer & Handling Systems',
+        subcategorySlug: 'transfer-handling',
+        type: 'Turn Units',
+        typeSlug: 'units',
+        condition: 'New',
+        image: '/demo-products/turn-unit.jpg',
+        shortDescription: 'Space-saving 90-degree PCB turn unit',
+        longDescription: 'Enables L-shaped or U-shaped line configurations by turning PCBs 90 degrees during transport.',
+        specifications: [
+            { label: 'Rotation', value: '90 Degrees' },
+            { label: 'Max PCB Size', value: '460 x 400mm' }
+        ],
+        features: [
+            'Compact design',
+            'Precision rotation',
+            'Easy integration'
+        ],
+        availability: '4-6 weeks'
+    },
+
+    // Board Handling - Buffering & Accumulation
+    {
+        id: 'fifo-buffer-20',
+        name: '20-Slot FIFO Buffer',
+        brand: 'Tekmart',
+        brandSlug: 'tekmart',
+        category: 'Board Handling',
+        categorySlug: 'board-handling',
+        subcategory: 'Buffering & Accumulation Systems',
+        subcategorySlug: 'buffering-accumulation',
+        type: 'FIFO Buffers',
+        typeSlug: 'fifo',
+        condition: 'New',
+        image: '/demo-products/buffer.jpg',
+        shortDescription: 'First-In-First-Out buffer for line balancing',
+        longDescription: 'Helps balance production line flow by temporarily storing PCBs between processes. Essential for managing machine downtime or speed variations.',
+        specifications: [
+            { label: 'Capacity', value: '20 PCBs' },
+            { label: 'Mode', value: 'FIFO / Pass-through' }
+        ],
+        features: [
+            'Smart line balancing',
+            'Gentle handling',
+            'Status indicators'
+        ],
+        availability: 'In Stock'
+    },
+
+    // Consumables (Nested under Board Handling)
+    {
+        id: 'stencil-wiping-roll',
+        name: 'Premium Stencil Wiping Rolls',
+        brand: 'Tekmart-Consumables',
+        brandSlug: 'consumables',
+        category: 'Board Handling',
+        categorySlug: 'board-handling',
+        subcategory: 'Consumables & Cleaning Materials',
+        subcategorySlug: 'consumables',
+        type: 'Stencil Wiping Rolls',
+        typeSlug: 'rolls',
+        condition: 'New',
+        image: '/demo-products/wiping-roll.jpg',
+        shortDescription: 'Lint-free stencil wiping rolls for all printer brands',
+        longDescription: 'High-absorbency, lint-free wiping rolls compatible with DEK, MPM, and Yamaha printers. Ensures clean apertures and high print quality.',
+        specifications: [
+            { label: 'Material', value: 'Non-woven fabric' },
+            { label: 'Compatibility', value: 'Universal' }
+        ],
+        features: [
+            'Low linting',
+            'Strong durability',
+            'Excellent solvent absorption'
+        ],
+        availability: 'In Stock'
+    },
+    {
+        id: 'cleaning-solvent-s1',
+        name: 'SMT Stencil Cleaning Solvent',
+        brand: 'Tekmart-Consumables',
+        brandSlug: 'consumables',
+        category: 'Board Handling',
+        categorySlug: 'board-handling',
+        subcategory: 'Consumables & Cleaning Materials',
+        subcategorySlug: 'consumables',
+        type: 'Cleaning Solvents',
+        typeSlug: 'solvents',
+        condition: 'New',
+        image: '/demo-products/cleaning-solvent.jpg',
+        shortDescription: 'Fast-evaporating stencil cleaning solvent',
+        longDescription: 'Specifically formulated for removing solder paste and SMT adhesives from stencils without damaging the mesh or frames.',
+        specifications: [
+            { label: 'Container Size', value: '5 Liters' },
+            { label: 'Flash Point', value: '>60°C' }
+        ],
+        features: [
+            'Fast evaporating',
+            'Eco-friendly',
+            'Non-toxic'
         ],
         availability: 'In Stock'
     }
