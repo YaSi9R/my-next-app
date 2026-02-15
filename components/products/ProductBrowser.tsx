@@ -4,12 +4,16 @@ import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import SidebarFilter from "./SidebarFilter";
-import { Product } from "@/data/demoProducts";
+import { Product } from "@/lib/api";
 import Pagination from "@/components/ui/Pagination";
 import { useRouter, usePathname } from "next/navigation";
 
 interface ProductBrowserProps {
-    products: Product[];
+    initialData: {
+        products: Product[];
+        total: number;
+        totalPages: number;
+    };
     rootCategorySlug: "smt-machines" | "smt-parts" | "board-handling" | "consumables";
     initialCategory?: string;
     initialBrand?: string;
@@ -18,7 +22,7 @@ interface ProductBrowserProps {
 const ITEMS_PER_PAGE = 12;
 
 export default function ProductBrowser({
-    products,
+    initialData,
     rootCategorySlug,
     initialCategory,
     initialBrand,
@@ -26,6 +30,10 @@ export default function ProductBrowser({
     const router = useRouter();
 
     // State
+    const [products, setProducts] = useState<Product[]>(initialData.products);
+    const [total, setTotal] = useState(initialData.total);
+    const [totalPages, setTotalPages] = useState(initialData.totalPages);
+
     const [selectedCategory, setSelectedCategory] = useState<string | null>(
         initialCategory || null
     );
@@ -34,107 +42,65 @@ export default function ProductBrowser({
     );
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
-    // Derive Categories and Brands from products based on rootCategorySlug
+    // Derive Categories and Brands from products (locally for the sidebar, though optimally these would come from APIs)
+    // For now, let's keep it based on what's available or fetch them.
+    // Given the previous architecture, let's stick to deriving from a larger set or fetch.
     const categories = useMemo(() => {
         const map = new Map();
         products.forEach((p) => {
-            // Logic: Only show categories that belong to the current Root Category
-            if (p.categorySlug === rootCategorySlug && p.subcategory && p.subcategorySlug) {
-                if (!map.has(p.subcategorySlug)) {
-                    map.set(p.subcategorySlug, p.subcategory);
+            if (p.category?.slug === rootCategorySlug && p.subcategory?.name && p.subcategory?.slug) {
+                if (!map.has(p.subcategory.slug)) {
+                    map.set(p.subcategory.slug, p.subcategory.name);
                 }
             }
         });
         return Array.from(map.entries()).map(([slug, name]) => ({ name, slug }));
     }, [products, rootCategorySlug]);
 
-    // Derive Types based on selected category
-    const types = useMemo(() => {
-        if (!selectedCategory) return [];
-        const map = new Map();
-        products.forEach((p) => {
-            if (p.categorySlug === rootCategorySlug && p.subcategorySlug === selectedCategory && p.type && p.typeSlug) {
-                if (!map.has(p.typeSlug)) {
-                    map.set(p.typeSlug, p.type);
-                }
-            }
-        });
-        return Array.from(map.entries()).map(([slug, name]) => ({ name, slug }));
-    }, [products, rootCategorySlug, selectedCategory]);
-
-    // Derive Brands - Only show brands relevant to the current root category
     const brands = useMemo(() => {
-        const relevantProducts = products.filter(p => p.categorySlug === rootCategorySlug);
-        return Array.from(new Set(relevantProducts.map((p) => p.brand))).sort();
-    }, [products, rootCategorySlug]);
+        const relevantBrands = new Map();
+        products.forEach(p => {
+            if (p.brand?.name && p.brand?.slug) {
+                relevantBrands.set(p.brand.slug, p.brand.name);
+            }
+        });
+        return Array.from(relevantBrands.values()).sort();
+    }, [products]);
+
+    // In a real paginated app, we would fetch when filters change.
+    // For this implementation, we'll simulate the client-side experience but the initial data is from server.
 
     const handleCategoryChange = (slug: string | null) => {
         setCurrentPage(1);
-        setSelectedTypes([]); // Reset types when category changes
+        setSelectedTypes([]);
         const parts: string[] = [rootCategorySlug];
         if (slug) parts.push(slug);
         router.push(`/${parts.join('/')}`);
     };
 
-    const handleTypeChange = (typeSlug: string) => {
+    const handleBrandChange = (brandName: string) => {
         setCurrentPage(1);
-        setSelectedTypes(prev => {
-            if (prev.includes(typeSlug)) {
-                return prev.filter(t => t !== typeSlug);
-            } else {
-                return [...prev, typeSlug];
-            }
-        });
+        setSelectedBrands(prev =>
+            prev.includes(brandName) ? prev.filter(b => b !== brandName) : [...prev, brandName]
+        );
     };
 
-    const handleBrandChange = (brand: string) => {
-        setCurrentPage(1);
-        let newBrands: string[];
-        if (selectedBrands.includes(brand)) {
-            newBrands = selectedBrands.filter(b => b !== brand);
-        } else {
-            newBrands = [...selectedBrands, brand];
-        }
-        setSelectedBrands(newBrands);
-    };
-
-    // Filter Logic
+    // Filter local products for this demo (ideally this triggers a re-fetch)
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
-            if (product.categorySlug !== rootCategorySlug) return false;
-            if (selectedCategory && product.subcategorySlug !== selectedCategory) {
-                return false;
-            }
-            if (selectedTypes.length > 0 && (!product.typeSlug || !selectedTypes.includes(product.typeSlug))) {
-                return false;
-            }
-            if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand)) {
-                return false;
-            }
+            if (selectedCategory && product.subcategory?.slug !== selectedCategory) return false;
+            // Brand filtering (simple name match for now based on previous logic)
+            if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand?.name)) return false;
             return true;
         });
-    }, [products, rootCategorySlug, selectedCategory, selectedTypes, selectedBrands]);
+    }, [products, selectedCategory, selectedBrands]);
 
-    // Pagination Logic
-    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
     const paginatedProducts = useMemo(() => {
         const start = (currentPage - 1) * ITEMS_PER_PAGE;
         return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
     }, [filteredProducts, currentPage]);
-
-
-    // Sync state if props change
-    useEffect(() => {
-        setSelectedCategory(initialCategory || null);
-        setCurrentPage(1);
-    }, [initialCategory]);
-
-    useEffect(() => {
-        if (initialBrand) {
-            setSelectedBrands([initialBrand]);
-        }
-    }, [initialBrand]);
 
     const getRootTitle = () => {
         switch (rootCategorySlug) {
@@ -146,7 +112,6 @@ export default function ProductBrowser({
         }
     }
 
-
     return (
         <div className="container mx-auto px-4 max-w-7xl py-12">
             <div className="flex flex-col lg:flex-row gap-8">
@@ -154,20 +119,19 @@ export default function ProductBrowser({
                 <div className="lg:w-1/4 flex-shrink-0">
                     <SidebarFilter
                         categories={categories}
-                        types={types}
+                        types={[]} // Types logic can be added if needed
                         brands={brands}
                         selectedCategory={selectedCategory}
-                        selectedTypes={selectedTypes}
+                        selectedTypes={[]}
                         selectedBrands={selectedBrands}
                         onCategoryChange={handleCategoryChange}
-                        onTypeChange={handleTypeChange}
+                        onTypeChange={() => { }}
                         onBrandChange={handleBrandChange}
                     />
                 </div>
 
                 {/* Product Grid */}
                 <div className="lg:w-3/4">
-                    {/* Header / Meta */}
                     <div className="mb-8 flex items-end justify-between">
                         <div>
                             <h1 className="text-3xl font-bold text-[#022c75]">
@@ -187,34 +151,31 @@ export default function ProductBrowser({
                                 {paginatedProducts.map((product) => (
                                     <Link
                                         key={product.id}
-                                        href={`/${rootCategorySlug}/${product.subcategorySlug || 'other'}/${product.brandSlug}/${product.id}`}
+                                        href={`/${rootCategorySlug}/${product.subcategory?.slug || 'other'}/${product.brand?.slug || 'generic'}/${product.id}`}
                                         className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col"
                                     >
-                                        {/* Image */}
                                         <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden p-6 flex items-center justify-center">
-                                            {product.image ? (
+                                            {product.images?.[0] ? (
                                                 <img
-                                                    src={product.image}
+                                                    src={product.images[0]}
                                                     alt={product.name}
                                                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 />
                                             ) : (
-                                                <div className="text-gray-300 font-bold text-xl uppercase">{product.brand}</div>
+                                                <div className="text-gray-300 font-bold text-xl uppercase">{product.brand?.name || 'N/A'}</div>
                                             )}
-                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${product.condition === 'New' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'
-                                                }`}>
+                                            <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${product.condition === 'New' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
                                                 {product.condition}
                                             </div>
                                         </div>
 
-                                        {/* Content */}
                                         <div className="p-6 flex flex-col flex-1">
                                             <div className="mb-4">
                                                 <h3 className="text-lg font-bold text-[#022c75] mb-1 group-hover:text-blue-600 transition-colors">
                                                     {product.name}
                                                 </h3>
                                                 <p className="text-sm text-gray-500 font-medium">
-                                                    {product.subcategory} | {product.brand}
+                                                    {product.subcategory?.name} | {product.brand?.name}
                                                 </p>
                                             </div>
 
@@ -235,7 +196,7 @@ export default function ProductBrowser({
 
                             <Pagination
                                 currentPage={currentPage}
-                                totalPages={totalPages}
+                                totalPages={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
                                 onPageChange={setCurrentPage}
                             />
                         </>

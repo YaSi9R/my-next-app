@@ -1,20 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, Phone, Mail } from 'lucide-react';
-import { Product } from '@/data/demoProducts';
+import { Product } from '@/lib/api';
 
 interface Props {
     product: Product;
 }
 
 export default function ProductDetail({ product }: Props) {
-    const backLink = product.brandSlug
-        ? `/${product.categorySlug}/${product.subcategorySlug}/${product.brandSlug}`
-        : `/${product.categorySlug}/${product.subcategorySlug}`;
+    const backLink = product.brand?.slug
+        ? `/${product.category?.slug}/${product.subcategory?.slug}/${product.brand.slug}`
+        : `/${product.category?.slug}/${product.subcategory?.slug}`;
 
-    const backLabel = product.brandSlug
-        ? `Back to ${product.brand} Machines`
-        : `Back to ${product.subcategory}`;
+    const backLabel = product.brand?.name
+        ? `Back to ${product.brand.name} Machines`
+        : `Back to ${product.subcategory?.name}`;
 
     return (
         <div className="min-h-screen bg-[#e6e6e6] py-12">
@@ -22,7 +22,7 @@ export default function ProductDetail({ product }: Props) {
                 {/* Back Button */}
                 <Link
                     href={backLink}
-                    className="inline-flex items-center gap-2 text-[#e6e6e6] hover:gap-3 transition-all mb-6"
+                    className="inline-flex items-center gap-2 text-[#022c75] hover:gap-3 transition-all mb-6 font-bold"
                 >
                     <ArrowLeft className="w-4 h-4" />
                     {backLabel}
@@ -31,23 +31,22 @@ export default function ProductDetail({ product }: Props) {
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Product Image */}
                     <div className="bg-white rounded-2xl p-8 shadow-lg">
-                        <div className="aspect-square bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl flex items-center justify-center mb-6 overflow-hidden relative">
-                            {/* Use product image if available, else placeholder text */}
-                            {product.image ? (
-                                <img src={product.image} alt={product.name} className="w-full h-full object-contain" />
+                        <div className=" bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl flex items-center justify-center mb-6 overflow-hidden relative border border-gray-100">
+                            {product.images?.[0] ? (
+                                <img src={product.images[0]} alt={product.name} className="w-full h-full object-contain" />
                             ) : (
-                                <div className="text-8xl font-bold text-gray-300">{product.name}</div>
+                                <div className="text-4xl font-bold text-gray-300 uppercase">{product.brand?.name || product.name}</div>
                             )}
                         </div>
 
-                        {/* Thumbnail Gallery (placeholder) */}
+                        {/* Thumbnail Gallery (real) */}
                         <div className="grid grid-cols-4 gap-4">
-                            {[1, 2, 3, 4].map((i) => (
+                            {product.images?.map((img, i) => (
                                 <div
                                     key={i}
-                                    className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-xs"
+                                    className="aspect-square bg-white border border-gray-100 rounded-lg flex items-center justify-center overflow-hidden hover:border-blue-400 transition-colors cursor-pointer"
                                 >
-                                    View {i}
+                                    <img src={img} className="w-full h-full object-contain p-2" />
                                 </div>
                             ))}
                         </div>
@@ -60,9 +59,9 @@ export default function ProductDetail({ product }: Props) {
                             <div className="flex items-start justify-between mb-6">
                                 <div>
                                     <h1 className="text-4xl font-bold text-[#022c75] mb-2 leading-tight">
-                                        {product.brand} {product.name}
+                                        {product.brand?.name} {product.name}
                                     </h1>
-                                    <p className="text-[#022c75] font-bold uppercase tracking-widest text-xs">{product.subcategory}</p>
+                                    <p className="text-[#022c75] font-bold uppercase tracking-widest text-xs">{product.subcategory?.name}</p>
                                 </div>
                                 <span
                                     className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest ${product.condition === 'New'
@@ -76,11 +75,7 @@ export default function ProductDetail({ product }: Props) {
                                 </span>
                             </div>
 
-                            {product.yearOfManufacture && (
-                                <div className="inline-block bg-[#022c75] px-3 py-1 rounded-lg text-xs font-bold text-[#e6e6e6] mb-6">
-                                    Year of Manufacture: {product.yearOfManufacture}
-                                </div>
-                            )}
+                            {/* Optional: Add year if available in data but it's not in current schema. Keeping it dormant or using createdAt */}
 
                             <div className="prose prose-blue max-w-none mb-8">
                                 <h3 className="text-lg font-bold text-[#022c75] mb-2">Description</h3>
@@ -95,7 +90,7 @@ export default function ProductDetail({ product }: Props) {
                                     href="/quote"
                                     className="block w-full bg-[#022c75] text-white text-center py-4 rounded-xl font-bold hover:bg-[#033a95] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 capitalize tracking-wide"
                                 >
-                                    Request  Quote
+                                    Request Quote
                                 </Link>
                                 <p className="text-center text-[10px] text-[#022c75] mt-4 font-semibold uppercase tracking-[0.2em]">
                                     Direct inquiry to administrator
@@ -127,7 +122,7 @@ export default function ProductDetail({ product }: Props) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
-                                {product.specifications.map((spec, idx) => (
+                                {Array.isArray(product.specifications) && product.specifications.map((spec: any, idx) => (
                                     <tr key={idx} className="hover:bg-blue-50/30 transition-colors">
                                         <td className="px-8 py-5 text-sm font-bold text-[#022c75] bg-gray-50/50">{spec.label}</td>
                                         <td className="px-8 py-5 text-sm text-[#022c75] font-medium">{spec.value}</td>
@@ -142,10 +137,10 @@ export default function ProductDetail({ product }: Props) {
                 <div className="mt-12 bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
                     <h2 className="text-2xl font-bold text-[#022c75] mb-8 border-l-4 border-[#022c75] pl-4">Key Performance Features</h2>
                     <div className="grid md:grid-cols-2 gap-x-12 gap-y-6">
-                        {product.features.map((feature, idx) => (
+                        {product.features?.map((feature, idx) => (
                             <div key={idx} className="flex items-start gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-colors border border-transparent hover:border-gray-100">
-                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-50 flex items-center justify-center mt-0.5">
-                                    <Check className="w-4 h-4 text-[#022c75] bg-[#e6e6e6]" />
+                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-50 flex items-center justify-center mt-0.5">
+                                    <Check className="w-4 h-4 text-[#022c75]" />
                                 </div>
                                 <p className="text-sm text-[#022c75] font-medium leading-relaxed">{feature}</p>
                             </div>

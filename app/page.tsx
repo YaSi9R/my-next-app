@@ -13,14 +13,18 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 export default function Home() {
-  const fetch=async()=>{
-    const data=await fetch("/api/products");
-    const dds=await data.json();
-    console.log("rspose",dds)
-  }
-  useEffect(()=>{
-    fetch();
-  },[])
+  const getData = async () => {
+    try {
+      const data = await fetch("/api/products");
+      const dds = await data.json();
+      console.log("response", dds);
+    } catch (error) {
+      console.error("Error fetching homepage data:", error);
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="min-h-screen bg-[#e6e6e6]">
       <HeroSlider />
@@ -30,35 +34,35 @@ export default function Home() {
 
 
       <FeaturesSection />
-      
+
       <ProductsSection />
       <AboutSection />
-     
+
       <BrandSlider />
       <ServicesSection />
- {/* CTA Banner */}
-            <section className="bg-[#e6e6e6] py-16">
-                <div className="container mx-auto px-4 max-w-7xl">
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-                        <div className="text-[#022c75] text-center md:text-left">
-                            <h2 className="text-3xl md:text-5xl font-bold mb-4">
-                                Ready to Boost Your Business with TekMart?
-                            </h2>
-                            <p className="text-[#022c75]/80 text-lg">
-                                Let TekMart's expertise and experience propel your brand to greater heights. Book a consultation today to find out how.
-                            </p>
-                        </div>
-                    </div>
+      {/* CTA Banner */}
+      <section className="bg-[#e6e6e6] py-16">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+            <div className="text-[#022c75] text-center md:text-left">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                Ready to Boost Your Business with TekMart?
+              </h2>
+              <p className="text-[#022c75]/80 text-lg">
+                Let TekMart's expertise and experience propel your brand to greater heights. Book a consultation today to find out how.
+              </p>
+            </div>
+          </div>
 
-                </div>
+        </div>
 
-            </section>
-            <div className="h-[80px] bg-[#022c75]"></div>
+      </section>
+      <div className="h-[80px] bg-[#022c75]"></div>
 
 
       <ContactSection />
 
-     
+
       <main className="container mx-auto py-16 px-4">
 
       </main>

@@ -16,7 +16,7 @@ export default async function BoardHandlingPage() {
                     </p>
                 </div>
             </div>
-            <ProductBrowser products={products} rootCategorySlug="board-handling" />
+            <ProductBrowser initialData={products || { products: [], total: 0, totalPages: 0 }} rootCategorySlug="board-handling" />
         </div>
     );
 }

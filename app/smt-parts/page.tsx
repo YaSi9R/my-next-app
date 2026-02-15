@@ -1,9 +1,9 @@
 import React from 'react';
 import ProductBrowser from '@/components/products/ProductBrowser';
-import { getAllProducts } from '@/lib/api';
+import { getProducts } from '@/lib/services/product-service';
 
 export default async function SmtPartsPage() {
-    const products = await getAllProducts();
+    const products = await getProducts({ categorySlug: 'smt-parts' });
 
     return (
         <div className="min-h-screen bg-[#e6e6e6]">
@@ -13,7 +13,7 @@ export default async function SmtPartsPage() {
                     High-quality spare parts for all your SMT equipment needs. From feeders to nozzles, we have it all.
                 </p>
             </div>
-            <ProductBrowser products={products} rootCategorySlug="smt-parts" />
+            <ProductBrowser initialData={JSON.parse(JSON.stringify(products)) || { products: [], total: 0, totalPages: 0 }} rootCategorySlug="smt-parts" />
         </div>
     );
 }

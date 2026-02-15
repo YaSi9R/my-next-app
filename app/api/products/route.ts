@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import slugify from "slugify";
+import { getProducts } from "@/lib/services/product-service";
 
 export async function POST(req: Request) {
   try {
@@ -64,29 +65,28 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
 
     const page = Number(searchParams.get("page")) || 1;
-    const limit = Number(searchParams.get("limit")) || 10;
-    const skip = (page - 1) * limit;
+    const limit = Number(searchParams.get("limit")) || 50;
+    const categorySlug = searchParams.get("categorySlug") || undefined;
+    const subcategorySlug = searchParams.get("subcategorySlug") || undefined;
+    const brandSlug = searchParams.get("brandSlug") || undefined;
 
-    const products = await prisma.product.findMany({
-      skip,
-      take: limit,
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        brand: true,
-        category: true,
-        subcategory: true,
-      },
+    const data = await getProducts({
+      categorySlug,
+      subcategorySlug,
+      brandSlug,
+      page,
+      limit,
     });
 
-    return NextResponse.json({
-      products
-    });
-  } catch (error) {
-    console.error("Get Products Error:", error);
+    return NextResponse.json(data);
+  } catch (error: any) {
+    console.error("Get Products Route Error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      {
+        error: "Internal server error",
+        message: error.message,
+        path: req.url
+      },
       { status: 500 }
     );
   }

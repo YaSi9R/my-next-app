@@ -23,40 +23,15 @@ export default function CategoryManagementPage() {
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
 
   const [categoryName, setCategoryName] = useState("");
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+
   const [subcategoryName, setSubcategoryName] = useState("");
+  const [editingSubcategoryId, setEditingSubcategoryId] = useState<string | null>(null);
 
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
-    // DELETE CATEGORY
-const handleDeleteCategory = async (id: string) => {
-  if (!confirm("Delete this category? This may affect subcategories.")) return;
-
-  await fetch(`/api/categories/${id}`, {
-    method: "DELETE",
-  });
-
-  // Reset selection if deleted
-  if (selectedCategoryId === id) {
-    setSelectedCategoryId("");
-  }
-
-  fetchData();
-};
-
-// DELETE SUBCATEGORY
-const handleDeleteSubcategory = async (id: string) => {
-  if (!confirm("Delete this subcategory?")) return;
-
-  await fetch(`/api/subcategories/${id}`, {
-    method: "DELETE",
-  });
-
-  fetchData();
-};
-
   const fetchData = async () => {
     setLoadingData(true);
-
     const [catRes, subRes] = await Promise.all([
       fetch("/api/categories"),
       fetch("/api/subcategories"),
@@ -64,7 +39,6 @@ const handleDeleteSubcategory = async (id: string) => {
 
     setCategories(await catRes.json());
     setSubcategories(await subRes.json());
-
     setLoadingData(false);
   };
 
@@ -72,49 +46,77 @@ const handleDeleteSubcategory = async (id: string) => {
     fetchData();
   }, []);
 
-  // CATEGORY CREATE
+  // CATEGORY ACTIONS
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
+    const method = editingCategoryId ? "PUT" : "POST";
+    const url = editingCategoryId ? `/api/categories/${editingCategoryId}` : "/api/categories";
 
-    await fetch("/api/categories", {
-      method: "POST",
+    await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: categoryName,
-        slug: slugify(categoryName, { lower: true, strict: true }),
       }),
     });
 
     setCategoryName("");
+    setEditingCategoryId(null);
     fetchData();
   };
 
-  // SUBCATEGORY CREATE
+  const handleEditCategory = (cat: Category) => {
+    setCategoryName(cat.name);
+    setEditingCategoryId(cat.id);
+  };
+
+  const handleDeleteCategory = async (id: string) => {
+    if (!confirm("Delete this category? This will also delete related subcategories.")) return;
+
+    await fetch(`/api/categories/${id}`, { method: "DELETE" });
+    if (selectedCategoryId === id) setSelectedCategoryId("");
+    fetchData();
+  };
+
+  // SUBCATEGORY ACTIONS
   const handleAddSubcategory = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!selectedCategoryId) return;
 
-    await fetch("/api/subcategories", {
-      method: "POST",
+    const method = editingSubcategoryId ? "PUT" : "POST";
+    const url = editingSubcategoryId ? `/api/subcategories/${editingSubcategoryId}` : "/api/subcategories";
+
+    await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: subcategoryName,
-        slug: slugify(subcategoryName, { lower: true, strict: true }),
         categoryId: selectedCategoryId,
       }),
     });
 
     setSubcategoryName("");
+    setEditingSubcategoryId(null);
+    fetchData();
+  };
+
+  const handleEditSubcategory = (sub: Subcategory) => {
+    setSubcategoryName(sub.name);
+    setEditingSubcategoryId(sub.id);
+  };
+
+  const handleDeleteSubcategory = async (id: string) => {
+    if (!confirm("Delete this subcategory?")) return;
+
+    await fetch(`/api/subcategories/${id}`, { method: "DELETE" });
     fetchData();
   };
 
   const filteredSubcategories = subcategories.filter(
     (sub) => sub.categoryId === selectedCategoryId,
   );
-  if (loadingData) {
-    return <ShimmerSection />;
-  }
+
+  if (loadingData) return <ShimmerSection />;
 
   return (
     <div className="space-y-10">
@@ -138,35 +140,58 @@ const handleDeleteSubcategory = async (id: string) => {
             type="submit"
             className="bg-[#022c75] text-white px-6 py-2 rounded-lg hover:bg-[#01306b]"
           >
-            Add
+            {editingCategoryId ? "Update" : "Add"}
           </button>
+
+          {editingCategoryId && (
+            <button
+              type="button"
+              onClick={() => { setEditingCategoryId(null); setCategoryName(""); }}
+              className="px-4 py-2 border rounded-lg"
+            >
+              Cancel
+            </button>
+          )}
         </form>
 
-        <ul className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {categories.map((cat) => (
-            <li
+            <div
               key={cat.id}
               onClick={() => setSelectedCategoryId(cat.id)}
-              className={`cursor-pointer p-3 rounded-lg border flex justify-between ${
-                selectedCategoryId === cat.id ? "bg-[#022c75] text-white" : ""
-              }`}
+              className={`cursor-pointer p-4 rounded-xl border-2 transition-all flex flex-col justify-between ${selectedCategoryId === cat.id ? "border-[#022c75] bg-blue-50" : "border-gray-100 hover:border-gray-300"
+                }`}
             >
-              {cat.name}
-               <button
-        onClick={() => handleDeleteCategory(cat.id)}
-        className="text-red-500 text-sm hover:text-red-700"
-      >
-        Delete
-      </button>
-            </li>
-            
+              <div className="flex justify-between items-start mb-4">
+                <span className="font-bold text-lg">{cat.name}</span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleEditCategory(cat); }}
+                    className="text-blue-600 hover:text-blue-800 text-sm"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleDeleteCategory(cat.id); }}
+                    className="text-red-500 hover:text-red-700 text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold">
+                {subcategories.filter(s => s.categoryId === cat.id).length} Subcategories
+              </span>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* SUBCATEGORY SECTION */}
       <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
-        <h2 className="text-xl font-semibold mb-4">Subcategories</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          Subcategories {selectedCategoryId && `for ${categories.find(c => c.id === selectedCategoryId)?.name}`}
+        </h2>
 
         {selectedCategoryId ? (
           <>
@@ -184,34 +209,57 @@ const handleDeleteSubcategory = async (id: string) => {
                 type="submit"
                 className="bg-[#022c75] text-white px-6 py-2 rounded-lg hover:bg-[#01306b]"
               >
-                Add
+                {editingSubcategoryId ? "Update" : "Add"}
               </button>
+
+              {editingSubcategoryId && (
+                <button
+                  type="button"
+                  onClick={() => { setEditingSubcategoryId(null); setSubcategoryName(""); }}
+                  className="px-4 py-2 border rounded-lg"
+                >
+                  Cancel
+                </button>
+              )}
             </form>
 
-            <ul className="space-y-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {filteredSubcategories.map((sub) => (
-                <li key={sub.id} className="border p-3 rounded-lg flex justify-between">
-                  {sub.name}
-                  <button
-        onClick={() => handleDeleteSubcategory(sub.id)}
-        className="text-red-500 text-sm hover:text-red-700"
-      >
-        Delete
-      </button>
-                </li>
+                <div key={sub.id} className="border border-gray-100 p-3 rounded-lg flex justify-between items-center group hover:border-gray-300 transition-colors">
+                  <span className="font-medium">{sub.name}</span>
+                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() => handleEditSubcategory(sub)}
+                      className="text-blue-600 hover:text-blue-800 text-sm"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteSubcategory(sub.id)}
+                      className="text-red-500 hover:text-red-700 text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               ))}
 
               {filteredSubcategories.length === 0 && (
-                <p className="text-gray-500">No subcategories</p>
+                <p className="text-gray-500 col-span-full py-4 text-center border-2 border-dashed rounded-xl">
+                  No subcategories in this category
+                </p>
               )}
-            </ul>
+            </div>
           </>
         ) : (
-          <p className="text-gray-500">
-            Select a category to manage subcategories
-          </p>
+          <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+            <p className="text-gray-500 font-medium">
+              Select a category above to manage its subcategories
+            </p>
+          </div>
         )}
       </div>
     </div>
   );
 }
+

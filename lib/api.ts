@@ -1,121 +1,109 @@
-import { demoProducts, smtParts, smtLinePackages, Product } from '@/data/demoProducts';
+// API Configuration
+const API_BASE_URL = '';
 
-// Simulate API delay for realism (optional, set to 0 for instant)
-const SIMULATED_DELAY = 100;
+export type Product = {
+    id: string;
+    name: string;
+    slug: string;
+    condition: string;
+    availability: string;
+    shortDescription: string;
+    longDescription: string;
+    images: string[];
+    specifications: { label: string; value: string }[];
+    features: string[];
+    brand: { name: string; slug: string };
+    category: { name: string; slug: string };
+    subcategory: { name: string; slug: string };
+    createdAt: string;
+    updatedAt: string;
+};
 
-// API Configuration (Placeholder)
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
-
-// Combine all products for queries
-const allData = [...demoProducts, ...smtParts];
-
-export async function getAllProducts(): Promise<Product[]> {
-    // Database Integration Placeholder:
-    // try {
-    //     const res = await fetch(`${API_BASE_URL}/products`);
-    //     if (!res.ok) throw new Error('Failed to fetch products');
-    //     return await res.json();
-    // } catch (error) {
-    //     console.error('Error fetching products:', error);
-    //     return [];
-    // }
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return allData;
+export async function getAllProducts(page = 1, limit = 50): Promise<{ products: Product[], total: number, totalPages: number }> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/products?page=${page}&limit=${limit}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to fetch products');
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return { products: [], total: 0, totalPages: 0 };
+    }
 }
 
-export async function getProductsByCategory(category: string): Promise<Product[]> {
-    // Database Integration Placeholder:
-    // const res = await fetch(`${API_BASE_URL}/products?category=${category}`);
-    // return await res.json();
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return allData.filter(p => p.category === category);
+export async function getProductsByCategorySlug(categorySlug: string, page = 1, limit = 50): Promise<{ products: Product[], total: number, totalPages: number }> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/products?categorySlug=${categorySlug}&page=${page}&limit=${limit}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to fetch products by category');
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching products by category:', error);
+        return { products: [], total: 0, totalPages: 0 };
+    }
 }
 
-export async function getProductsByCategorySlug(categorySlug: string): Promise<Product[]> {
-    // Database Integration Placeholder:
-    // const res = await fetch(`${API_BASE_URL}/products?categorySlug=${categorySlug}`);
-    // return await res.json();
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return allData.filter(p => p.categorySlug === categorySlug);
+export async function getProductsBySubcategorySlug(subcategorySlug: string, page = 1, limit = 10): Promise<{ products: Product[], total: number, totalPages: number }> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/products?subcategorySlug=${subcategorySlug}&page=${page}&limit=${limit}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to fetch products by subcategory');
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching products by subcategory:', error);
+        return { products: [], total: 0, totalPages: 0 };
+    }
 }
 
-export async function getProductsBySubcategory(subcategory: string): Promise<Product[]> {
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return allData.filter(p => p.subcategory === subcategory);
-}
-
-export async function getProductsBySubcategorySlug(subcategorySlug: string): Promise<Product[]> {
-    // Database Integration Placeholder:
-    // const res = await fetch(`${API_BASE_URL}/products?subcategorySlug=${subcategorySlug}`);
-    // return await res.json();
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return allData.filter(p => p.subcategorySlug === subcategorySlug);
-}
-
-export async function getProductsByBrandSlug(brandSlug: string): Promise<Product[]> {
-    // Database Integration Placeholder:
-    // const res = await fetch(`${API_BASE_URL}/products?brandSlug=${brandSlug}`);
-    // return await res.json();
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return allData.filter(p => p.brandSlug === brandSlug);
+export async function getProductsByBrandSlug(brandSlug: string, page = 1, limit = 10): Promise<{ products: Product[], total: number, totalPages: number }> {
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/products?brandSlug=${brandSlug}&page=${page}&limit=${limit}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to fetch products by brand');
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching products by brand:', error);
+        return { products: [], total: 0, totalPages: 0 };
+    }
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
-    // Database Integration Placeholder:
-    // const res = await fetch(`${API_BASE_URL}/products/${id}`);
-    // if (!res.ok) return undefined;
-    // return await res.json();
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    const product = allData.find(p => p.id === id);
-    if (product) return product;
-
-    return undefined;
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/products/${id}`, { cache: 'no-store' });
+        if (!res.ok) return undefined;
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching product by id:', error);
+        return undefined;
+    }
 }
 
-// Helper to get by multiple criteria (simulate database query)
-export async function getProductsByFilters(filters: { categorySlug?: string; subcategorySlug?: string; brandSlug?: string }): Promise<Product[]> {
-    // Database Integration Placeholder:
-    // const queryParams = new URLSearchParams(filters as any).toString();
-    // const res = await fetch(`${API_BASE_URL}/products?${queryParams}`);
-    // return await res.json();
+export async function getProductsByFilters(filters: { categorySlug?: string; subcategorySlug?: string; brandSlug?: string; page?: number; limit?: number }): Promise<{ products: Product[], total: number, totalPages: number }> {
+    try {
+        const queryParams = new URLSearchParams();
+        if (filters.categorySlug) queryParams.append('categorySlug', filters.categorySlug);
+        if (filters.subcategorySlug) queryParams.append('subcategorySlug', filters.subcategorySlug);
+        if (filters.brandSlug) queryParams.append('brandSlug', filters.brandSlug);
+        if (filters.page) queryParams.append('page', filters.page.toString());
+        if (filters.limit) queryParams.append('limit', filters.limit.toString());
 
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return allData.filter(p => {
-        if (filters.categorySlug && p.categorySlug !== filters.categorySlug) return false;
-        if (filters.subcategorySlug && p.subcategorySlug !== filters.subcategorySlug) return false;
-        if (filters.brandSlug && p.brandSlug !== filters.brandSlug) return false;
-        return true;
-    });
+        const res = await fetch(`${API_BASE_URL}/api/products?${queryParams.toString()}`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to fetch products by filters');
+        return await res.json();
+    } catch (error) {
+        console.error('Error fetching products by filters:', error);
+        return { products: [], total: 0, totalPages: 0 };
+    }
 }
 
-
-// Parts
+// Keeping these for now, assuming they might still use demo data or need future migration
 export async function getAllParts() {
-    // Database Integration Placeholder:
-    // const res = await fetch(`${API_BASE_URL}/parts`);
-    // return await res.json();
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return smtParts;
+    return []; // Return empty for now as parts should be migrated to products model
 }
+
+import { demoProducts, smtLinePackages } from "@/data/demoProducts";
 
 export async function getPartsBySubcategorySlug(subcategorySlug: string) {
-    // Database Integration Placeholder:
-    // const res = await fetch(`${API_BASE_URL}/parts?subcategorySlug=${subcategorySlug}`);
-    // return await res.json();
-
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return smtParts.filter(p => p.subcategorySlug === subcategorySlug);
+    const { products } = await getAllProducts();
+    return products.filter(p => p.category?.slug === 'smt-parts' && p.subcategory?.slug === subcategorySlug);
 }
 
-// Lines
 export async function getAllLinePackages() {
-    await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
     return smtLinePackages;
 }

@@ -484,7 +484,9 @@ export default function ProductsPage() {
         <table className="w-full">
           <thead>
             <tr className="border-b text-left">
-              <th>Name</th>
+              <th className="py-3">Name</th>
+              <th>Category</th>
+              <th>Subcategory</th>
               <th>Condition</th>
               <th>Availability</th>
               <th>Actions</th>
@@ -494,13 +496,15 @@ export default function ProductsPage() {
           <tbody>
             {products.map((p) => (
               <tr key={p.id} className="border-b">
-                <td className="py-3">{p.name}</td>
+                <td className="py-3 font-semibold">{p.name}</td>
+                <td>{(p as any).category?.name || "N/A"}</td>
+                <td>{(p as any).subcategory?.name || "N/A"}</td>
                 <td>{p.condition}</td>
                 <td>{p.availability}</td>
                 <td className="space-x-3">
                   <button
                     onClick={() => {
-                      setEditingId(p.id);
+                      setEditingId(p.id!);
                       setForm({
                         ...p,
                         specifications: (p as any).specifications || [
@@ -512,14 +516,14 @@ export default function ProductsPage() {
                         Array.isArray(p.features) ? p.features.join(", ") : "",
                       );
                     }}
-                    className="text-blue-600"
+                    className="text-blue-600 hover:text-blue-800"
                   >
                     Edit
                   </button>
 
                   <button
-                    onClick={() => handleDelete(p.id)}
-                    className="text-red-600"
+                    onClick={() => handleDelete(p.id!)}
+                    className="text-red-500 hover:text-red-700"
                   >
                     Delete
                   </button>

@@ -4,22 +4,34 @@ import slugify from "slugify";
 
 export async function POST(req: Request) {
   const { name } = await req.json();
-const slug = slugify(name, { lower: true });
+  const slug = slugify(name, { lower: true });
   const category = await prisma.category.create({
     data: {
       name,
-      slug}
+      slug
+    }
   });
 
   return NextResponse.json(category);
 }
 
 export async function GET() {
-  const categories = await prisma.category.findMany({
-    include: {
-      subcategories: true,
-    },
-  });
+  try {
+    const categories = await prisma.category.findMany({
+      include: {
+        subcategories: true,
+        _count: {
+          select: { products: true }
+        }
+      },
+    });
 
-  return NextResponse.json(categories);
+    return NextResponse.json(categories);
+  } catch (error) {
+    console.error("Get Categories Error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }

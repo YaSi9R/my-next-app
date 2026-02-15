@@ -15,9 +15,22 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const brands = await prisma.brand.findMany({
-    orderBy: { name: "asc" },
-  });
+  try {
+    const brands = await prisma.brand.findMany({
+      orderBy: { name: "asc" },
+      include: {
+        _count: {
+          select: { products: true }
+        }
+      }
+    });
 
-  return NextResponse.json(brands);
+    return NextResponse.json(brands);
+  } catch (error) {
+    console.error("Get Brands Error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
