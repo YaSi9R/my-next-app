@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import slugify from "slugify";
+import { revalidatePath } from "next/cache";
 
 /* ================= GET SINGLE PRODUCT ================= */
 
@@ -89,6 +90,15 @@ export async function PUT(
       },
     });
 
+    // Revalidate product pages and listings
+    revalidatePath("/");
+    revalidatePath("/smt-machines");
+    revalidatePath("/smt-parts");
+    revalidatePath("/board-handling");
+    revalidatePath("/consumables");
+    // Also revalidate this specific product's page if it exists
+    revalidatePath(`/products/${id}`);
+
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Update Product Error:", error);
@@ -111,6 +121,13 @@ export async function DELETE(
     await prisma.product.delete({
       where: { id },
     });
+
+    // Revalidate product listing pages after deletion
+    revalidatePath("/");
+    revalidatePath("/smt-machines");
+    revalidatePath("/smt-parts");
+    revalidatePath("/board-handling");
+    revalidatePath("/consumables");
 
     return NextResponse.json({
       message: "Product deleted successfully",

@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import slugify from "slugify";
 import { getProducts } from "@/lib/services/product-service";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -49,6 +50,13 @@ export async function POST(req: Request) {
         features,
       },
     });
+
+    // Revalidate product listing pages
+    revalidatePath("/");
+    revalidatePath("/smt-machines");
+    revalidatePath("/smt-parts");
+    revalidatePath("/board-handling");
+    revalidatePath("/consumables");
 
     return NextResponse.json(product, { status: 201 });
   } catch (error) {
