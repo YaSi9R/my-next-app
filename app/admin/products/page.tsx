@@ -20,6 +20,12 @@ interface Subcategory {
   categoryId: string;
 }
 
+interface SubSubcategory {
+  id: string;
+  name: string;
+  subcategoryId: string;
+}
+
 interface Product {
   id?: string | null;
   name: string;
@@ -31,6 +37,7 @@ interface Product {
   brandId: string;
   categoryId: string;
   subcategoryId: string;
+  subsubcategoryId?: string; // Optional
   specifications: {
     label: string;
     value: string;
@@ -44,6 +51,7 @@ export default function ProductsPage() {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [subsubcategories, setSubSubcategories] = useState<SubSubcategory[]>([]);
   const [featuresInput, setFeaturesInput] = useState("");
   const [loadingData, setLoadingData] = useState(true);
 
@@ -59,6 +67,7 @@ export default function ProductsPage() {
     brandId: "",
     categoryId: "",
     subcategoryId: "",
+    subsubcategoryId: "",
     specifications: [{ label: "", value: "" }],
     features: [],
   });
@@ -179,11 +188,12 @@ export default function ProductsPage() {
   const fetchData = async () => {
     setLoadingData(true);
 
-    const [p, b, c, s] = await Promise.all([
+    const [p, b, c, s, ss] = await Promise.all([
       fetch("/api/products"),
       fetch("/api/brands"),
       fetch("/api/categories"),
       fetch("/api/subcategories"),
+      fetch("/api/subsubcategories"),
     ]);
     const list = await p.json();
     setProducts(list.products);
@@ -191,6 +201,7 @@ export default function ProductsPage() {
     setBrands(await b.json());
     setCategories(await c.json());
     setSubcategories(await s.json());
+    setSubSubcategories(await ss.json());
 
     setLoadingData(false);
   };
@@ -248,6 +259,7 @@ export default function ProductsPage() {
       brandId: "",
       categoryId: "",
       subcategoryId: "",
+      subsubcategoryId: "",
       specifications: [],
       features: [],
     });
@@ -270,6 +282,10 @@ export default function ProductsPage() {
 
   const filteredSubcategories = subcategories.filter(
     (s) => s.categoryId === form.categoryId,
+  );
+
+  const filteredSubSubcategories = subsubcategories.filter(
+    (ss) => ss.subcategoryId === form.subcategoryId,
   );
 
   if (loadingData) return <TableShimmer />;
@@ -325,7 +341,11 @@ export default function ProductsPage() {
           <select
             value={form.subcategoryId}
             onChange={(e) =>
-              setForm({ ...form, subcategoryId: e.target.value })
+              setForm({
+                ...form,
+                subcategoryId: e.target.value,
+                subsubcategoryId: "" // Reset third level when subcategory changes
+              })
             }
             className="border rounded p-2"
             required
@@ -337,6 +357,23 @@ export default function ProductsPage() {
               </option>
             ))}
           </select>
+
+          {filteredSubSubcategories.length > 0 && (
+            <select
+              value={form.subsubcategoryId || ""}
+              onChange={(e) =>
+                setForm({ ...form, subsubcategoryId: e.target.value })
+              }
+              className="border rounded p-2"
+            >
+              <option value="">Select Third Level (Optional)</option>
+              {filteredSubSubcategories.map((ss) => (
+                <option key={ss.id} value={ss.id}>
+                  {ss.name}
+                </option>
+              ))}
+            </select>
+          )}
 
           <select
             value={form.condition}

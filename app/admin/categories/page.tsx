@@ -17,10 +17,18 @@ interface Subcategory {
   categoryId: string;
 }
 
+interface SubSubcategory {
+  id: string;
+  name: string;
+  slug: string;
+  subcategoryId: string;
+}
+
 export default function CategoryManagementPage() {
   const [loadingData, setLoadingData] = useState(true);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
+  const [subsubcategories, setSubSubcategories] = useState<SubSubcategory[]>([]);
 
   const [categoryName, setCategoryName] = useState("");
   const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
@@ -28,17 +36,23 @@ export default function CategoryManagementPage() {
   const [subcategoryName, setSubcategoryName] = useState("");
   const [editingSubcategoryId, setEditingSubcategoryId] = useState<string | null>(null);
 
+  const [subsubcategoryName, setSubSubcategoryName] = useState("");
+  const [editingSubSubcategoryId, setEditingSubSubcategoryId] = useState<string | null>(null);
+
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [selectedSubcategoryId, setSelectedSubcategoryId] = useState("");
 
   const fetchData = async () => {
     setLoadingData(true);
-    const [catRes, subRes] = await Promise.all([
+    const [catRes, subRes, subsubRes] = await Promise.all([
       fetch("/api/categories"),
       fetch("/api/subcategories"),
+      fetch("/api/subsubcategories"),
     ]);
 
     setCategories(await catRes.json());
     setSubcategories(await subRes.json());
+    setSubSubcategories(await subsubRes.json());
     setLoadingData(false);
   };
 
@@ -112,8 +126,46 @@ export default function CategoryManagementPage() {
     fetchData();
   };
 
+  // SUBSUBCATEGORY ACTIONS
+  const handleAddSubSubcategory = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedSubcategoryId) return;
+
+    const method = editingSubSubcategoryId ? "PUT" : "POST";
+    const url = editingSubSubcategoryId ? `/api/subsubcategories/${editingSubSubcategoryId}` : "/api/subsubcategories";
+
+    await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: subsubcategoryName,
+        subcategoryId: selectedSubcategoryId,
+      }),
+    });
+
+    setSubSubcategoryName("");
+    setEditingSubSubcategoryId(null);
+    fetchData();
+  };
+
+  const handleEditSubSubcategory = (subsub: SubSubcategory) => {
+    setSubSubcategoryName(subsub.name);
+    setEditingSubSubcategoryId(subsub.id);
+  };
+
+  const handleDeleteSubSubcategory = async (id: string) => {
+    if (!confirm("Delete this item?")) return;
+
+    await fetch(`/api/subsubcategories/${id}`, { method: "DELETE" });
+    fetchData();
+  };
+
   const filteredSubcategories = subcategories.filter(
     (sub) => sub.categoryId === selectedCategoryId,
+  );
+
+  const filteredSubSubcategories = subsubcategories.filter(
+    (subsub) => subsub.subcategoryId === selectedSubcategoryId,
   );
 
   if (loadingData) return <ShimmerSection />;
@@ -225,17 +277,22 @@ export default function CategoryManagementPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {filteredSubcategories.map((sub) => (
-                <div key={sub.id} className="border border-gray-100 p-3 rounded-lg flex justify-between items-center group hover:border-gray-300 transition-colors">
+                <div
+                  key={sub.id}
+                  onClick={() => setSelectedSubcategoryId(sub.id)}
+                  className={`cursor-pointer border p-3 rounded-lg flex justify-between items-center group transition-all ${selectedSubcategoryId === sub.id ? "border-[#022c75] bg-blue-50" : "border-gray-100 hover:border-gray-300"
+                    }`}
+                >
                   <span className="font-medium">{sub.name}</span>
-                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="flex gap-2">
                     <button
-                      onClick={() => handleEditSubcategory(sub)}
+                      onClick={(e) => { e.stopPropagation(); handleEditSubcategory(sub); }}
                       className="text-blue-600 hover:text-blue-800 text-sm"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDeleteSubcategory(sub.id)}
+                      onClick={(e) => { e.stopPropagation(); handleDeleteSubcategory(sub.id); }}
                       className="text-red-500 hover:text-red-700 text-sm"
                     >
                       Delete
@@ -255,6 +312,79 @@ export default function CategoryManagementPage() {
           <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
             <p className="text-gray-500 font-medium">
               Select a category above to manage its subcategories
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* SUBSUBCATEGORY SECTION */}
+      <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+        <h2 className="text-xl font-semibold mb-4">
+          Third Level Items {selectedSubcategoryId && `for ${subcategories.find(s => s.id === selectedSubcategoryId)?.name}`}
+        </h2>
+
+        {selectedSubcategoryId ? (
+          <>
+            <form onSubmit={handleAddSubSubcategory} className="flex gap-4 mb-6">
+              <input
+                type="text"
+                required
+                placeholder="Item name"
+                value={subsubcategoryName}
+                onChange={(e) => setSubSubcategoryName(e.target.value)}
+                className="flex-1 border rounded-lg px-4 py-2"
+              />
+
+              <button
+                type="submit"
+                className="bg-[#022c75] text-white px-6 py-2 rounded-lg hover:bg-[#01306b]"
+              >
+                {editingSubSubcategoryId ? "Update" : "Add"}
+              </button>
+
+              {editingSubSubcategoryId && (
+                <button
+                  type="button"
+                  onClick={() => { setEditingSubSubcategoryId(null); setSubSubcategoryName(""); }}
+                  className="px-4 py-2 border rounded-lg"
+                >
+                  Cancel
+                </button>
+              )}
+            </form>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {filteredSubSubcategories.map((subsub) => (
+                <div key={subsub.id} className="border border-gray-100 p-3 rounded-lg flex justify-between items-center group hover:border-gray-300 transition-colors">
+                  <span className="font-medium">{subsub.name}</span>
+                  <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleEditSubSubcategory(subsub); }}
+                      className="text-blue-600 hover:text-blue-800 text-sm"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleDeleteSubSubcategory(subsub.id); }}
+                      className="text-red-500 hover:text-red-700 text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+              {filteredSubSubcategories.length === 0 && (
+                <p className="text-gray-500 col-span-full py-4 text-center border-2 border-dashed rounded-xl">
+                  No items in this subcategory
+                </p>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
+            <p className="text-gray-500 font-medium">
+              Select a subcategory above to manage its items
             </p>
           </div>
         )}

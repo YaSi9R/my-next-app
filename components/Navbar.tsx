@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../public/TEKMART LOGO.png";
@@ -18,219 +18,189 @@ interface NavItem {
     children?: SubMenuItem[];
 }
 
+const initialNavItems: NavItem[] = [
+    {
+        name: "About Us",
+        href: "/about/company",
+        children: [
+            { name: "Company Overview", href: "/about/company" },
+            { name: "Why Tekmart", href: "/about/why-tekmart" },
+        ],
+    },
+    {
+        name: "SMT Machines",
+        href: "/smt-machines",
+        children: [],
+    },
+    {
+        name: "SMT Line",
+        href: "/smt-line",
+        children: [
+            {
+                name: "Entry Level SMT Line",
+                href: "/smt-line/entry-level",
+                children: [
+                    { name: "Line Flow Diagram", href: "/smt-line/entry-level#diagram" },
+                    { name: "Fixed Machine Combination", href: "/smt-line/entry-level#machines" },
+                    { name: "Suitable For", href: "/smt-line/entry-level#suitable" },
+                    { name: "Short Description", href: "/smt-line/entry-level#description" },
+                    { name: "Enquiry / WhatsApp CTA", href: "/smt-line/entry-level#enquiry" },
+                ],
+            },
+            {
+                name: "Mid-Scale SMT Line",
+                href: "/smt-line/mid-scale",
+                children: [
+                    { name: "Line Flow Diagram", href: "/smt-line/mid-scale#diagram" },
+                    { name: "Fixed Machine Combination", href: "/smt-line/mid-scale#machines" },
+                    { name: "Suitable For", href: "/smt-line/mid-scale#suitable" },
+                    { name: "Short Description", href: "/smt-line/mid-scale#description" },
+                    { name: "Enquiry / WhatsApp CTA", href: "/smt-line/mid-scale#enquiry" },
+                ],
+            },
+            {
+                name: "High-Speed SMT Line",
+                href: "/smt-line/high-speed",
+                children: [
+                    { name: "Line Flow Diagram", href: "/smt-line/high-speed#diagram" },
+                    { name: "Fixed Machine Combination", href: "/smt-line/high-speed#machines" },
+                    { name: "Suitable For", href: "/smt-line/high-speed#suitable" },
+                    { name: "Short Description", href: "/smt-line/high-speed#description" },
+                    { name: "Enquiry / WhatsApp CTA", href: "/smt-line/high-speed#enquiry" },
+                ],
+            },
+        ],
+    },
+    {
+        name: "SMT Parts",
+        href: "/smt-parts",
+        children: [],
+    },
+    {
+        name: "Board Handling",
+        href: "/board-handling",
+        children: [],
+    },
+    {
+        name: "Services",
+        href: "/service",
+        children: [
+            { name: "Installation & Commissioning", href: "/service/installation" },
+            { name: "SMT Line Setup & Integration", href: "/service/setup" },
+            { name: "Operator & Maintenance Training", href: "/service/training" },
+            { name: "Preventive Maintenance", href: "/service/preventive" },
+            { name: "Breakdown & Technical Support", href: "/service/technical" },
+            { name: "SMT Spare Parts Support", href: "/service/spare-parts" },
+        ],
+    },
+    {
+        name: "Our Clients",
+        href: "/clients",
+        children: [
+            { name: "Client List", href: "/clients#list" },
+            { name: "Case Studies", href: "/clients#case" },
+            { name: "What Our Clients Say", href: "/clients#say" },
+        ],
+    },
+];
+
+const GlobalLink = ({ href, children, className, onClick, ...props }: any) => {
+    const handleClick = (e: React.MouseEvent) => {
+        if (onClick) onClick(e);
+
+        // Dispatch event for GlobalLoader
+        window.dispatchEvent(new Event("route-change-start"));
+
+        window.scrollTo(0, 0);
+
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+    };
+
+    return (
+        <Link href={href} className={className} onClick={handleClick} {...props}>
+            {children}
+        </Link>
+    );
+};
+
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [openMobileMenus, setOpenMobileMenus] = useState<string[]>([]);
+    const [navItems, setNavItems] = useState<NavItem[]>(initialNavItems);
 
-    const navItems: NavItem[] = [
-        {
-            name: "About Us",
-            href: "/about/company",
-            children: [
-                { name: "Company Overview", href: "/about/company" },
-                { name: "Why Tekmart", href: "/about/why-tekmart" },
-            ],
-        },
-        {
-            name: "SMT Machines",
-            href: "/smt-machines",
-            children: [
-                {
-                    name: "Pick & Place Machines",
-                    href: "/smt-machines/pick-and-place",
-                    children: [
-                        { name: "Yamaha", href: "/smt-machines/pick-and-place/yamaha" },
-                        { name: "Fuji", href: "/smt-machines/pick-and-place/fuji" },
-                        { name: "Panasonic", href: "/smt-machines/pick-and-place/panasonic" },
-                        { name: "Other Brands", href: "/smt-machines/pick-and-place/other" },
-                    ],
-                },
-                { name: "Reflow Ovens", href: "/smt-machines/reflow-ovens" },
-                { name: "Screen Printers", href: "/smt-machines/screen-printers" },
-                { name: "SPI", href: "/smt-machines/spi" },
-                { name: "AOI", href: "/smt-machines/aoi" },
-            ],
-        },
+    useEffect(() => {
+        const fetchNavigation = async () => {
+            try {
+                const response = await fetch('/api/navigation');
+                if (!response.ok) return;
+                const data = await response.json();
+                const { subcategories, brands } = data;
 
-        {
-            name: "SMT Line",
-            href: "/smt-line",
-            children: [
-                {
-                    name: "Entry Level SMT Line",
-                    href: "/smt-line/entry-level",
-                    children: [
-                        { name: "Line Flow Diagram", href: "/smt-line/entry-level#diagram" },
-                        { name: "Fixed Machine Combination", href: "/smt-line/entry-level#machines" },
-                        { name: "Suitable For", href: "/smt-line/entry-level#suitable" },
-                        { name: "Short Description", href: "/smt-line/entry-level#description" },
-                        { name: "Enquiry / WhatsApp CTA", href: "/smt-line/entry-level#enquiry" },
-                    ],
-                },
-                {
-                    name: "Mid-Scale SMT Line",
-                    href: "/smt-line/mid-scale",
-                    children: [
-                        { name: "Line Flow Diagram", href: "/smt-line/mid-scale#diagram" },
-                        { name: "Fixed Machine Combination", href: "/smt-line/mid-scale#machines" },
-                        { name: "Suitable For", href: "/smt-line/mid-scale#suitable" },
-                        { name: "Short Description", href: "/smt-line/mid-scale#description" },
-                        { name: "Enquiry / WhatsApp CTA", href: "/smt-line/mid-scale#enquiry" },
-                    ],
-                },
-                {
-                    name: "High-Speed SMT Line",
-                    href: "/smt-line/high-speed",
-                    children: [
-                        { name: "Line Flow Diagram", href: "/smt-line/high-speed#diagram" },
-                        { name: "Fixed Machine Combination", href: "/smt-line/high-speed#machines" },
-                        { name: "Suitable For", href: "/smt-line/high-speed#suitable" },
-                        { name: "Short Description", href: "/smt-line/high-speed#description" },
-                        { name: "Enquiry / WhatsApp CTA", href: "/smt-line/high-speed#enquiry" },
-                    ],
-                },
-            ],
-        },
-        {
-            name: "SMT Parts",
-            href: "/smt-parts",
-            children: [
-                {
-                    name: "Yamaha Parts",
-                    href: "/smt-parts/yamaha",
-                    children: [
-                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/yamaha" },
-                        { name: "Nozzles", href: "/smt-parts/nozzles/yamaha" },
-                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/yamaha" },
-                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/yamaha" },
-                        {
-                            name: "Consumables",
-                            href: "/smt-parts/consumables/yamaha",
-                            children: [
-                                { name: "Solder Paste", href: "/smt-parts/consumables/yamaha/solder-paste" },
-                                { name: "Cleaning Solutions", href: "/smt-parts/consumables/yamaha/cleaning" },
-                                { name: "Adhesives", href: "/smt-parts/consumables/yamaha/adhesives" },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    name: "Fuji Parts", href: "/smt-parts/fuji",
-                    children: [
-                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/fuji" },
-                        { name: "Nozzles", href: "/smt-parts/nozzles/fuji" },
-                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/fuji" },
-                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/fuji" },
-                        {
-                            name: "Consumables",
-                            href: "/smt-parts/consumables/fuji",
+                const dynamicNav = initialNavItems.map(item => {
+                    // SMT Machines Logic
+                    if (item.name === "SMT Machines") {
+                        const smtMachineSubcats = subcategories.filter((s: any) => s.category.slug === 'smt-machines');
+                        return {
+                            ...item,
+                            children: smtMachineSubcats.map((s: any) => ({
+                                name: s.name,
+                                href: `/smt-machines/${s.slug}`,
+                                children: s.slug === 'pick-and-place-machines' ? brands.map((b: any) => ({
+                                    name: b.name.charAt(0).toUpperCase() + b.name.slice(1),
+                                    href: `/smt-machines/pick-and-place-machines/${b.slug}`
+                                })) : undefined
+                            }))
+                        };
+                    }
 
-                        },
-                    ],
-                },
-                {
-                    name: "Panasonic Parts", href: "/smt-parts/panasonic",
-                    children: [
-                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/panasonic" },
-                        { name: "Nozzles", href: "/smt-parts/nozzles/panasonic" },
-                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/panasonic" },
-                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/panasonic" },
-                        {
-                            name: "Consumables",
-                            href: "/smt-parts/consumables/panasonic",
+                    // SMT Parts Logic
+                    if (item.name === "SMT Parts") {
+                        const smtPartsSubcats = subcategories.filter((s: any) => s.category.slug === 'smt-parts');
+                        return {
+                            ...item,
+                            children: brands.map((b: any) => ({
+                                name: `${b.name.charAt(0).toUpperCase() + b.name.slice(1)} Parts`,
+                                href: `/smt-parts/${b.slug}`,
+                                children: smtPartsSubcats.map((s: any) => ({
+                                    name: s.name,
+                                    href: `/smt-parts/${s.slug}/${b.slug}`
+                                }))
+                            }))
+                        };
+                    }
 
-                        },
-                    ],
-                },
-                {
-                    name: "Other Brands", href: "/smt-parts/other",
-                    children: [
-                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/other" },
-                        { name: "Nozzles", href: "/smt-parts/nozzles/other" },
-                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/other" },
-                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/other" },
-                        {
-                            name: "Consumables",
-                            href: "/smt-parts/consumables/other",
+                    // Board Handling Logic
+                    if (item.name === "Board Handling") {
+                        const boardHandlingSubcats = subcategories.filter((s: any) =>
+                            s.category.slug === 'board-handling'
+                        );
+                        return {
+                            ...item,
+                            children: boardHandlingSubcats.map((s: any) => ({
+                                name: s.name,
+                                href: `/board-handling/${s.slug}`,
+                                // Map subsubcategories (third level)
+                                children: s.subsubcategories?.map((subsub: any) => ({
+                                    name: subsub.name,
+                                    href: `/board-handling/${s.slug}/${subsub.slug}`
+                                }))
+                            }))
+                        };
+                    }
 
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            name: "Board Handling",
-            href: "/board-handling",
-            children: [
-                {
-                    name: "Loading & Unloading Systems",
-                    href: "/board-handling/loading-unloading",
-                    children: [
-                        { name: "Magazine Loaders", href: "/board-handling/loading-unloading#loaders" },
-                        { name: "Vacuum Loaders", href: "/board-handling/loading-unloading#vacuum" },
-                        { name: "Destackers", href: "/board-handling/loading-unloading#destackers" },
-                        { name: "Magazine Unloaders", href: "/board-handling/loading-unloading#unloaders" },
-                        { name: "Stackers", href: "/board-handling/loading-unloading#stackers" },
-                        { name: "NG/OK Reject Conveyors", href: "/board-handling/loading-unloading#reject" },
-                    ],
-                },
-                {
-                    name: "Transfer & Handling Systems",
-                    href: "/board-handling/transfer-handling",
-                    children: [
-                        { name: "Link Conveyors", href: "/board-handling/transfer-handling#link" },
-                        { name: "Inspection Conveyors", href: "/board-handling/transfer-handling#inspection" },
-                        { name: "Turn Conveyors", href: "/board-handling/transfer-handling#turn" },
-                        { name: "Inverters / Flippers", href: "/board-handling/transfer-handling#inverters" },
-                        { name: "Turn Units", href: "/board-handling/transfer-handling#units" },
-                    ],
-                },
-                {
-                    name: "Buffering & Accumulation Systems",
-                    href: "/board-handling/buffering-accumulation",
-                    children: [
-                        { name: "FIFO Buffers", href: "/board-handling/buffering-accumulation#fifo" },
-                        { name: "LIFO Buffers", href: "/board-handling/buffering-accumulation#lifo" },
-                        { name: "Vertical Buffers", href: "/board-handling/buffering-accumulation#vertical" },
-                        { name: "Cooling Buffers", href: "/board-handling/buffering-accumulation#cooling" },
-                    ],
-                },
-                {
-                    name: "Consumables & Cleaning",
-                    href: "/board-handling/consumables",
-                    children: [
-                        { name: "Stencil Wiping Rolls", href: "/board-handling/consumables#rolls" },
-                        { name: "Cleaning Solvents", href: "/board-handling/consumables#solvents" },
-                        { name: "Nozzle Cleaning", href: "/board-handling/consumables#nozzle" },
-                        { name: "PCB Cleaning", href: "/board-handling/consumables#pcb" },
-                        { name: "Filters & Wipers", href: "/board-handling/consumables#filters" },
-                    ],
-                },
-            ],
-        },
-        {
-            name: "Services",
-            href: "/service",
-            children: [
-                { name: "Installation & Commissioning", href: "/service/installation" },
-                { name: "SMT Line Setup & Integration", href: "/service/setup" },
-                { name: "Operator & Maintenance Training", href: "/service/training" },
-                { name: "Preventive Maintenance", href: "/service/preventive" },
-                { name: "Breakdown & Technical Support", href: "/service/technical" },
-                { name: "SMT Spare Parts Support", href: "/service/spare-parts" },
-            ],
-        },
-        {
-            name: "Our Clients",
-            href: "/clients",
-            children: [
-                { name: "Client List", href: "/clients#list" },
-                { name: "Case Studies", href: "/clients#case" },
-                { name: "What Our Clients Say", href: "/clients#say" },
-            ],
-        },
+                    return item;
+                });
 
-    ];
+                setNavItems(dynamicNav);
+            } catch (error) {
+                console.error("Failed to fetch navigation:", error);
+            }
+        };
+
+        fetchNavigation();
+    }, []);
 
     const toggleMobileSubmenu = (itemName: string) => {
         setOpenMobileMenus((prev) =>
@@ -242,64 +212,50 @@ const Navbar = () => {
 
     return (
         <nav className="bg-[#e6e6e6] backdrop-blur-md text-[#022c75] sticky top-0 z-50 border-b border-gray-200 shadow-sm">
-            {/* Main Navbar */}
             <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-                {/* Logo */}
-                <Link href="/" className="flex items-center">
+                <Link href="/" className="flex items-center" onClick={() => window.scrollTo(0, 0)}>
                     <div className="h-20 md:h-20 flex items-center pb-2 ">
-                        <Image
-                            src={logo}
-                            alt="Tekmart Logo"
-                            className=" h-full w-auto scale-170"
-                            priority
-                        />
+                        <Image src={logo} alt="Tekmart Logo" className=" h-full w-auto scale-170" priority />
                     </div>
                 </Link>
 
-                {/* Desktop Menu */}
                 <div className="hidden xl:flex items-center space-x-0.5 text-[13px] 2xl:text-[14px]">
                     {navItems.map((item) => (
                         <div key={item.name} className="relative group">
-                            <Link
+                            <GlobalLink
                                 href={item.href}
                                 className="flex items-center gap-1 px-2.5 py-1.5 hover:text-white hover:bg-[#022c75] rounded-md transition-all duration-300 font-bold text-[#022c75] whitespace-nowrap group-hover:bg-[#022c75] group-hover:text-white"
                             >
                                 {item.name}
-                                {item.children && (
-                                    <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180" />
-                                )}
-                            </Link>
+                                {item.children && <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180" />}
+                            </GlobalLink>
 
-                            {/* First Level Dropdown */}
                             {item.children && (
                                 <div className="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top translate-y-2 group-hover:translate-y-0 z-[60]">
                                     <div className="bg-[#e6e6e6] backdrop-blur-sm text-[#022c75] rounded-xl shadow-2xl border border-gray-100 py-2 font-semibold">
                                         {item.children.map((subItem) => (
                                             <div key={subItem.name} className="relative group/sub px-1 hover:z-50 font-semibold">
-
-                                                <Link
+                                                <GlobalLink
                                                     href={subItem.href}
                                                     className="flex items-center justify-between px-2 font-semibold py-2.5 hover:bg-[#022c75] hover:text-[#e6e6e6] rounded-lg transition-colors group-hover/sub:text-[#022c75]"
                                                 >
                                                     <span className="font-semibold text-[13px]">{subItem.name}</span>
                                                     {subItem.children && <ChevronRight className="h-4 w-4 opacity-50 font-semibold" />}
-                                                </Link>
+                                                </GlobalLink>
 
-                                                {/* Second Level Dropdown */}
                                                 {subItem.children && (
                                                     <div className="absolute left-full ml-2 top-0 w-64 bg-[#e6e6e6] text-[#022c75] rounded-lg shadow-xl opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 border border-gray-200 z-50">
                                                         {subItem.children.map((nestedItem) => (
                                                             <div key={nestedItem.name} className="px-2">
-                                                                <Link
+                                                                <GlobalLink
                                                                     href={nestedItem.href}
                                                                     className="block px-3 py-2.5 hover:bg-[#022c75] hover:text-[#e6e6e6] rounded-lg transition-colors text-[12.5px] font-semibold"
                                                                 >
                                                                     {nestedItem.name}
-                                                                </Link>
+                                                                </GlobalLink>
                                                             </div>
                                                         ))}
                                                     </div>
-
                                                 )}
                                             </div>
                                         ))}
@@ -311,16 +267,14 @@ const Navbar = () => {
                 </div>
 
                 <div className="hidden xl:flex items-center">
-                    {/* CTA */}
-                    <Link
+                    <GlobalLink
                         href="/quote"
                         className="bg-[#022c75] text-white px-6 py-2 rounded-full font-bold hover:bg-[#033a95] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-95 ml-6"
                     >
                         Request Quote
-                    </Link>
+                    </GlobalLink>
                 </div>
 
-                {/* Mobile Toggle */}
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className="xl:hidden p-2 hover:bg-gray-200 rounded-lg transition-colors"
@@ -335,73 +289,55 @@ const Navbar = () => {
                 </button>
             </div>
 
-            {/* Mobile Menu */}
-            <div
-                className={`xl:hidden bg-[#e6e6e6] border-t border-gray-200 overflow-y-auto transition-all duration-300 ${isMobileMenuOpen ? "max-h-[80vh] py-6 shadow-2xl" : "max-h-0"
-                    }`}
-            >
+            <div className={`xl:hidden bg-[#e6e6e6] border-t border-gray-200 overflow-y-auto transition-all duration-300 ${isMobileMenuOpen ? "max-h-[80vh] py-6 shadow-2xl" : "max-h-0"}`}>
                 <div className="px-4 space-y-2">
                     {navItems.map((item) => (
                         <div key={item.name}>
                             <div className="flex items-center justify-between">
-                                <Link
+                                <GlobalLink
                                     href={item.href}
                                     className="flex-1 font-medium py-2"
                                     onClick={() => !item.children && setIsMobileMenuOpen(false)}
                                 >
                                     {item.name}
-                                </Link>
+                                </GlobalLink>
                                 {item.children && (
-                                    <button
-                                        onClick={() => toggleMobileSubmenu(item.name)}
-                                        className="p-2"
-                                    >
-                                        <ChevronDown
-                                            className={`h-4 w-4 transition-transform ${openMobileMenus.includes(item.name) ? "rotate-180" : ""
-                                                }`}
-                                        />
+                                    <button onClick={() => toggleMobileSubmenu(item.name)} className="p-2">
+                                        <ChevronDown className={`h-4 w-4 transition-transform ${openMobileMenus.includes(item.name) ? "rotate-180" : ""}`} />
                                     </button>
                                 )}
                             </div>
 
-                            {/* Mobile Submenu */}
                             {item.children && openMobileMenus.includes(item.name) && (
                                 <div className="ml-4 mt-2 space-y-2 border-l-2 border-blue-700 pl-4">
                                     {item.children.map((subItem) => (
                                         <div key={subItem.name}>
                                             <div className="flex items-center justify-between">
-                                                <Link
+                                                <GlobalLink
                                                     href={subItem.href}
                                                     className="flex-1 text-sm opacity-90 py-2"
                                                     onClick={() => !subItem.children && setIsMobileMenuOpen(false)}
                                                 >
                                                     {subItem.name}
-                                                </Link>
+                                                </GlobalLink>
                                                 {subItem.children && (
-                                                    <button
-                                                        onClick={() => toggleMobileSubmenu(subItem.name)}
-                                                        className="p-2"
-                                                    >
-                                                        <ChevronDown
-                                                            className={`h-3 w-3 transition-transform ${openMobileMenus.includes(subItem.name) ? "rotate-180" : ""
-                                                                }`}
-                                                        />
+                                                    <button onClick={() => toggleMobileSubmenu(subItem.name)} className="p-2">
+                                                        <ChevronDown className={`h-3 w-3 transition-transform ${openMobileMenus.includes(subItem.name) ? "rotate-180" : ""}`} />
                                                     </button>
                                                 )}
                                             </div>
 
-                                            {/* Nested Mobile Submenu */}
                                             {subItem.children && openMobileMenus.includes(subItem.name) && (
                                                 <div className="ml-4 mt-2 space-y-2 border-l-2 border-blue-600 pl-4">
                                                     {subItem.children.map((nestedItem) => (
-                                                        <Link
+                                                        <GlobalLink
                                                             key={nestedItem.name}
                                                             href={nestedItem.href}
                                                             className="block text-xs opacity-80 py-2"
                                                             onClick={() => setIsMobileMenuOpen(false)}
                                                         >
                                                             {nestedItem.name}
-                                                        </Link>
+                                                        </GlobalLink>
                                                     ))}
                                                 </div>
                                             )}
@@ -412,13 +348,13 @@ const Navbar = () => {
                         </div>
                     ))}
 
-                    <Link
+                    <GlobalLink
                         href="/quote"
                         className="block bg-[#022c75] text-[#e6e6e6] text-center py-3 rounded-xl font-bold mt-4 shadow-md active:scale-95 transition-transform"
                         onClick={() => setIsMobileMenuOpen(false)}
                     >
                         Get A Quote
-                    </Link>
+                    </GlobalLink>
                 </div>
             </div>
         </nav>

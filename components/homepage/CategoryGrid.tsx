@@ -18,17 +18,17 @@ const categories = [
     {
         title: "Pick & Place",
         image: machine1,
-        href: "/smt-machines/pick-and-place",
+        href: "/smt-machines/pick-and-place-machines",
     },
     {
         title: "Feeders",
         image: machine2,
-        href: "/smt-parts/yamaha/feeders", // Pointing to Yamaha parts hub for now
+        href: "/smt-parts/feeders-and-feeder-parts/yamaha", // Pointing to Yamaha parts hub for now
     },
     {
         title: "Inspection - AOI/SPI",
         image: machine3,
-        href: "/smt-machines", // General machines page
+        href: "/smt-machines/aoi", // General machines page
     },
     {
         title: "Screen Printer",

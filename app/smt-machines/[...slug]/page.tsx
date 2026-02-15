@@ -124,7 +124,7 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
                     initialData={JSON.parse(JSON.stringify(machinesData))}
                     rootCategorySlug="smt-machines"
                     initialCategory={initialCategorySlug}
-                    initialBrand={initialBrandName}
+                    initialBrandSlug={initialBrandSlug}
                 />
             </div>
         )

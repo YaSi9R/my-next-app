@@ -1,9 +1,9 @@
 import React from 'react';
 import ProductBrowser from '@/components/products/ProductBrowser';
-import { getAllProducts } from '@/lib/api';
+import { getProducts } from '@/lib/services/product-service';
 
 export default async function BoardHandlingPage() {
-    const products = await getAllProducts();
+    const products = await getProducts({ categorySlug: 'board-handling' });
 
     return (
         <div className="min-h-screen bg-[#e6e6e6]">
@@ -16,7 +16,7 @@ export default async function BoardHandlingPage() {
                     </p>
                 </div>
             </div>
-            <ProductBrowser initialData={products || { products: [], total: 0, totalPages: 0 }} rootCategorySlug="board-handling" />
+            <ProductBrowser initialData={JSON.parse(JSON.stringify(products)) || { products: [], total: 0, totalPages: 0 }} rootCategorySlug="board-handling" />
         </div>
     );
 }

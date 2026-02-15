@@ -37,6 +37,18 @@ model Subcategory {
   categoryId String   @db.ObjectId
   category   Category @relation(fields: [categoryId], references: [id])
 
+  subsubcategories SubSubcategory[]
+  products Product[]
+}
+
+model SubSubcategory {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  slug String
+
+  subcategoryId String      @db.ObjectId
+  subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
+
   products Product[]
 }
 
@@ -57,6 +69,11 @@ model Product {
   category         Category @relation(fields: [categoryId], references: [id])
   subcategoryId    String   @db.ObjectId
   subcategory      Subcategory @relation(fields: [subcategoryId], references: [id])
+  
+  // Optional: Link to SubSubcategory if product belongs to third level
+  subsubcategoryId String?        @db.ObjectId
+  subsubcategory   SubSubcategory? @relation(fields: [subsubcategoryId], references: [id])
+  
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }

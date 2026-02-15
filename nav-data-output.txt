@@ -1,0 +1,25 @@
+
+=== SUBCATEGORIES ===
+- AOI (slug: aoi, category: smt-machines)
+- Consumables (slug: consumables, category: smt-parts)
+- Feeders & Feeder Parts (slug: feeders-and-feeder-parts, category: smt-parts)
+- Motors / Belts (slug: motors-belts, category: smt-parts)
+- Nozzles (slug: nozzles, category: smt-parts)
+- Pick & Place Machines (slug: pick-and-place-machines, category: smt-machines)
+- Reflow Ovens (slug: reflow-ovens, category: smt-machines)
+- SPI (slug: spi, category: smt-machines)
+- Screen Printers (slug: screen-printers, category: smt-machines)
+- Sensors / Valves (slug: sensors-valves, category: smt-parts)
+
+=== BRANDS ===
+- fuji (slug: fuji)
+- pansonic (slug: pansonic)
+- yamaha (slug: yamaha)
+
+=== SMT MACHINES SUBCATEGORIES ===
+Found 5 subcategories for smt-machines:
+  - AOI (slug: aoi)
+  - Pick & Place Machines (slug: pick-and-place-machines)
+  - Reflow Ovens (slug: reflow-ovens)
+  - SPI (slug: spi)
+  - Screen Printers (slug: screen-printers)

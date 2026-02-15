@@ -6,13 +6,13 @@ import { ChevronDown, ChevronRight, X, Filter } from "lucide-react";
 interface SidebarFilterProps {
     categories: { name: string; slug: string }[];
     types?: { name: string; slug: string }[];
-    brands: string[];
+    brands: { name: string; slug: string }[];
     selectedCategory: string | null;
     selectedTypes?: string[];
     selectedBrands: string[];
     onCategoryChange: (categorySlug: string | null) => void;
     onTypeChange?: (typeSlug: string) => void;
-    onBrandChange: (brand: string) => void;
+    onBrandChange: (brandSlug: string) => void;
     className?: string;
 }
 
@@ -128,14 +128,14 @@ export default function SidebarFilter({
                         <div className="space-y-3">
                             {brands.map((brand) => (
                                 <label
-                                    key={brand}
+                                    key={brand.slug}
                                     className="flex items-center gap-3 cursor-pointer group p-2 hover:bg-gray-50 rounded-lg transition-colors"
                                 >
                                     <div className="relative flex items-center">
                                         <input
                                             type="checkbox"
-                                            checked={selectedBrands.includes(brand)}
-                                            onChange={() => onBrandChange(brand)}
+                                            checked={selectedBrands.includes(brand.slug)}
+                                            onChange={() => onBrandChange(brand.slug)}
                                             className="peer w-5 h-5 border-2 border-gray-300 rounded focus:ring-0 checked:bg-[#022c75] checked:border-[#022c75] transition-all"
                                         />
                                         <ChevronDown
@@ -144,8 +144,8 @@ export default function SidebarFilter({
                                             strokeWidth={4}
                                         />
                                     </div>
-                                    <span className={`text-sm font-medium transition-colors ${selectedBrands.includes(brand) ? 'text-[#022c75]' : 'text-gray-600'}`}>
-                                        {brand}
+                                    <span className={`text-sm font-medium transition-colors ${selectedBrands.includes(brand.slug) ? 'text-[#022c75]' : 'text-gray-600'}`}>
+                                        {brand.name}
                                     </span>
                                 </label>
                             ))}

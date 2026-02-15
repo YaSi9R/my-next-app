@@ -16,7 +16,7 @@ interface ProductBrowserProps {
     };
     rootCategorySlug: "smt-machines" | "smt-parts" | "board-handling" | "consumables";
     initialCategory?: string;
-    initialBrand?: string;
+    initialBrandSlug?: string;
 }
 
 const ITEMS_PER_PAGE = 12;
@@ -25,7 +25,7 @@ export default function ProductBrowser({
     initialData,
     rootCategorySlug,
     initialCategory,
-    initialBrand,
+    initialBrandSlug,
 }: ProductBrowserProps) {
     const router = useRouter();
 
@@ -38,7 +38,7 @@ export default function ProductBrowser({
         initialCategory || null
     );
     const [selectedBrands, setSelectedBrands] = useState<string[]>(
-        initialBrand ? [initialBrand] : []
+        initialBrandSlug ? [initialBrandSlug] : []
     );
     const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -66,7 +66,7 @@ export default function ProductBrowser({
                 relevantBrands.set(p.brand.slug, p.brand.name);
             }
         });
-        return Array.from(relevantBrands.values()).sort();
+        return Array.from(relevantBrands.entries()).map(([slug, name]) => ({ name, slug }));
     }, [products]);
 
     // In a real paginated app, we would fetch when filters change.
@@ -80,10 +80,10 @@ export default function ProductBrowser({
         router.push(`/${parts.join('/')}`);
     };
 
-    const handleBrandChange = (brandName: string) => {
+    const handleBrandChange = (brandSlug: string) => {
         setCurrentPage(1);
         setSelectedBrands(prev =>
-            prev.includes(brandName) ? prev.filter(b => b !== brandName) : [...prev, brandName]
+            prev.includes(brandSlug) ? prev.filter(b => b !== brandSlug) : [...prev, brandSlug]
         );
     };
 
@@ -91,8 +91,8 @@ export default function ProductBrowser({
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
             if (selectedCategory && product.subcategory?.slug !== selectedCategory) return false;
-            // Brand filtering (simple name match for now based on previous logic)
-            if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand?.name)) return false;
+            // Brand filtering (using slug for robustness)
+            if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand?.slug)) return false;
             return true;
         });
     }, [products, selectedCategory, selectedBrands]);
@@ -154,7 +154,7 @@ export default function ProductBrowser({
                                         href={`/${rootCategorySlug}/${product.subcategory?.slug || 'other'}/${product.brand?.slug || 'generic'}/${product.id}`}
                                         className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col"
                                     >
-                                        <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden p-6 flex items-center justify-center">
+                                        <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden p-3 flex items-center justify-center">
                                             {product.images?.[0] ? (
                                                 <img
                                                     src={product.images[0]}
@@ -169,8 +169,8 @@ export default function ProductBrowser({
                                             </div>
                                         </div>
 
-                                        <div className="p-6 flex flex-col flex-1">
-                                            <div className="mb-4">
+                                        <div className="p-3 flex flex-col flex-1">
+                                            <div className="mb-3">
                                                 <h3 className="text-lg font-bold text-[#022c75] mb-1 group-hover:text-blue-600 transition-colors">
                                                     {product.name}
                                                 </h3>
@@ -179,7 +179,7 @@ export default function ProductBrowser({
                                                 </p>
                                             </div>
 
-                                            <p className="text-sm text-gray-600 mb-6 line-clamp-2 leading-relaxed">
+                                            <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed">
                                                 {product.shortDescription}
                                             </p>
 

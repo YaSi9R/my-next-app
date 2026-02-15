@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import FloatingContactBar from "@/components/FloatingContactBar";
 
+import GlobalLoader from "@/components/GlobalLoader";
+
 export default function LayoutWrapper({
   children,
 }: {
@@ -19,6 +21,7 @@ export default function LayoutWrapper({
 
   return (
     <>
+      <GlobalLoader />
       {!isAdminRoute && <Navbar />}
       {children}
       {!isAdminRoute && <Footer />}

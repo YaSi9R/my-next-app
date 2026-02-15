@@ -18,6 +18,7 @@ export async function POST(req: Request) {
       brandId,
       categoryId,
       subcategoryId,
+      subsubcategoryId, // Optional
       specifications,
       features,
     } = body;
@@ -46,6 +47,7 @@ export async function POST(req: Request) {
         brandId,
         categoryId,
         subcategoryId,
+        subsubcategoryId,
         specifications,
         features,
       },
