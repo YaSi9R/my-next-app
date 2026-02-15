@@ -1,3 +1,5 @@
+"use client";
+
 import { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
