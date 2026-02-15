@@ -7,7 +7,7 @@ export default function Topbar() {
 
   const logout = async () => {
     await fetch("/api/admin/logout", { method: "POST" });
-    router.push("/admin/login");
+    router.push("/login");
   };
 
   return (
