@@ -48,18 +48,18 @@ export default function ProductListing({ title, description, products, breadcrum
     };
 
     return (
-        <div className="min-h-screen bg-[#022c75] py-12 font-sans">
+        <div className="min-h-screen bg-[#e6e6e6] py-12 font-sans">
             <div className="container mx-auto px-4 max-w-7xl">
                 {/* Breadcrumb */}
                 <div className="text-sm mb-6 flex items-center gap-1">
-                    <Link href="/" className="text-gray-400 hover:text-white transition-colors">Home</Link>
+                    <Link href="/" className="text-[#022c75] hover:font-bold transition-colors">Home</Link>
                     {breadcrumbs.map((crumb, idx) => (
                         <React.Fragment key={idx}>
-                            <span className="text-gray-500">/</span>
+                            <span className="text-[#022c75]">/</span>
                             {idx === breadcrumbs.length - 1 ? (
-                                <span className="text-white font-semibold">{crumb.label}</span>
+                                <span className="text-[#022c75] font-semibold">{crumb.label}</span>
                             ) : (
-                                <Link href={crumb.href} className="text-gray-400 hover:text-white transition-colors">{crumb.label}</Link>
+                                <Link href={crumb.href} className="text-[#022c75] hover:font-bold transition-colors">{crumb.label}</Link>
                             )}
                         </React.Fragment>
                     ))}
@@ -67,10 +67,10 @@ export default function ProductListing({ title, description, products, breadcrum
 
                 {/* Page Header */}
                 <div className="mb-12">
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                    <h1 className="text-4xl md:text-5xl font-bold text-[#022c75] mb-4">
                         {title}
                     </h1>
-                    <p className="text-xl text-gray-300">
+                    <p className="text-xl text-[#022c75]">
                         {description}
                     </p>
                 </div>
@@ -96,8 +96,8 @@ export default function ProductListing({ title, description, products, breadcrum
                             </div>
 
                             {/* Brand Filter */}
-                            <div className="mb-8 bg-white/5 p-4 rounded-2xl border border-white/10">
-                                <h3 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4 opacity-50">Manufacturer</h3>
+                            <div className="mb-8 bg-[#022c75] p-4 rounded-2xl border border-white/10">
+                                <h3 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4 ">Manufacturer</h3>
                                 <div className="space-y-3">
                                     {brands.map(brand => (
                                         <label key={brand} className="flex items-center gap-3 cursor-pointer group">
@@ -114,8 +114,8 @@ export default function ProductListing({ title, description, products, breadcrum
                             </div>
 
                             {/* Condition Filter */}
-                            <div className="mb-8 bg-white/5 p-4 rounded-2xl border border-white/10">
-                                <h3 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4 opacity-50">Condition</h3>
+                            <div className="mb-8 bg-[#022c75] p-4 rounded-2xl border border-white/10">
+                                <h3 className="text-white font-bold uppercase tracking-widest text-[10px] mb-4 ">Condition</h3>
                                 <div className="space-y-3">
                                     {conditions.map(condition => (
                                         <label key={condition} className="flex items-center gap-3 cursor-pointer group">
@@ -134,7 +134,7 @@ export default function ProductListing({ title, description, products, breadcrum
                             {(selectedBrands.length > 0 || selectedConditions.length > 0) && (
                                 <button
                                     onClick={clearFilters}
-                                    className="text-[10px] font-bold text-blue-400 hover:text-blue-300 uppercase tracking-widest mt-2 px-2 transition-colors inline-flex items-center gap-2"
+                                    className="text-[10px] font-bold text-[#022c75] hover:text-blue-300 uppercase tracking-widest mt-2 px-2 transition-colors inline-flex items-center gap-2"
                                 >
                                     <X className="w-3 h-3" />
                                     Clear All Filters
@@ -160,10 +160,10 @@ export default function ProductListing({ title, description, products, breadcrum
                                     <Link
                                         key={product.id}
                                         href={`/${product.categorySlug}/${product.subcategorySlug || 'other'}/${product.brandSlug}/${product.id}`}
-                                        className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group flex flex-col"
+                                        className="bg-[#022c75] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group flex flex-col"
                                     >
                                         {/* Image Box */}
-                                        <div className="relative h-64 flex items-center justify-center overflow-hidden bg-white border-b border-gray-100">
+                                        <div className="relative h-64 flex items-center justify-center overflow-hidden bg-[#022c75] ">
                                             <div className="absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity bg-[#022c75]"></div>
                                             {product.image ? (
                                                 <img src={product.image} alt={product.name} className="w-full h-full object-contain p-8 group-hover:scale-105 transition-transform duration-500" />
@@ -177,33 +177,22 @@ export default function ProductListing({ title, description, products, breadcrum
                                         {/* Content Box */}
                                         <div className="p-8 flex flex-col flex-1">
                                             <div className="flex items-start justify-between mb-4 gap-4">
-                                                <h3 className="text-2xl font-bold text-gray-900 group-hover:text-[#022c75] transition-colors leading-tight">{product.name}</h3>
+                                                <h3 className="text-2xl font-bold text-[#e6e6e6]group-hover:text-[#022c75] transition-colors leading-tight">{product.name}</h3>
                                                 <span className={`flex-shrink-0 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${product.condition === 'New' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
                                                     {product.condition}
                                                 </span>
                                             </div>
 
-                                            <p className="mb-6 line-clamp-2 text-sm text-gray-500 font-medium leading-relaxed">
+                                            <p className="mb-6 line-clamp-2 text-sm text-[#e6e6e6] font-medium leading-relaxed">
                                                 {product.shortDescription}
                                             </p>
 
-                                            {/* Specs List */}
-                                            <div className="space-y-3 mb-8 flex-1">
-                                                {product.specifications.slice(0, 3).map((spec, idx) => (
-                                                    <div key={idx} className="flex items-center justify-between text-[11px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-gray-500 transition-colors">
-                                                        <span>{spec.label}</span>
-                                                        <span className="text-gray-800">{spec.value}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
+                                           
 
                                             {/* Action Bar */}
                                             <div className="flex items-center justify-between pt-6 border-t border-gray-100 mt-auto">
-                                                <div className="flex flex-col">
-                                                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-1">Pricing</span>
-                                                    <span className="text-sm font-bold text-blue-600 uppercase tracking-widest">Request Quote</span>
-                                                </div>
-                                                <div className="inline-flex items-center gap-2 font-bold uppercase tracking-[0.2em] text-[10px] text-[#022c75] group-hover:gap-4 transition-all pr-1">
+                                                
+                                                <div className="inline-flex items-center gap-2 font-bold uppercase tracking-[0.2em] text-[10px] text-[#e6e6e6] group-hover:gap-4 transition-all pr-1">
                                                     Details
                                                     <ArrowRight className="w-4 h-4" />
                                                 </div>

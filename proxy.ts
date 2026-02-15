@@ -65,6 +65,5 @@ export const config = {
     "/api/brands/:path*",
     "/api/categories/:path*",
     "/api/subcategories/:path*",
-    "/api/queries/:path*",
   ],
 };

@@ -25,7 +25,7 @@ const Navbar = () => {
     const navItems: NavItem[] = [
         {
             name: "About Us",
-            href: "/about",
+            href: "/about/company",
             children: [
                 { name: "Company Overview", href: "/about/company" },
                 { name: "Why Tekmart", href: "/about/why-tekmart" },
@@ -99,35 +99,113 @@ const Navbar = () => {
                     name: "Yamaha Parts",
                     href: "/smt-parts/yamaha",
                     children: [
-                        { name: "Feeders & Feeder Parts", href: "/smt-parts/yamaha/feeders" },
-                        { name: "Nozzles", href: "/smt-parts/yamaha/nozzles" },
-                        { name: "Motors / Belts", href: "/smt-parts/yamaha/motors-belts" },
-                        { name: "Sensors / Valves", href: "/smt-parts/yamaha/sensors-valves" },
+                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/yamaha" },
+                        { name: "Nozzles", href: "/smt-parts/nozzles/yamaha" },
+                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/yamaha" },
+                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/yamaha" },
                         {
                             name: "Consumables",
-                            href: "/smt-parts/yamaha/consumables",
+                            href: "/smt-parts/consumables/yamaha",
                             children: [
-                                { name: "Solder Paste", href: "/smt-parts/yamaha/consumables/solder-paste" },
-                                { name: "Cleaning Solutions", href: "/smt-parts/yamaha/consumables/cleaning" },
-                                { name: "Adhesives", href: "/smt-parts/yamaha/consumables/adhesives" },
+                                { name: "Solder Paste", href: "/smt-parts/consumables/yamaha/solder-paste" },
+                                { name: "Cleaning Solutions", href: "/smt-parts/consumables/yamaha/cleaning" },
+                                { name: "Adhesives", href: "/smt-parts/consumables/yamaha/adhesives" },
                             ],
                         },
                     ],
                 },
-                { name: "Fuji Parts", href: "/smt-parts/fuji" },
-                { name: "Panasonic Parts", href: "/smt-parts/panasonic" },
-                { name: "Other Brands", href: "/smt-parts/other" },
+                {
+                    name: "Fuji Parts", href: "/smt-parts/fuji",
+                    children: [
+                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/fuji" },
+                        { name: "Nozzles", href: "/smt-parts/nozzles/fuji" },
+                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/fuji" },
+                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/fuji" },
+                        {
+                            name: "Consumables",
+                            href: "/smt-parts/consumables/fuji",
+
+                        },
+                    ],
+                },
+                {
+                    name: "Panasonic Parts", href: "/smt-parts/panasonic",
+                    children: [
+                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/panasonic" },
+                        { name: "Nozzles", href: "/smt-parts/nozzles/panasonic" },
+                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/panasonic" },
+                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/panasonic" },
+                        {
+                            name: "Consumables",
+                            href: "/smt-parts/consumables/panasonic",
+
+                        },
+                    ],
+                },
+                {
+                    name: "Other Brands", href: "/smt-parts/other",
+                    children: [
+                        { name: "Feeders & Feeder Parts", href: "/smt-parts/feeders/other" },
+                        { name: "Nozzles", href: "/smt-parts/nozzles/other" },
+                        { name: "Motors / Belts", href: "/smt-parts/motors-belts/other" },
+                        { name: "Sensors / Valves", href: "/smt-parts/sensors-valves/other" },
+                        {
+                            name: "Consumables",
+                            href: "/smt-parts/consumables/other",
+
+                        },
+                    ],
+                },
             ],
         },
         {
             name: "Board Handling",
             href: "/board-handling",
             children: [
-
-                { name: "Loaders", href: "/board-handling/loaders" },
-                { name: "Unloaders", href: "/board-handling/unloaders" },
-                { name: "Conveyors", href: "/board-handling/conveyors" },
-
+                {
+                    name: "Loading & Unloading Systems",
+                    href: "/board-handling/loading-unloading",
+                    children: [
+                        { name: "Magazine Loaders", href: "/board-handling/loading-unloading#loaders" },
+                        { name: "Vacuum Loaders", href: "/board-handling/loading-unloading#vacuum" },
+                        { name: "Destackers", href: "/board-handling/loading-unloading#destackers" },
+                        { name: "Magazine Unloaders", href: "/board-handling/loading-unloading#unloaders" },
+                        { name: "Stackers", href: "/board-handling/loading-unloading#stackers" },
+                        { name: "NG/OK Reject Conveyors", href: "/board-handling/loading-unloading#reject" },
+                    ],
+                },
+                {
+                    name: "Transfer & Handling Systems",
+                    href: "/board-handling/transfer-handling",
+                    children: [
+                        { name: "Link Conveyors", href: "/board-handling/transfer-handling#link" },
+                        { name: "Inspection Conveyors", href: "/board-handling/transfer-handling#inspection" },
+                        { name: "Turn Conveyors", href: "/board-handling/transfer-handling#turn" },
+                        { name: "Inverters / Flippers", href: "/board-handling/transfer-handling#inverters" },
+                        { name: "Turn Units", href: "/board-handling/transfer-handling#units" },
+                    ],
+                },
+                {
+                    name: "Buffering & Accumulation Systems",
+                    href: "/board-handling/buffering-accumulation",
+                    children: [
+                        { name: "FIFO Buffers", href: "/board-handling/buffering-accumulation#fifo" },
+                        { name: "LIFO Buffers", href: "/board-handling/buffering-accumulation#lifo" },
+                        { name: "Vertical Buffers", href: "/board-handling/buffering-accumulation#vertical" },
+                        { name: "Cooling Buffers", href: "/board-handling/buffering-accumulation#cooling" },
+                    ],
+                },
+                {
+                    name: "Consumables & Cleaning",
+                    href: "/board-handling/consumables",
+                    children: [
+                        { name: "Stencil Wiping Rolls", href: "/board-handling/consumables#rolls" },
+                        { name: "Cleaning Solvents", href: "/board-handling/consumables#solvents" },
+                        { name: "Nozzle Cleaning", href: "/board-handling/consumables#nozzle" },
+                        { name: "PCB Cleaning", href: "/board-handling/consumables#pcb" },
+                        { name: "Filters & Wipers", href: "/board-handling/consumables#filters" },
+                    ],
+                },
             ],
         },
         {

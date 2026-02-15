@@ -6,34 +6,34 @@ import { ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function ContactPage() {
     return (
-        <div className="min-h-screen bg-[#022c75] py-20 px-4">
+        <div className="min-h-screen bg-[#e6e6e6] py-10 px-4">
             <div className="container mx-auto max-w-5xl">
                 <div className="text-center mb-16">
-                    <h1 className="text-5xl font-bold text-white mb-6 tracking-tight">Get in Touch</h1>
-                    <p className="text-xl text-blue-100/70 max-w-2xl mx-auto leading-relaxed">
+                    <h1 className="text-5xl font-bold text-[#022c75] mb-6 tracking-tight">Get in Touch</h1>
+                    <p className="text-xl text-[#022c75] max-w-2xl mx-auto leading-relaxed">
                         For all equipment inquiries, technical specifications, and procurement needs, please use our unified quote request system.
                     </p>
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-8">
                     {/* Primary Action Card */}
-                    <div className="lg:col-span-2 bg-white rounded-[40px] p-12 shadow-2xl flex flex-col justify-between">
+                    <div className="lg:col-span-2 bg-[#e6e6e6] border border-[#022c75] rounded-[40px] p-12 shadow-2xl flex flex-col justify-between">
                         <div>
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Request Technical Information</h2>
-                            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
+                            <h2 className="text-3xl font-bold text-[#022c75] mb-6">Request Technical Information</h2>
+                            <p className="text-[#022c75] text-lg mb-8 leading-relaxed">
                                 Our technical team is ready to assist you with detailed machine configurations, part compatibility checks, and production line optimization proposals.
                             </p>
                             <div className="space-y-4 mb-12">
-                                <div className="flex items-center gap-4 text-gray-700 font-medium">
-                                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                <div className="flex items-center gap-4 text-[#022c75] font-medium">
+                                    <div className="w-2 h-2 bg-[#022c75] rounded-full"></div>
                                     Detailed Technical Proposals
                                 </div>
-                                <div className="flex items-center gap-4 text-gray-700 font-medium">
-                                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                <div className="flex items-center gap-4 text-[#022c75] font-medium">
+                                    <div className="w-2 h-2 bg-[#022c75] rounded-full"></div>
                                     Custom Production Line Solutions
                                 </div>
-                                <div className="flex items-center gap-4 text-gray-700 font-medium">
-                                    <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                                <div className="flex items-center gap-4 text-[#022c75] font-medium">
+                                    <div className="w-2 h-2 bg-[#022c75] rounded-full"></div>
                                     Specialized SMT Spare Parts Sourcing
                                 </div>
                             </div>
@@ -49,20 +49,20 @@ export default function ContactPage() {
 
                     {/* Side Info */}
                     <div className="space-y-6">
-                        <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-[40px] p-8 text-white">
-                            <h3 className="text-xl font-bold mb-6">Corporate Office</h3>
+                        <div className="bg-white/10 backdrop-blur-md border border-[#022c75] rounded-[40px] p-8 text-white">
+                            <h3 className="text-xl font-bold mb-6 text-[#022c75]">Corporate Office</h3>
                             <div className="space-y-6">
                                 <div className="flex gap-4">
-                                    <MapPin className="w-6 h-6 text-blue-400 shrink-0" />
-                                    <p className="text-sm text-blue-100 font-medium">Industrial Zone A, New Delhi, India</p>
+                                    <MapPin className="w-6 h-6 text-[#022c75] shrink-0" />
+                                    <p className="text-sm text-[#022c75] font-medium">Industrial Zone A, New Delhi, India</p>
                                 </div>
                                 <div className="flex gap-4">
-                                    <Phone className="w-6 h-6 text-blue-400 shrink-0" />
-                                    <p className="text-sm text-blue-100 font-medium">+91 1234 567 890</p>
+                                    <Phone className="w-6 h-6 text-[#022c75] shrink-0" />
+                                    <p className="text-sm text-[#022c75] font-medium">+91 1234 567 890</p>
                                 </div>
                                 <div className="flex gap-4">
-                                    <Mail className="w-6 h-6 text-blue-400 shrink-0" />
-                                    <p className="text-sm text-blue-100 font-medium">sales@tekmart.com</p>
+                                    <Mail className="w-6 h-6 text-[#022c75] shrink-0" />
+                                    <p className="text-sm text-[#022c75] font-medium">sales@tekmart.com</p>
                                 </div>
                             </div>
                         </div>

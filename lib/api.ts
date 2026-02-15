@@ -6,6 +6,9 @@ const SIMULATED_DELAY = 100;
 // API Configuration (Placeholder)
 // const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
+// Combine all products for queries
+const allData = [...demoProducts, ...smtParts];
+
 export async function getAllProducts(): Promise<Product[]> {
     // Database Integration Placeholder:
     // try {
@@ -18,7 +21,7 @@ export async function getAllProducts(): Promise<Product[]> {
     // }
 
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return demoProducts;
+    return allData;
 }
 
 export async function getProductsByCategory(category: string): Promise<Product[]> {
@@ -27,7 +30,7 @@ export async function getProductsByCategory(category: string): Promise<Product[]
     // return await res.json();
 
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return demoProducts.filter(p => p.category === category);
+    return allData.filter(p => p.category === category);
 }
 
 export async function getProductsByCategorySlug(categorySlug: string): Promise<Product[]> {
@@ -36,12 +39,12 @@ export async function getProductsByCategorySlug(categorySlug: string): Promise<P
     // return await res.json();
 
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return demoProducts.filter(p => p.categorySlug === categorySlug);
+    return allData.filter(p => p.categorySlug === categorySlug);
 }
 
 export async function getProductsBySubcategory(subcategory: string): Promise<Product[]> {
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return demoProducts.filter(p => p.subcategory === subcategory);
+    return allData.filter(p => p.subcategory === subcategory);
 }
 
 export async function getProductsBySubcategorySlug(subcategorySlug: string): Promise<Product[]> {
@@ -50,7 +53,7 @@ export async function getProductsBySubcategorySlug(subcategorySlug: string): Pro
     // return await res.json();
 
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return demoProducts.filter(p => p.subcategorySlug === subcategorySlug);
+    return allData.filter(p => p.subcategorySlug === subcategorySlug);
 }
 
 export async function getProductsByBrandSlug(brandSlug: string): Promise<Product[]> {
@@ -59,7 +62,7 @@ export async function getProductsByBrandSlug(brandSlug: string): Promise<Product
     // return await res.json();
 
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return demoProducts.filter(p => p.brandSlug === brandSlug);
+    return allData.filter(p => p.brandSlug === brandSlug);
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
@@ -69,12 +72,8 @@ export async function getProductById(id: string): Promise<Product | undefined> {
     // return await res.json();
 
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    const product = demoProducts.find(p => p.id === id);
+    const product = allData.find(p => p.id === id);
     if (product) return product;
-
-    // Also check parts
-    const part = smtParts.find(p => p.id === id);
-    if (part) return part as unknown as Product;
 
     return undefined;
 }
@@ -87,7 +86,7 @@ export async function getProductsByFilters(filters: { categorySlug?: string; sub
     // return await res.json();
 
     await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY));
-    return demoProducts.filter(p => {
+    return allData.filter(p => {
         if (filters.categorySlug && p.categorySlug !== filters.categorySlug) return false;
         if (filters.subcategorySlug && p.subcategorySlug !== filters.subcategorySlug) return false;
         if (filters.brandSlug && p.brandSlug !== filters.brandSlug) return false;
