@@ -1,24 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import slugify from "slugify";
 
-export async function PUT(req: Request, { params }: any) {
-  const body = await req.json();
-
-  const updated = await prisma.product.update({
-    where: { id: params.id },
-    data: body,
-  });
-
-  return NextResponse.json(updated);
-}
-
-export async function DELETE(req: Request, { params }: any) {
-  await prisma.product.delete({
-    where: { id: params.id },
-  });
-
-  return NextResponse.json({ message: "Deleted successfully" });
-}
+/* ================= GET SINGLE PRODUCT ================= */
 
 export async function GET(
   req: Request,
@@ -48,6 +32,93 @@ export async function GET(
     console.error("Get Product Error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+/* ================= UPDATE PRODUCT ================= */
+
+export async function PUT(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await context.params;
+    const body = await req.json();
+
+    const {
+      name,
+      condition,
+      images,
+      shortDescription,
+      longDescription,
+      availability,
+      brandId,
+      categoryId,
+      subcategoryId,
+      specifications,
+      features,
+    } = body;
+
+    if (!name) {
+      return NextResponse.json(
+        { error: "Product name is required" },
+        { status: 400 }
+      );
+    }
+
+    // Regenerate slug
+    const baseSlug = slugify(name, { lower: true, strict: true });
+
+    const updated = await prisma.product.update({
+      where: { id },
+      data: {
+        name,
+        slug: baseSlug,
+        condition,
+        images,
+        shortDescription,
+        longDescription,
+        availability,
+        brandId,
+        categoryId,
+        subcategoryId,
+        specifications,
+        features,
+      },
+    });
+
+    return NextResponse.json(updated);
+  } catch (error) {
+    console.error("Update Product Error:", error);
+    return NextResponse.json(
+      { error: "Failed to update product" },
+      { status: 500 }
+    );
+  }
+}
+
+/* ================= DELETE PRODUCT ================= */
+
+export async function DELETE(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await context.params;
+
+    await prisma.product.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({
+      message: "Product deleted successfully",
+    });
+  } catch (error) {
+    console.error("Delete Product Error:", error);
+    return NextResponse.json(
+      { error: "Failed to delete product" },
       { status: 500 }
     );
   }

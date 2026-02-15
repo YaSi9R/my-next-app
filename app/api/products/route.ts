@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     const {
       name,
       condition,
-      image,
+      images,
       shortDescription,
       longDescription,
       availability,
@@ -20,34 +20,24 @@ export async function POST(req: Request) {
       features,
     } = body;
 
-    // 🔥 Basic Validation
-    if (!name || !image || !brandId || !categoryId || !subcategoryId) {
+    if (!name || !brandId || !categoryId || !subcategoryId) {
       return NextResponse.json(
         { error: "Required fields missing" },
         { status: 400 }
       );
     }
 
-    // 🔥 Generate Unique Slug
-    let baseSlug = slugify(name, {
+    const baseSlug = slugify(name, {
       lower: true,
       strict: true,
     });
 
-    let slug = baseSlug;
-    let count = 1;
-
-    while (await prisma.product.findUnique({ where: { slug } })) {
-      slug = `${baseSlug}-${count++}`;
-    }
-
-    // 🔥 Create Product
     const product = await prisma.product.create({
       data: {
         name,
-        slug,
+        slug: baseSlug,
         condition,
-        image,
+        images,
         shortDescription,
         longDescription,
         availability,
@@ -63,7 +53,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Create Product Error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Failed to create product" },
       { status: 500 }
     );
   }
@@ -90,13 +80,8 @@ export async function GET(req: Request) {
       },
     });
 
-    const total = await prisma.product.count();
-
     return NextResponse.json({
-      products,
-      total,
-      page,
-      totalPages: Math.ceil(total / limit),
+      products
     });
   } catch (error) {
     console.error("Get Products Error:", error);

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import path from "path";
-import fs from "fs";
+import cloudinary from "@/lib/cloudinary";
 
 export async function POST(req: Request) {
   try {
@@ -14,30 +13,23 @@ export async function POST(req: Request) {
       );
     }
 
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
-      return NextResponse.json(
-        { error: "Only images allowed" },
-        { status: 400 }
-      );
-    }
-
-    const uploadDir = path.join(process.cwd(), "public/uploads");
-
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const fileName = `${Date.now()}-${file.name}`;
-    const filePath = path.join(uploadDir, fileName);
-
-    fs.writeFileSync(filePath, buffer);
+    const result: any = await new Promise((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          { folder: "tekmart-products" }, // ✅ fixed
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        )
+        .end(buffer);
+    });
 
     return NextResponse.json({
-      url: `/uploads/${fileName}`,
+      url: result.secure_url,
     });
   } catch (error) {
     console.error("Upload Error:", error);

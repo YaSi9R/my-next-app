@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import Navbar from "@/components/Navbar";
 import { Poppins } from "next/font/google";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,14 +23,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" className={poppins.variable}>
       <body className={poppins.className}>
-        <Navbar />
+       <LayoutWrapper>
         {children}
-        <Footer />
-        <BackToTop />
-        <FloatingContactBar />
+        </LayoutWrapper>
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+"use client"
 import { HeroSlider } from "@/components/homepage/HeroSlider";
 import CategoryGrid from "@/components/homepage/CategoryGrid";
 import ProductsSection from "@/components/homepage/ProductsSection";
@@ -9,8 +10,17 @@ import AboutSection from "@/components/homepage/AboutSection";
 import ContactSection from "@/components/homepage/ContactSection";
 import heroBanner from "../public/heroBanner.jpg";
 import Image from "next/image";
+import { useEffect } from "react";
 
 export default function Home() {
+  const fetch=async()=>{
+    const data=await fetch("/api/products");
+    const dds=await data.json();
+    console.log("rspose",dds)
+  }
+  useEffect(()=>{
+    fetch();
+  },[])
   return (
     <div className="min-h-screen bg-[#e6e6e6]">
       <HeroSlider />

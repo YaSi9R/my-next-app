@@ -10,22 +10,33 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function proxy(req: NextRequest) {
   const token = req.cookies.get("adminToken")?.value;
+  const pathname = req.nextUrl.pathname;
+  const method = req.method;
 
-  const protectedPaths = [
-    "/api/products",
-    "/api/brands",
-    "/api/categories",
-    "/api/subcategories",
-    "/api/queries",
-  ];
+  // ===============================
+  // PUBLIC ROUTES
+  // ===============================
 
-  const isProtected = protectedPaths.some((path) =>
-    req.nextUrl.pathname.startsWith(path)
-  );
+  // 1️⃣ Public POST for queries
+  if (pathname.startsWith("/api/queries") && method === "POST") {
+    return NextResponse.next();
+  }
 
-  if (!isProtected) return NextResponse.next();
+  // 2️⃣ Public GET for everything except queries
+  if (
+    method === "GET" &&
+    !pathname.startsWith("/api/queries")
+  ) {
+    return NextResponse.next();
+  }
 
-  if (req.method === "GET") return NextResponse.next();
+  // ===============================
+  // PROTECTED ROUTES
+  // ===============================
+
+  // Protect:
+  // - POST/PUT/DELETE of all APIs
+  // - GET of /api/queries
 
   if (!token) {
     return NextResponse.json(
