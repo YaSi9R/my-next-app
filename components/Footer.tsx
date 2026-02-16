@@ -6,7 +6,7 @@ import logo from "../public/TEKMART LOGO.png";
 
 const Footer = () => {
     return (
-        <footer className="bg-[#e6e6e6] text-white pb-6 pt-10">
+        <footer className="bg-[#e6e6e6] text-white pb-6 pt-10 border-t border-[#022c75]">
             <div className="container mx-auto px-4 w-9/11">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
@@ -135,11 +135,11 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row  justify-center items-center">
-
-
+                <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
                     <p className="text-sm text-[#022c75]">Copyright © 2026, tekmartindia. All rights reserved.</p>
-
+                    <p className="text-sm text-[#022c75] mt-2 md:mt-0">
+                        Developed By <a href="http://technopediasoft.com/" target="_blank" rel="noopener noreferrer" className="font-bold hover:underline">Technopedia Software</a>
+                    </p>
                 </div>
             </div>
         </footer>
