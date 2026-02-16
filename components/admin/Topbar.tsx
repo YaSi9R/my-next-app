@@ -11,7 +11,7 @@ export default function Topbar() {
   };
 
   return (
-    <div className="bg-white shadow px-6 py-4 flex justify-between items-center">
+    <div className="bg-white shadow px-6 py-4 flex justify-between items-center sticky top-0">
       <h1 className="text-xl font-semibold text-[#022c75]">
         Admin Panel
       </h1>

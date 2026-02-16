@@ -168,13 +168,16 @@ export default function CategoryManagementPage() {
     (subsub) => subsub.subcategoryId === selectedSubcategoryId,
   );
 
-  if (loadingData) return <ShimmerSection />;
+  // if (loadingData) return <ShimmerSection />;
 
   return (
     <div className="space-y-10">
       <h1 className="text-3xl font-bold text-[#022c75]">Category Management</h1>
 
       {/* CATEGORY SECTION */}
+      {
+        loadingData?<ShimmerSection/>:<>
+      
       <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
         <h2 className="text-xl font-semibold mb-4">Categories</h2>
 
@@ -219,19 +222,19 @@ export default function CategoryManagementPage() {
                 <div className="flex gap-2">
                   <button
                     onClick={(e) => { e.stopPropagation(); handleEditCategory(cat); }}
-                    className="text-blue-600 hover:text-blue-800 text-sm"
+                    className="text-[#022c75]  text-sm cursor-pointer"
                   >
                     Edit
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); handleDeleteCategory(cat.id); }}
-                    className="text-red-500 hover:text-red-700 text-sm"
+                    className="text-red-500 hover:text-red-700 text-sm cursor-pointer"
                   >
                     Delete
                   </button>
                 </div>
               </div>
-              <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold">
+              <span className="text-xs text-[#022c75] uppercase tracking-wider font-semibold">
                 {subcategories.filter(s => s.categoryId === cat.id).length} Subcategories
               </span>
             </div>
@@ -287,7 +290,7 @@ export default function CategoryManagementPage() {
                   <div className="flex gap-2">
                     <button
                       onClick={(e) => { e.stopPropagation(); handleEditSubcategory(sub); }}
-                      className="text-blue-600 hover:text-blue-800 text-sm"
+                      className="text-[#022c75] text-sm"
                     >
                       Edit
                     </button>
@@ -310,7 +313,7 @@ export default function CategoryManagementPage() {
           </>
         ) : (
           <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-            <p className="text-gray-500 font-medium">
+            <p className="text-[#022c75] font-medium">
               Select a category above to manage its subcategories
             </p>
           </div>
@@ -337,7 +340,7 @@ export default function CategoryManagementPage() {
 
               <button
                 type="submit"
-                className="bg-[#022c75] text-white px-6 py-2 rounded-lg hover:bg-[#01306b]"
+                className="bg-[#022c75] text-[#022c75] px-6 py-2 rounded-lg"
               >
                 {editingSubSubcategoryId ? "Update" : "Add"}
               </button>
@@ -360,7 +363,7 @@ export default function CategoryManagementPage() {
                   <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={(e) => { e.stopPropagation(); handleEditSubSubcategory(subsub); }}
-                      className="text-blue-600 hover:text-blue-800 text-sm"
+                      className="text-[#022c75] text-sm"
                     >
                       Edit
                     </button>
@@ -375,7 +378,7 @@ export default function CategoryManagementPage() {
               ))}
 
               {filteredSubSubcategories.length === 0 && (
-                <p className="text-gray-500 col-span-full py-4 text-center border-2 border-dashed rounded-xl">
+                <p className="text-[#022c75] col-span-full py-4 text-center border-2 border-dashed rounded-xl">
                   No items in this subcategory
                 </p>
               )}
@@ -383,12 +386,14 @@ export default function CategoryManagementPage() {
           </>
         ) : (
           <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-            <p className="text-gray-500 font-medium">
+            <p className="text-[#022c75] font-medium">
               Select a subcategory above to manage its items
             </p>
           </div>
         )}
       </div>
+        </>
+      }
     </div>
   );
 }

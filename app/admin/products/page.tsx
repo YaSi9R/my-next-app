@@ -288,7 +288,7 @@ export default function ProductsPage() {
     (ss) => ss.categoryId === form.subcategoryId,
   );
 
-  if (loadingData) return <TableShimmer />;
+  // if (loadingData) return <TableShimmer />;
 
   return (
     <div>
@@ -301,19 +301,19 @@ export default function ProductsPage() {
           {editingId ? "Update Product" : "Add Product"}
         </h2>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 text-[#022c75]">
           <input
             required
             placeholder="Product Name"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="border rounded p-2 col-span-2"
+            className="border rounded p-2 col-span-2 text-[#022c75]"
           />
 
           <select
             value={form.brandId}
             onChange={(e) => setForm({ ...form, brandId: e.target.value })}
-            className="border rounded p-2"
+            className="border rounded p-2 col-span-2 md:col-span-1 w-full"
             required
           >
             <option value="">Select Brand</option>
@@ -327,7 +327,7 @@ export default function ProductsPage() {
           <select
             value={form.categoryId}
             onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-            className="border rounded p-2"
+            className="border rounded p-2 col-span-2 md:col-span-1 w-full"
             required
           >
             <option value="">Select Category</option>
@@ -347,7 +347,7 @@ export default function ProductsPage() {
                 subsubcategoryId: "" // Reset third level when subcategory changes
               })
             }
-            className="border rounded p-2"
+            className="border rounded p-2 col-span-2 md:col-span-1 w-full"
             required
           >
             <option value="">Select Subcategory</option>
@@ -364,7 +364,7 @@ export default function ProductsPage() {
               onChange={(e) =>
                 setForm({ ...form, subsubcategoryId: e.target.value })
               }
-              className="border rounded p-2"
+              className="border rounded p-2 col-span-2 md:col-span-1 w-full"
             >
               <option value="">Select Third Level (Optional)</option>
               {filteredSubSubcategories.map((ss) => (
@@ -378,7 +378,7 @@ export default function ProductsPage() {
           <select
             value={form.condition}
             onChange={(e) => setForm({ ...form, condition: e.target.value })}
-            className="border rounded p-2"
+            className="border rounded p-2 col-span-2 md:col-span-1 w-full"
           >
             <option>New</option>
             <option>Used</option>
@@ -464,7 +464,7 @@ export default function ProductsPage() {
             <h3 className="font-semibold mb-2">Specifications</h3>
 
             {form.specifications.map((spec: any, index: number) => (
-              <div key={index} className="flex gap-3 mb-3">
+              <div key={index} className="flex gap-3 mb-3 col-span-2 md:col-span-1 w-full">
                 <input
                   placeholder="Specification Name"
                   className="border p-2 w-1/2 rounded"
@@ -496,7 +496,7 @@ export default function ProductsPage() {
             <button
               type="button"
               onClick={addSpecification}
-              className="text-sm text-blue-600 mt-2"
+              className="text-sm text-[#022c75] mt-2"
             >
               + Add Specification
             </button>
@@ -518,6 +518,8 @@ export default function ProductsPage() {
       {/* ================= TABLE ================= */}
 
       <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+        {
+              loadingData?<TableShimmer/>:
         <table className="w-full">
           <thead>
             <tr className="border-b text-left">
@@ -529,7 +531,6 @@ export default function ProductsPage() {
               <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
             {products.map((p) => (
               <tr key={p.id} className="border-b">
@@ -553,7 +554,7 @@ export default function ProductsPage() {
                         Array.isArray(p.features) ? p.features.join(", ") : "",
                       );
                     }}
-                    className="text-blue-600 hover:text-blue-800"
+                    className="text-[#022c75]"
                   >
                     Edit
                   </button>
@@ -570,13 +571,14 @@ export default function ProductsPage() {
 
             {products.length === 0 && (
               <tr>
-                <td colSpan={4} className="text-center py-6 text-gray-500">
+                <td colSpan={4} className="text-center py-6 text-[#022c75]">
                   No products found
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+}
       </div>
     </div>
   );
