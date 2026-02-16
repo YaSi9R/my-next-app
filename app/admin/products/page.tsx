@@ -284,8 +284,8 @@ export default function ProductsPage() {
     (s) => s.categoryId === form.categoryId,
   );
 
-  const filteredSubSubcategories = subsubcategories.filter(
-    (ss) => ss.subcategoryId === form.subcategoryId,
+  const filteredSubSubcategories = subcategories.filter(
+    (ss) => ss.categoryId === form.subcategoryId,
   );
 
   if (loadingData) return <TableShimmer />;

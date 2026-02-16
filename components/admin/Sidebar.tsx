@@ -19,7 +19,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="w-64 bg-[#022c75] text-white">
+    <div className="w-64 text-[#022c75] bg-white p-4">
         <Link href="/" className="flex items-center justify-center py-4">
           <div className="h-20 md:h-20 flex items-center pb-2 bg-white ">
               <Image
@@ -32,19 +32,22 @@ export default function Sidebar() {
       </Link>
 
       <nav className="space-y-4">
-        {menu.map((item) => (
+        {menu.map((item) => {
+          const isActive = pathname === item.path;
+
+          return(
           <Link
             key={item.path}
             href={item.path}
             className={`block px-3 py-2 rounded ${
-              pathname === item.path
-                ? "bg-white text-[#022c75]"
-                : "hover:bg-[#01306b]"
-            }`}
+                  isActive
+                    ? "bg-[#022c75] text-white"
+                    : "bg-white text-[#022c75]"
+                }`}
           >
             {item.name}
           </Link>
-        ))}
+)})}
       </nav>
     </div>
   );
