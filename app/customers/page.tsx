@@ -58,18 +58,7 @@ export default function CustomersPage() {
                 </div>
             </section>
 
-            {/* 3. Subtle Closing Section */}
-            <section className="bg-[#e6e6e6] py-20 border-b border-[#022c75]">
-                <div className="container mx-auto px-4 max-w-4xl text-center">
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#022c75] mb-4">
-                        Long-Term Industry Partnerships
-                    </h2>
-                    <p className="text-[#022c75] text-lg leading-relaxed max-w-2xl mx-auto">
-                        From machine supply to installation and AMC coverage, our focus remains on
-                        production reliability and operational stability.
-                    </p>
-                </div>
-            </section>
+           
         </div>
     );
 }

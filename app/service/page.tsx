@@ -307,10 +307,7 @@ export default function ServicesPage() {
                             </ul>
                         </div>
 
-                        <div className="flex items-start gap-3 p-4 bg-amber-50 rounded-xl border border-amber-100 text-amber-800">
-                            <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
-                            <p className="font-medium">Note: AMC customers receive priority scheduling.</p>
-                        </div>
+                       
                     </div>
                 </section>
 

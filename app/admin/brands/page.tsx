@@ -85,7 +85,7 @@ export default function BrandsPage() {
           {editingId ? "Update Brand" : "Add New Brand"}
         </h2>
 
-        <form onSubmit={handleSubmit} className="flex gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4">
           <input
             type="text"
             required
@@ -119,51 +119,51 @@ export default function BrandsPage() {
       </div>
 
       {/* TABLE */}
-      <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
-       
-          {
-            loadingData?<TableShimmer/>:
-             <table className="w-full">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-3">Name</th>
-              <th>Slug</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {brands.map((brand) => (
-              <tr key={brand.id} className="border-b">
-                <td className="py-3">{brand.name}</td>
-                <td>{brand.slug}</td>
-                <td className="space-x-3">
-                  <button
-                    onClick={() => handleEdit(brand)}
-                    className="text-[#022c75] cursor-pointer" 
-                  >
-                    Edit
-                  </button>
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow text-[#022c75] overflow-x-auto">
 
-                  <button
-                    onClick={() => handleDelete(brand.id)}
-                    className="text-red-600 cursor-pointer"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+        {
+          loadingData ? <TableShimmer /> :
+            <table className="w-full min-w-[500px]">
+              <thead>
+                <tr className="border-b text-left">
+                  <th className="py-3">Name</th>
+                  <th>Slug</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {brands.map((brand) => (
+                  <tr key={brand.id} className="border-b">
+                    <td className="py-3">{brand.name}</td>
+                    <td>{brand.slug}</td>
+                    <td className="space-x-3">
+                      <button
+                        onClick={() => handleEdit(brand)}
+                        className="text-[#022c75] cursor-pointer"
+                      >
+                        Edit
+                      </button>
 
-            {brands.length === 0 && (
-              <tr>
-                <td colSpan={3} className="text-center py-6 text-[#022c75]">
-                  No brands found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-}
+                      <button
+                        onClick={() => handleDelete(brand.id)}
+                        className="text-red-600 cursor-pointer"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+
+                {brands.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="text-center py-6 text-[#022c75]">
+                      No brands found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+        }
       </div>
     </div>
   );

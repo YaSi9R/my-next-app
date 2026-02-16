@@ -33,11 +33,11 @@ export default function NewsletterPage() {
         <div>
             <h1 className="text-3xl font-bold text-[#022c75] mb-6">Newsletter Subscriptions</h1>
 
-            <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+            <div className="bg-white p-4 md:p-6 rounded-xl shadow text-[#022c75] overflow-x-auto">
                 {loading ? (
                     <TableShimmer />
                 ) : (
-                    <table className="w-full">
+                    <table className="w-full min-w-[600px]">
                         <thead>
                             <tr className="border-b text-left">
                                 <th className="py-3">Email</th>

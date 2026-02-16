@@ -70,60 +70,60 @@ export default function QueriesPage() {
         Customer Queries
       </h1>
 
-      <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow text-[#022c75]">
         {error && (
           <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-4 text-center">
             {error}
           </div>
         )}
 
-{
-  loading?<QueriesShimmer/>:<>
-  
-        {queries.length === 0 && !error ? (
-          <p className="text-[#022c75] text-center py-6">
-            No queries found
-          </p>
-        ) : null}
-        {queries.length > 0 && (
-          <div className="space-y-6">
-            {queries.map((query) => (
-              <div
-                key={query.id}
-                className="border-2 rounded-lg p-4 space-y-2 border-[#022c75]"
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <p className="font-semibold text-lg">{query.name}</p>
-                    <div className="text-sm text-[#022c75] mt-1 space-y-1">
-                      <p>Email: {query.email}</p>
-                      <p>Phone: {query.phone}</p>
-                      {query.company && <p>Company: {query.company}</p>}
-                      {query.interest && <p>Interest: {query.interest}</p>}
-                    </div>
-                  </div>
+        {
+          loading ? <QueriesShimmer /> : <>
 
-                  <button
-                    onClick={() => handleDelete(query.id)}
-                    className="text-red-600 text-sm cursor-pointer" 
+            {queries.length === 0 && !error ? (
+              <p className="text-[#022c75] text-center py-6">
+                No queries found
+              </p>
+            ) : null}
+            {queries.length > 0 && (
+              <div className="space-y-6">
+                {queries.map((query) => (
+                  <div
+                    key={query.id}
+                    className="border-2 rounded-lg p-4 space-y-2 border-[#022c75]"
                   >
-                    Delete
-                  </button>
-                </div>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-semibold text-lg">{query.name}</p>
+                        <div className="text-sm text-[#022c75] mt-1 space-y-1">
+                          <p>Email: {query.email}</p>
+                          <p>Phone: {query.phone}</p>
+                          {query.company && <p>Company: {query.company}</p>}
+                          {query.interest && <p>Interest: {query.interest}</p>}
+                        </div>
+                      </div>
 
-                <p className="text-[#022c75]">
-                  {query.message}
-                </p>
+                      <button
+                        onClick={() => handleDelete(query.id)}
+                        className="text-red-600 text-sm cursor-pointer"
+                      >
+                        Delete
+                      </button>
+                    </div>
 
-                <p className="text-xs text-[#022c75]">
-                  {new Date(query.createdAt).toLocaleString()}
-                </p>
+                    <p className="text-[#022c75]">
+                      {query.message}
+                    </p>
+
+                    <p className="text-xs text-[#022c75]">
+                      {new Date(query.createdAt).toLocaleString()}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-        </>
-}
+            )}
+          </>
+        }
       </div>
     </div>
   );

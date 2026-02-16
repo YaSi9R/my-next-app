@@ -310,13 +310,13 @@ export default function ProductsPage() {
           {editingId ? "Update Product" : "Add Product"}
         </h2>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4 text-[#022c75]">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[#022c75]">
           <input
             required
             placeholder="Product Name"
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="border rounded p-2 col-span-2 text-[#022c75]"
+            className="border rounded p-2 md:col-span-2 text-[#022c75]"
           />
 
           <select
@@ -430,7 +430,7 @@ export default function ProductsPage() {
             placeholder="Availability"
             value={form.availability}
             onChange={(e) => setForm({ ...form, availability: e.target.value })}
-            className="border rounded p-2 col-span-2"
+            className="border rounded p-2 md:col-span-2"
           />
 
           <textarea
@@ -442,7 +442,7 @@ export default function ProductsPage() {
                 shortDescription: e.target.value,
               })
             }
-            className="border rounded p-2 col-span-2"
+            className="border rounded p-2 md:col-span-2"
           />
 
           <textarea
@@ -454,7 +454,7 @@ export default function ProductsPage() {
                 longDescription: e.target.value,
               })
             }
-            className="border rounded p-2 col-span-2"
+            className="border rounded p-2 md:col-span-2"
           />
 
           {/* <textarea
@@ -469,7 +469,7 @@ export default function ProductsPage() {
             className="border rounded p-2 col-span-2"
           /> */}
 
-          <div className="col-span-2">
+          <div className="md:col-span-2">
             <h3 className="font-semibold mb-2">Specifications</h3>
 
             {form.specifications.map((spec: any, index: number) => (
@@ -515,10 +515,10 @@ export default function ProductsPage() {
             placeholder="Features (comma separated)"
             value={featuresInput}
             onChange={(e) => setFeaturesInput(e.target.value)}
-            className="border rounded p-2 col-span-2"
+            className="border rounded p-2 md:col-span-2"
           />
 
-          <button className="bg-[#022c75] text-white py-2 rounded col-span-2">
+          <button className="bg-[#022c75] text-white py-2 rounded md:col-span-2">
             {editingId ? "Update Product" : "Add Product"}
           </button>
         </form>
@@ -526,10 +526,10 @@ export default function ProductsPage() {
 
       {/* ================= TABLE ================= */}
 
-      <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow text-[#022c75] overflow-x-auto">
         {
           loadingData ? <TableShimmer /> :
-            <table className="w-full">
+            <table className="w-full min-w-[800px]">
               <thead>
                 <tr className="border-b text-left">
                   <th className="py-3">Name</th>

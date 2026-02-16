@@ -17,11 +17,19 @@ const menu = [
   { name: "Newsletters", path: "/admin/newsletters", icon: Send },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   return (
-    <div className="w-64 text-[#022c75] bg-white p-4 sticky top-0 bottom-0 max-h-screen border-r-4 border-[#022c75] ">
-      <Link href="/" className="flex items-center justify-center py-4">
+    <div className={`
+      fixed inset-y-0 left-0 z-50 w-64 bg-white p-4 transition-transform duration-300 md:relative md:translate-x-0 border-r-4 border-[#022c75]
+      ${isOpen ? "translate-x-0" : "-translate-x-full"}
+    `}>
+      <Link href="/admin" className="flex items-center justify-center py-4">
         <div className="h-20 md:h-20 flex items-center pb-2 bg-white ">
           <Image
             src={logo}
@@ -41,9 +49,10 @@ export default function Sidebar() {
             <Link
               key={item.path}
               href={item.path}
+              onClick={() => onClose?.()}
               className={`px-3 py-2 rounded font-bold flex gap-2 ${isActive
-                  ? "bg-[#022c75] text-white"
-                  : "bg-white text-[#022c75]"
+                ? "bg-[#022c75] text-white"
+                : "bg-white text-[#022c75]"
                 }`}
             >
               <Icon className="w-5 h-5" />
