@@ -262,7 +262,7 @@ const ContactSection = () => {
 
                 </div>
             </section>
-            <div className="h-[80px] bg-[#022c75]"></div>
+            
         </div>
     );
 };

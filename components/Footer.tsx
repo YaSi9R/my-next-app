@@ -6,7 +6,7 @@ import logo from "../public/TEKMART LOGO.png";
 
 const Footer = () => {
     return (
-        <footer className="bg-[#e6e6e6] text-white pb-6">
+        <footer className="bg-[#e6e6e6] text-white pb-6 pt-10">
             <div className="container mx-auto px-4 w-9/11">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 

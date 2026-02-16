@@ -141,7 +141,13 @@ const Navbar = () => {
                 const dynamicNav = initialNavItems.map(item => {
                     // SMT Machines Logic
                     if (item.name === "SMT Machines") {
-                        const smtMachineSubcats = subcategories.filter((s: any) => s.category.slug === 'smt-machines');
+                        const smtMachineSubcats = subcategories
+                            .filter((s: any) => s.category.slug === 'smt-machines')
+                            .sort((a: any, b: any) => {
+                                if (a.slug === 'pick-and-place-machines') return -1;
+                                if (b.slug === 'pick-and-place-machines') return 1;
+                                return 0;
+                            });
                         return {
                             ...item,
                             children: smtMachineSubcats.map((s: any) => ({
@@ -271,7 +277,7 @@ const Navbar = () => {
                         href="/quote"
                         className="bg-[#022c75] text-white px-6 py-2 rounded-full font-bold hover:bg-[#033a95] transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 active:scale-95 ml-6"
                     >
-                        Request Quote
+                        Contact Us
                     </GlobalLink>
                 </div>
 
