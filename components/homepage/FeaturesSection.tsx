@@ -32,25 +32,25 @@ const FeaturesSection = () => {
                             title="Find Your Product"
                             items={["Wide Product Coverage", "Responsive Product Finding", "100% Product Matching"]}
                             linkText="Find Now"
-                            linkHref="#"
+                            linkHref="/smt-machines"
                         />
                         <FeatureCard
                             title="Get Your Products"
                             items={["Ample SMT Product Expertise", "Solid Supply Chain System", "Proficiency in Tricky Products"]}
                             linkText="Request Support"
-                            linkHref="#"
+                            linkHref="/smt-machines"
                         />
                         <FeatureCard
                             title="Inspect Your Products"
                             items={["Triple Inspections", "Professional Quality Inspection", "Stringent Quality System"]}
                             linkText="Learn Quality Control"
-                            linkHref="#"
+                            linkHref="/smt-machines"
                         />
                         <FeatureCard
                             title="Deliver Your Products"
                             items={["Sufficient Inventory", "Reliable Logistic Partners", "On Time Delivery"]}
                             linkText="Warehouse Tour"
-                            linkHref="#"
+                            linkHref="/smt-machines"
                         />
                     </div>
 

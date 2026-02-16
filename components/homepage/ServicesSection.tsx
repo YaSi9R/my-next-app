@@ -26,7 +26,7 @@ const services = [
 
 const ServicesSection = () => {
     return (
-        <section className="py-20 bg-[#e6e6e6]">
+        <section className="pt-20 bg-[#e6e6e6]">
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="text-center mb-16 px-4">
                     <h2 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-4">
@@ -53,11 +53,7 @@ const ServicesSection = () => {
                     ))}
                 </div>
 
-                <div className="flex justify-center">
-                    <button className="bg-[#022c75] hover:bg-[#0441ac] text-white font-semibold py-3 px-10 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer">
-                        Explore Our Services
-                    </button>
-                </div>
+                
             </div>
         </section>
     );

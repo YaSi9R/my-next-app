@@ -124,6 +124,15 @@ const ContactSection = () => {
                                     <p className="text-[#e6e6e6] text-sm">support@tekmart.com</p>
                                 </div>
                             </div>
+                            <div className="bg-[#022c75] backdrop-blur-md p-8 rounded-2xl shadow-sm border border-[#e6e6e6]/20 flex items-start gap-4">
+                               <div className="w-12 h-12 rounded-full bg-[#e6e6e6] flex items-center justify-center flex-shrink-0">
+                                    <MapPin size={24} className="text-[#022c75]" />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-[#e6e6e6] mb-1">Refurbishment Centre</h4>
+                                    <p className="text-[#e6e6e6] text-sm">Plot No.1405, Dheeraj Nagar Extension Faridabad, Haryana 121013</p>
+                                </div>
+                            </div>
                         </div>
                         {/* Form */}
                         <div className="lg:col-span-2 bg-[#e6e6e6] p-8 md:p-12 rounded-3xl shadow-2xl border border-[#022c75]">

@@ -91,11 +91,7 @@ const BrandSlider = () => {
                     </button>
                 </div>
 
-                <div className="mt-16 flex justify-center cursor-pointer">
-                    <button className="bg-[#022c75] hover:bg-[#0441ac] text-white font-semibold py-3 px-10 rounded-full transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer">
-                        Explore More Brands
-                    </button>
-                </div>
+               
             </div>
         </section>
     );

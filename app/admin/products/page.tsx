@@ -187,23 +187,25 @@ export default function ProductsPage() {
 
   const fetchData = async () => {
     setLoadingData(true);
-
-    const [p, b, c, s, ss] = await Promise.all([
-      fetch("/api/products"),
-      fetch("/api/brands"),
-      fetch("/api/categories"),
-      fetch("/api/subcategories"),
-      fetch("/api/subsubcategories"),
-    ]);
-    const list = await p.json();
-    setProducts(list.products);
-    console.log("ddd", list.products);
-    setBrands(await b.json());
-    setCategories(await c.json());
-    setSubcategories(await s.json());
-    setSubSubcategories(await ss.json());
-
-    setLoadingData(false);
+    try {
+      const [p, b, c, s, ss] = await Promise.all([
+        fetch("/api/products"),
+        fetch("/api/brands"),
+        fetch("/api/categories"),
+        fetch("/api/subcategories"),
+        fetch("/api/subsubcategories"),
+      ]);
+      const list = await p.json();
+      setProducts(list.products || []);
+      setBrands(await b.json());
+      setCategories(await c.json());
+      setSubcategories(await s.json());
+      setSubSubcategories(await ss.json());
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoadingData(false);
+    }
   };
 
   useEffect(() => {
@@ -220,6 +222,7 @@ export default function ProductsPage() {
     const payload = {
       ...form,
       slug,
+      subsubcategoryId: form.subsubcategoryId || null, // Ensure empty string becomes null for Prisma
       specifications: form.specifications.filter(
         (s: any) => s.label && s.value,
       ),
@@ -229,22 +232,28 @@ export default function ProductsPage() {
         .filter((f) => f.length > 0),
     };
 
-    if (editingId) {
-      await fetch(`/api/products/${editingId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-    } else {
-      await fetch("/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-    }
+    try {
+      const url = editingId ? `/api/products/${editingId}` : "/api/products";
+      const method = editingId ? "PUT" : "POST";
 
-    resetForm();
-    fetchData();
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to save product");
+      }
+
+      alert(editingId ? "Product updated successfully!" : "Product added successfully!");
+      resetForm();
+      fetchData();
+    } catch (error: any) {
+      console.error("Submission error:", error);
+      alert(error.message || "An error occurred during submission");
+    }
   };
 
   const resetForm = () => {
@@ -284,8 +293,8 @@ export default function ProductsPage() {
     (s) => s.categoryId === form.categoryId,
   );
 
-  const filteredSubSubcategories = subcategories.filter(
-    (ss) => ss.categoryId === form.subcategoryId,
+  const filteredSubSubcategories = subsubcategories.filter(
+    (ss) => ss.subcategoryId === form.subcategoryId,
   );
 
   // if (loadingData) return <TableShimmer />;
@@ -519,66 +528,66 @@ export default function ProductsPage() {
 
       <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
         {
-              loadingData?<TableShimmer/>:
-        <table className="w-full">
-          <thead>
-            <tr className="border-b text-left">
-              <th className="py-3">Name</th>
-              <th>Category</th>
-              <th>Subcategory</th>
-              <th>Condition</th>
-              <th>Availability</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((p) => (
-              <tr key={p.id} className="border-b">
-                <td className="py-3 font-semibold">{p.name}</td>
-                <td>{(p as any).category?.name || "N/A"}</td>
-                <td>{(p as any).subcategory?.name || "N/A"}</td>
-                <td>{p.condition}</td>
-                <td>{p.availability}</td>
-                <td className="space-x-3">
-                  <button
-                    onClick={() => {
-                      setEditingId(p.id!);
-                      setForm({
-                        ...p,
-                        specifications: (p as any).specifications || [
-                          { label: "", value: "" },
-                        ],
-                        features: Array.isArray(p.features) ? p.features : [],
-                      });
-                      setFeaturesInput(
-                        Array.isArray(p.features) ? p.features.join(", ") : "",
-                      );
-                    }}
-                    className="text-[#022c75]"
-                  >
-                    Edit
-                  </button>
+          loadingData ? <TableShimmer /> :
+            <table className="w-full">
+              <thead>
+                <tr className="border-b text-left">
+                  <th className="py-3">Name</th>
+                  <th>Category</th>
+                  <th>Subcategory</th>
+                  <th>Condition</th>
+                  <th>Availability</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.map((p) => (
+                  <tr key={p.id} className="border-b">
+                    <td className="py-3 font-semibold">{p.name}</td>
+                    <td>{(p as any).category?.name || "N/A"}</td>
+                    <td>{(p as any).subcategory?.name || "N/A"}</td>
+                    <td>{p.condition}</td>
+                    <td>{p.availability}</td>
+                    <td className="space-x-3">
+                      <button
+                        onClick={() => {
+                          setEditingId(p.id!);
+                          setForm({
+                            ...p,
+                            specifications: (p as any).specifications || [
+                              { label: "", value: "" },
+                            ],
+                            features: Array.isArray(p.features) ? p.features : [],
+                          });
+                          setFeaturesInput(
+                            Array.isArray(p.features) ? p.features.join(", ") : "",
+                          );
+                        }}
+                        className="text-[#022c75]"
+                      >
+                        Edit
+                      </button>
 
-                  <button
-                    onClick={() => handleDelete(p.id!)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+                      <button
+                        onClick={() => handleDelete(p.id!)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
 
-            {products.length === 0 && (
-              <tr>
-                <td colSpan={4} className="text-center py-6 text-[#022c75]">
-                  No products found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-}
+                {products.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="text-center py-6 text-[#022c75]">
+                      No products found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+        }
       </div>
     </div>
   );

@@ -101,7 +101,7 @@ export function HeroSlider() {
 
               {/* Secondary button */}
               <Link
-                href="/solutions"
+                href="/smt-line"
                 className="bg-[#022c75] hover:bg-[#022c75]/85
                text-[#e6e6e6]
                border border-[#022c75]/40
