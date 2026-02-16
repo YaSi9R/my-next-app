@@ -305,7 +305,7 @@ export default function ProductsPage() {
 
       {/* ================= FORM ================= */}
 
-      <div className="bg-white p-6 rounded-xl shadow mb-10 text-[#022c75] space-y-4">
+      <div className="bg-[#e6e6e6] p-6 rounded-xl shadow mb-10 text-[#022c75] space-y-4 border border-2 border-[#022c75]">
         <h2 className="text-xl font-semibold">
           {editingId ? "Update Product" : "Add Product"}
         </h2>
@@ -526,7 +526,7 @@ export default function ProductsPage() {
 
       {/* ================= TABLE ================= */}
 
-      <div className="bg-white p-4 md:p-6 rounded-xl shadow text-[#022c75] overflow-x-auto">
+      <div className="bg-[#e6e6e6] p-4 md:p-6 rounded-xl shadow text-[#022c75] overflow-x-auto border border-2 border-[#022c75]">
         {
           loadingData ? <TableShimmer /> :
             <table className="w-full min-w-[800px]">

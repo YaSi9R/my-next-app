@@ -70,7 +70,7 @@ export default function QueriesPage() {
         Customer Queries
       </h1>
 
-      <div className="bg-white p-4 md:p-6 rounded-xl shadow text-[#022c75]">
+      <div className="bg-[#e6e6e6] p-4 md:p-6 rounded-xl shadow text-[#022c75]">
         {error && (
           <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-4 text-center">
             {error}

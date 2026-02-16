@@ -178,7 +178,7 @@ export default function CategoryManagementPage() {
       {
         loadingData ? <ShimmerSection /> : <>
 
-          <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+          <div className="bg-[#e6e6e6] p-6 rounded-xl shadow text-[#022c75] border border-2 border-[#022c75]">
             <h2 className="text-xl font-semibold mb-4">Categories</h2>
 
             <form onSubmit={handleAddCategory} className="flex flex-col md:flex-row gap-4 mb-6">
@@ -210,40 +210,54 @@ export default function CategoryManagementPage() {
             </form>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {categories.map((cat) => (
-                <div
-                  key={cat.id}
-                  onClick={() => setSelectedCategoryId(cat.id)}
-                  className={`cursor-pointer p-4 rounded-xl border-2 transition-all flex flex-col justify-between ${selectedCategoryId === cat.id ? "border-[#022c75] bg-blue-50" : "border-gray-100 hover:border-gray-300"
-                    }`}
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="font-bold text-lg">{cat.name}</span>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); handleEditCategory(cat); }}
-                        className="text-[#022c75]  text-sm cursor-pointer"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); handleDeleteCategory(cat.id); }}
-                        className="text-red-500 hover:text-red-700 text-sm cursor-pointer"
-                      >
-                        Delete
-                      </button>
+              {categories.map((cat) => {
+                const isActive = selectedCategoryId === cat.id;
+
+                return (
+                  <div
+                    key={cat.id}
+                    onClick={() => setSelectedCategoryId(cat.id)}
+                    className={`cursor-pointer p-4 rounded-xl border-2 transition-all flex flex-col justify-between
+          ${isActive
+                        ? "bg-[#022c75] text-[#e6e6e6] border-[#022c75]"
+                        : "bg-[#e6e6e6] text-[#022c75] border-[#022c75]"
+                      }
+        `}
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <span className="font-bold text-lg">
+                        {cat.name}
+                      </span>
+
+                      <div className="flex gap-2">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleEditCategory(cat); }}
+                          className={`${isActive ? "text-[#e6e6e6]" : "text-[#022c75]"} text-sm`}
+                        >
+                          Edit
+                        </button>
+
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleDeleteCategory(cat.id); }}
+                          className="text-red-500 hover:text-red-700 text-sm"
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
+
+                    <span className="text-xs uppercase tracking-wider font-semibold">
+                      {subcategories.filter(s => s.categoryId === cat.id).length} Subcategories
+                    </span>
                   </div>
-                  <span className="text-xs text-[#022c75] uppercase tracking-wider font-semibold">
-                    {subcategories.filter(s => s.categoryId === cat.id).length} Subcategories
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
           </div>
 
           {/* SUBCATEGORY SECTION */}
-          <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+          <div className="bg-[#e6e6e6] p-6 rounded-xl shadow text-[#022c75] border border-2 border-[#022c75]">
             <h2 className="text-xl font-semibold mb-4">
               Subcategories {selectedCategoryId && `for ${categories.find(c => c.id === selectedCategoryId)?.name}`}
             </h2>
@@ -279,37 +293,50 @@ export default function CategoryManagementPage() {
                 </form>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-                  {filteredSubcategories.map((sub) => (
-                    <div
-                      key={sub.id}
-                      onClick={() => setSelectedSubcategoryId(sub.id)}
-                      className={`cursor-pointer border p-3 rounded-lg flex justify-between items-center group transition-all ${selectedSubcategoryId === sub.id ? "border-[#022c75] bg-blue-50" : "border-gray-100 hover:border-gray-300"
-                        }`}
-                    >
-                      <span className="font-medium">{sub.name}</span>
-                      <div className="flex gap-2">
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleEditSubcategory(sub); }}
-                          className="text-[#022c75] text-sm"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleDeleteSubcategory(sub.id); }}
-                          className="text-red-500 hover:text-red-700 text-sm"
-                        >
-                          Delete
-                        </button>
+                  {filteredSubcategories.map((sub) => {
+                    const isActive = selectedSubcategoryId === sub.id;
+
+                    return (
+                      <div
+                        key={sub.id}
+                        onClick={() => setSelectedSubcategoryId(sub.id)}
+                        className={`cursor-pointer p-3 rounded-lg flex justify-between items-center transition-all border
+          ${isActive
+                            ? "bg-[#022c75] text-[#e6e6e6] border-[#022c75]"
+                            : "bg-[#e6e6e6] text-[#022c75] border-[#022c75]"
+                          }
+        `}
+                      >
+                        <span className="font-medium">
+                          {sub.name}
+                        </span>
+
+                        <div className="flex gap-2">
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleEditSubcategory(sub); }}
+                            className={`${isActive ? "text-[#e6e6e6]" : "text-[#022c75]"} text-sm`}
+                          >
+                            Edit
+                          </button>
+
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleDeleteSubcategory(sub.id); }}
+                            className="text-red-500 hover:text-red-700 text-sm"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
 
                   {filteredSubcategories.length === 0 && (
-                    <p className="text-gray-500 col-span-full py-4 text-center border-2 border-dashed rounded-xl">
+                    <p className="text-[#022c75] col-span-full py-4 text-center border-2 border-dashed border-[#022c75] rounded-xl">
                       No subcategories in this category
                     </p>
                   )}
                 </div>
+
               </>
             ) : (
               <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
@@ -321,7 +348,7 @@ export default function CategoryManagementPage() {
           </div>
 
           {/* SUBSUBCATEGORY SECTION */}
-          <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
+          <div className="bg-[#e6e6e6] p-6 rounded-xl shadow text-[#022c75]">
             <h2 className="text-xl font-semibold mb-4">
               Third Level Items {selectedSubcategoryId && `for ${subcategories.find(s => s.id === selectedSubcategoryId)?.name}`}
             </h2>
@@ -358,12 +385,12 @@ export default function CategoryManagementPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                   {filteredSubSubcategories.map((subsub) => (
-                    <div key={subsub.id} className="border border-gray-100 p-3 rounded-lg flex justify-between items-center group hover:border-gray-300 transition-colors">
+                    <div key={subsub.id} className="border border-gray-100 p-3 rounded-lg flex justify-between items-center group hover:border-[#022c75] hover:text-[#e6e6e6] hover:bg-[#022c75] transition-colors">
                       <span className="font-medium">{subsub.name}</span>
-                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex gap-2 ">
                         <button
                           onClick={(e) => { e.stopPropagation(); handleEditSubSubcategory(subsub); }}
-                          className="text-[#022c75] text-sm"
+                          className="text-[#022c75] text-sm group-hover:text-[#e6e6e6]"
                         >
                           Edit
                         </button>

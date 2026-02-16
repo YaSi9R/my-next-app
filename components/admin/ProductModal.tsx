@@ -20,7 +20,7 @@ export default function ProductModal({
 
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-      <div className="bg-white w-[800px] max-h-[90vh] overflow-y-auto p-6 rounded-xl space-y-6">
+      <div className="bg-[#e6e6e6] w-[800px] max-h-[90vh] overflow-y-auto p-6 rounded-xl space-y-6">
 
         <div className="flex justify-between">
           <h2 className="text-xl font-bold text-[#022c75]">

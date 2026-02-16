@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, Phone, Mail } from 'lucide-react';
 import { Product } from '@/lib/api';
@@ -8,6 +10,13 @@ interface Props {
 }
 
 export default function ProductDetail({ product }: Props) {
+    const [activeImage, setActiveImage] = useState(product.images?.[0] || "");
+
+    useEffect(() => {
+        if (product.images?.[0]) {
+            setActiveImage(product.images[0]);
+        }
+    }, [product.images]);
     const backLink = product.brand?.slug
         ? `/${product.category?.slug}/${product.subcategory?.slug}/${product.brand.slug}`
         : `/${product.category?.slug}/${product.subcategory?.slug}`;
@@ -31,9 +40,9 @@ export default function ProductDetail({ product }: Props) {
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Product Image */}
                     <div className="bg-white rounded-2xl p-8 shadow-lg">
-                        <div className=" bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl flex items-center justify-center mb-6 overflow-hidden relative border border-gray-100">
-                            {product.images?.[0] ? (
-                                <img src={product.images[0]} alt={product.name} className="w-full h-full object-contain" />
+                        <div className=" bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl flex items-center justify-center mb-6 overflow-hidden relative border border-gray-100 h-[400px]">
+                            {activeImage ? (
+                                <img src={activeImage} alt={product.name} className="w-full h-full object-contain transition-all duration-300" />
                             ) : (
                                 <div className="text-4xl font-bold text-gray-300 uppercase">{product.brand?.name || product.name}</div>
                             )}
@@ -44,7 +53,9 @@ export default function ProductDetail({ product }: Props) {
                             {product.images?.map((img, i) => (
                                 <div
                                     key={i}
-                                    className="aspect-square bg-white border border-gray-100 rounded-lg flex items-center justify-center overflow-hidden hover:border-blue-400 transition-colors cursor-pointer"
+                                    onClick={() => setActiveImage(img)}
+                                    className={`aspect-square bg-white border-2 rounded-lg flex items-center justify-center overflow-hidden transition-all cursor-pointer ${activeImage === img ? "border-[#022c75] ring-2 ring-[#022c75]/20" : "border-gray-100 hover:border-blue-400"
+                                        }`}
                                 >
                                     <img src={img} className="w-full h-full object-contain p-2" />
                                 </div>

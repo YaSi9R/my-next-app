@@ -80,8 +80,8 @@ export default function BrandsPage() {
       </h1>
 
       {/* FORM */}
-      <div className="bg-white p-6 rounded-xl shadow mb-8 text-[#022c75]">
-        <h2 className="text-xl font-semibold mb-4">
+      <div className="bg-[#022c75] p-6 rounded-xl border border-[#022c75] border-2 shadow mb-8 text-[#022c75]">
+        <h2 className="text-xl font-semibold mb-4 text-[#e6e6e6]">
           {editingId ? "Update Brand" : "Add New Brand"}
         </h2>
 
@@ -92,13 +92,13 @@ export default function BrandsPage() {
             placeholder="Brand name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="flex-1 border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#022c75]"
+            className="flex-1 text-[#e6e6e6]  border border-[#e6e6e6] rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#e6e6e6]"
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#022c75] text-white px-6 py-2 rounded-lg hover:bg-[#01306b]"
+            className="bg-[#e6e6e6] text-[#022c75] px-6 py-2 rounded-lg border border-[#e6e6e6] cursor-pointer"
           >
             {editingId ? "Update" : "Add"}
           </button>
@@ -110,7 +110,7 @@ export default function BrandsPage() {
                 setEditingId(null);
                 setName("");
               }}
-              className="px-4 py-2 border rounded-lg"
+              className="px-4 py-2 border border-[#e6e6e6] rounded-lg"
             >
               Cancel
             </button>
@@ -119,13 +119,13 @@ export default function BrandsPage() {
       </div>
 
       {/* TABLE */}
-      <div className="bg-white p-4 md:p-6 rounded-xl shadow text-[#022c75] overflow-x-auto">
+      <div className="bg-[#e6e6e6] p-4 md:p-6 rounded-xl border border-[#022c75] border-2 shadow text-[#022c75] overflow-x-auto">
 
         {
           loadingData ? <TableShimmer /> :
             <table className="w-full min-w-[500px]">
               <thead>
-                <tr className="border-b text-left">
+                <tr className="border-b text-left text-[#022c75]">
                   <th className="py-3">Name</th>
                   <th>Slug</th>
                   <th>Actions</th>
@@ -133,7 +133,7 @@ export default function BrandsPage() {
               </thead>
               <tbody>
                 {brands.map((brand) => (
-                  <tr key={brand.id} className="border-b">
+                  <tr key={brand.id} className="border-b text-[#022c75]">
                     <td className="py-3">{brand.name}</td>
                     <td>{brand.slug}</td>
                     <td className="space-x-3">

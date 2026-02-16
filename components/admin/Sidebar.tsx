@@ -26,17 +26,17 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   return (
     <div className={`
-      fixed inset-y-0 left-0 z-50 w-64 bg-white p-4 transition-transform duration-300 md:relative md:translate-x-0 border-r-4 border-[#022c75]
-      ${isOpen ? "translate-x-0" : "-translate-x-full"}
-    `}>
-      <Link href="/admin" className="flex items-center justify-center py-4">
-        <div className="h-20 md:h-20 flex items-center pb-2 bg-white ">
-          <Image
-            src={logo}
-            alt="Tekmart Logo"
-            className=" h-full w-auto scale-170"
-            unoptimized
-          />
+  fixed inset-y-0 left-0 z-50 w-64 bg-[#e6e6e6] p-4 
+  transition-transform duration-300 
+  md:relative md:translate-x-0 
+  border-r-4 border-[#022c75]
+  flex flex-col items-center
+  ${isOpen ? "translate-x-0" : "-translate-x-full"}
+`}>
+
+      <Link href="/admin" className="flex items-center" onClick={() => window.scrollTo(0, 0)}>
+        <div className="h-20 md:h-20 flex items-center pb-2 ">
+          <Image src={logo} alt="Tekmart Logo" className=" h-full w-auto scale-170" priority />
         </div>
       </Link>
 
@@ -50,9 +50,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               key={item.path}
               href={item.path}
               onClick={() => onClose?.()}
-              className={`px-3 py-2 rounded font-bold flex gap-2 ${isActive
+              className={`px-14 mt-4 py-2 rounded font-bold flex gap-2 ${isActive
                 ? "bg-[#022c75] text-white"
-                : "bg-white text-[#022c75]"
+                : "bg-[#e6e6e6] text-[#022c75]"
                 }`}
             >
               <Icon className="w-5 h-5" />
