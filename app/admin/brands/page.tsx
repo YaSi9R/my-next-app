@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import slugify from "slugify";
 import TableShimmer from "@/components/admin/TableShimmer";
+import ShimmerSection from "@/components/admin/TableShimmer";
 
 interface Brand {
   id: string;
@@ -70,7 +71,7 @@ export default function BrandsPage() {
     fetchBrands();
   };
 
-  if (loadingData) return <TableShimmer/>;
+  // if (loadingData) return <TableShimmer/>;
 
   return (
     <div>
@@ -119,7 +120,10 @@ export default function BrandsPage() {
 
       {/* TABLE */}
       <div className="bg-white p-6 rounded-xl shadow text-[#022c75]">
-        <table className="w-full">
+       
+          {
+            loadingData?<TableShimmer/>:
+             <table className="w-full">
           <thead>
             <tr className="border-b text-left">
               <th className="py-3">Name</th>
@@ -127,7 +131,6 @@ export default function BrandsPage() {
               <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
             {brands.map((brand) => (
               <tr key={brand.id} className="border-b">
@@ -136,14 +139,14 @@ export default function BrandsPage() {
                 <td className="space-x-3">
                   <button
                     onClick={() => handleEdit(brand)}
-                    className="text-blue-600"
+                    className="text-[#022c75] cursor-pointer" 
                   >
                     Edit
                   </button>
 
                   <button
                     onClick={() => handleDelete(brand.id)}
-                    className="text-red-600"
+                    className="text-red-600 cursor-pointer"
                   >
                     Delete
                   </button>
@@ -153,13 +156,14 @@ export default function BrandsPage() {
 
             {brands.length === 0 && (
               <tr>
-                <td colSpan={3} className="text-center py-6 text-gray-500">
+                <td colSpan={3} className="text-center py-6 text-[#022c75]">
                   No brands found
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+}
       </div>
     </div>
   );

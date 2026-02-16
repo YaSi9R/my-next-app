@@ -60,9 +60,9 @@ export default function QueriesPage() {
     fetchQueries();
   };
 
-  if (loading) {
-    return <QueriesShimmer />;
-  }
+  // if (loading) {
+  //   return <QueriesShimmer />;
+  // }
 
   return (
     <div>
@@ -77,23 +77,25 @@ export default function QueriesPage() {
           </div>
         )}
 
+{
+  loading?<QueriesShimmer/>:<>
+  
         {queries.length === 0 && !error ? (
-          <p className="text-gray-500 text-center py-6">
+          <p className="text-[#022c75] text-center py-6">
             No queries found
           </p>
         ) : null}
-
         {queries.length > 0 && (
           <div className="space-y-6">
             {queries.map((query) => (
               <div
                 key={query.id}
-                className="border rounded-lg p-4 space-y-2"
+                className="border-2 rounded-lg p-4 space-y-2 border-[#022c75]"
               >
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="font-semibold text-lg">{query.name}</p>
-                    <div className="text-sm text-gray-600 mt-1 space-y-1">
+                    <div className="text-sm text-[#022c75] mt-1 space-y-1">
                       <p>Email: {query.email}</p>
                       <p>Phone: {query.phone}</p>
                       {query.company && <p>Company: {query.company}</p>}
@@ -103,23 +105,25 @@ export default function QueriesPage() {
 
                   <button
                     onClick={() => handleDelete(query.id)}
-                    className="text-red-600 text-sm"
+                    className="text-red-600 text-sm cursor-pointer" 
                   >
                     Delete
                   </button>
                 </div>
 
-                <p className="text-gray-700">
+                <p className="text-[#022c75]">
                   {query.message}
                 </p>
 
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-[#022c75]">
                   {new Date(query.createdAt).toLocaleString()}
                 </p>
               </div>
             ))}
           </div>
         )}
+        </>
+}
       </div>
     </div>
   );
@@ -129,7 +133,7 @@ export default function QueriesPage() {
 function QueriesShimmer() {
   return (
     <div>
-      <div className="h-8 bg-gray-300 w-64 mb-6 rounded animate-pulse"></div>
+      {/* <div className="h-8 bg-gray-300 w-64 mb-6 rounded animate-pulse"></div> */}
 
       <div className="bg-white p-6 rounded-xl shadow animate-pulse space-y-6">
         {Array.from({ length: 5 }).map((_, i) => (
