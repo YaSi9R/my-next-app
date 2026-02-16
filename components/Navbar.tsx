@@ -66,23 +66,12 @@ const initialNavItems: NavItem[] = [
     {
         name: "Services",
         href: "/service",
-        children: [
-            { name: "Installation & Commissioning", href: "/service/installation" },
-            { name: "SMT Line Setup & Integration", href: "/service/setup" },
-            { name: "Operator & Maintenance Training", href: "/service/training" },
-            { name: "Preventive Maintenance", href: "/service/preventive" },
-            { name: "Breakdown & Technical Support", href: "/service/technical" },
-            { name: "SMT Spare Parts Support", href: "/service/spare-parts" },
-        ],
+       
     },
     {
-        name: "Our Clients",
-        href: "/clients",
-        children: [
-            { name: "Client List", href: "/clients#list" },
-            { name: "Case Studies", href: "/clients#case" },
-            { name: "What Our Clients Say", href: "/clients#say" },
-        ],
+        name: "Our Customers",
+        href: "/customers",
+        
     },
 ];
 
