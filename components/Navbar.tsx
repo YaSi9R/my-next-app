@@ -39,35 +39,17 @@ const initialNavItems: NavItem[] = [
             {
                 name: "Entry Level SMT Line",
                 href: "/smt-line/entry-level",
-                children: [
-                    { name: "Line Flow Diagram", href: "/smt-line/entry-level#diagram" },
-                    { name: "Fixed Machine Combination", href: "/smt-line/entry-level#machines" },
-                    { name: "Suitable For", href: "/smt-line/entry-level#suitable" },
-                    { name: "Short Description", href: "/smt-line/entry-level#description" },
-                    { name: "Enquiry / WhatsApp CTA", href: "/smt-line/entry-level#enquiry" },
-                ],
+                
             },
             {
                 name: "Mid-Scale SMT Line",
                 href: "/smt-line/mid-scale",
-                children: [
-                    { name: "Line Flow Diagram", href: "/smt-line/mid-scale#diagram" },
-                    { name: "Fixed Machine Combination", href: "/smt-line/mid-scale#machines" },
-                    { name: "Suitable For", href: "/smt-line/mid-scale#suitable" },
-                    { name: "Short Description", href: "/smt-line/mid-scale#description" },
-                    { name: "Enquiry / WhatsApp CTA", href: "/smt-line/mid-scale#enquiry" },
-                ],
+                
             },
             {
                 name: "High-Speed SMT Line",
                 href: "/smt-line/high-speed",
-                children: [
-                    { name: "Line Flow Diagram", href: "/smt-line/high-speed#diagram" },
-                    { name: "Fixed Machine Combination", href: "/smt-line/high-speed#machines" },
-                    { name: "Suitable For", href: "/smt-line/high-speed#suitable" },
-                    { name: "Short Description", href: "/smt-line/high-speed#description" },
-                    { name: "Enquiry / WhatsApp CTA", href: "/smt-line/high-speed#enquiry" },
-                ],
+                
             },
         ],
     },

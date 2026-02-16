@@ -1,142 +1,121 @@
 import React from 'react';
 import Link from 'next/link';
-import { getAllLinePackages } from '@/lib/api';
-import { Check, ArrowRight, Factory, Zap, Users } from 'lucide-react';
+import { ArrowRight, Factory, Zap, Activity, BarChart3, ChevronRight } from 'lucide-react';
 
-export default async function SMTLinePage() {
-    const smtLinePackages = await getAllLinePackages();
+export default function SMTLinePage() {
     return (
-        <div className="min-h-screen bg-[#022c75] py-12">
-            <div className="container mx-auto px-4 max-w-7xl">
-                {/* Page Header */}
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                        SMT Production Line Solutions
-                    </h1>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Complete turnkey SMT production lines tailored to your manufacturing needs - from entry-level to high-speed production
-                    </p>
-                </div>
-
-
-                <div className="space-y-12">
-                    {smtLinePackages.map((line, idx) => (
-                        <div
-                            key={line.id}
-                            className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-                        >
-                            <div className="grid lg:grid-cols-2 gap-8">
-
-                                <div className="bg-gradient-to-br from-blue-50 to-gray-100 p-8 flex items-center justify-center">
-                                    <div className="text-center">
-                                        <Factory className="w-32 h-32 text-[#e6e6e6] mx-auto mb-4 opacity-20" />
-                                        <p className="text-gray-500 text-sm">Line Flow Diagram</p>
-                                        <p className="text-xs text-gray-400 mt-2">
-                                            (Placeholder - actual diagram will be provided)
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Line Details */}
-                                <div className="p-8">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <h2 className="text-3xl font-bold text-gray-900">{line.name}</h2>
-                                        <span className="px-4 py-2 bg-[#e6e6e6] text-white rounded-full text-sm font-semibold">
-                                            {idx === 0 ? 'Popular' : 'Premium'}
-                                        </span>
-                                    </div>
-
-                                    <p className="text-gray-700 mb-6 leading-relaxed">{line.description}</p>
-
-                                    {/* Key Info Grid */}
-                                    <div className="grid grid-cols-2 gap-4 mb-6">
-                                        <div className="bg-gray-50 p-4 rounded-lg">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <Zap className="w-5 h-5 text-[#e6e6e6]" />
-                                                <p className="text-sm font-semibold text-gray-700">Capacity</p>
-                                            </div>
-                                            <p className="text-gray-900 font-bold">{line.capacity}</p>
-                                        </div>
-                                        <div className="bg-gray-50 p-4 rounded-lg">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <Factory className="w-5 h-5 text-[#e6e6e6]" />
-                                                <p className="text-sm font-semibold text-gray-700">Floor Space</p>
-                                            </div>
-                                            <p className="text-gray-900 font-bold">{line.floorSpace}</p>
-                                        </div>
-                                    </div>
-
-                                    {/* Suitable For */}
-                                    <div className="mb-6">
-                                        <h3 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                                            <Users className="w-5 h-5 text-[#e6e6e6]" />
-                                            Suitable For
-                                        </h3>
-                                        <p className="text-gray-600">{line.suitableFor}</p>
-                                    </div>
-
-                                    {/* Included Machines */}
-                                    <div className="mb-6">
-                                        <h3 className="font-bold text-gray-900 mb-3">Included Equipment</h3>
-                                        <div className="space-y-2">
-                                            {line.machines.map((machine, idx) => (
-                                                <div key={idx} className="flex items-center gap-2">
-                                                    <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
-                                                    <span className="text-gray-700">{machine}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Features */}
-                                    <div className="mb-6">
-                                        <h3 className="font-bold text-gray-900 mb-3">Package Includes</h3>
-                                        <div className="grid grid-cols-2 gap-2">
-                                            {line.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-start gap-2 text-sm">
-                                                    <Check className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                                                    <span className="text-gray-600">{feature}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* CTA */}
-                                    <div className="flex items-center justify-between pt-6 border-t border-gray-200">
-                                        <div className="flex flex-col">
-                                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Pricing</span>
-                                            <span className="text-sm font-bold text-blue-600 uppercase tracking-widest">Request Technical Quote</span>
-                                        </div>
-                                        <div className="flex gap-3">
-                                            <Link
-                                                href={`/smt-line/${line.id}`}
-                                                className="inline-flex items-center gap-2 px-6 py-3 bg-[#022c75] text-white rounded-xl font-bold hover:bg-[#033a95] transition shadow-lg hover:shadow-xl"
-                                            >
-                                                View Details
-                                                <ArrowRight className="w-4 h-4" />
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Contact CTA */}
-                <div className="mt-16 bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-16 text-center text-white backdrop-blur-sm shadow-2xl">
-                    <h2 className="text-4xl font-bold mb-6 tracking-tight">Need a Custom SMT Line Configuration?</h2>
-                    <p className="text-lg mb-10 text-blue-100/70 max-w-2xl mx-auto leading-relaxed">
-                        Our specialized engineers can design a bespoke production line tailored to your specific manufacturing volume and technical requirements.
-                    </p>
-                    <div className="flex justify-center">
-                        <Link
-                            href="/quote"
-                            className="inline-block bg-white text-[#022c75] px-12 py-4 rounded-2xl font-bold text-lg hover:bg-blue-50 transition shadow-2xl hover:scale-105"
-                        >
-                            Request Custom Line Quote
-                        </Link>
+        <div className="min-h-screen bg-[#e6e6e6]">
+            {/* Hero Section */}
+            <div className="bg-[#e6e6e6] py-6 lg:py-10 relative overflow-hidden">
+                <div className="container mx-auto px-4 max-w-7xl relative z-10">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <h1 className="text-4xl md:text-6xl font-bold mb-2 tracking-tight leading-tight text-[#022c75]">
+                            Complete SMT Lines Configured for <span className="text-[#022c75] text-4xl block">Every Production Scale</span>
+                        </h1>
+                        <p className="text-lg md:text-xl text-blue-100/90 leading-relaxed max-w-3xl mx-auto">
+                            Tekmart designs and configures complete SMT production lines combining refurbished core
+                            machines with select new peripherals. From compact 20,000 CPH setups to
+                            high-performance 60,000+ CPH systems, each line is structured around your production
+                            goals, space constraints, and investment strategy.
+                        </p>
                     </div>
+                </div>
+            </div>
+
+            {/* Line Cards Section */}
+            <div className="container mx-auto px-4 max-w-7xl py-8 -mt-16 z-20 relative">
+                <div className="grid md:grid-cols-3 gap-8">
+                    {/* Entry Level Card */}
+                    <div className="bg-[#022c75] rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full border  border-[#022c75]">
+                        <div className="h-2 bg-[#022c75]"></div>
+                        <div className="p-8 flex-1 flex flex-col">
+                            <div className="w-14 h-14 bg-[#e6e6e6] rounded-xl flex items-center justify-center mb-6">
+                                <Zap className="w-8 h-8 text-[#022c75]" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-[#e6e6e6] mb-2">Entry Level SMT Line</h3>
+                            <div className="text-sm font-bold text-[#022c75] mb-4 bg-[#e6e6e6] inline-block px-3 py-1 rounded-full w-fit">
+                                Up to 20,000 CPH
+                            </div>
+                            <p className="text-[#e6e6e6] mb-8 flex-1 leading-relaxed">
+                                Smart automation designed for new SMT setups, manual-to-automation upgrades, and budget-conscious expansion.
+                            </p>
+                            <Link
+                                href="/smt-line/entry-level"
+                                className="group flex items-center justify-between w-full py-3 px-5 bg-[#e6e6e6]  text-[#022c75]  rounded-xl transition-all duration-300 font-semibold"
+                            >
+                                Explore Entry Line
+                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Mid Level Card */}
+                    <div className="bg-[#e6e6e6] rounded-2xl shadow-xl overflow-hidden hover:shadow-3xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full border border-[#022c75] relative transform md:-translate-y-4">
+                        <div className="absolute top-0 right-0 bg-[#022c75] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                            MOST POPULAR
+                        </div>
+                        <div className="h-2 bg-[#022c75]"></div>
+                        <div className="p-8 flex-1 flex flex-col">
+                            <div className="w-14 h-14 bg-[#022c75] rounded-xl flex items-center justify-center mb-6">
+                                <Activity className="w-8 h-8 text-[#e6e6e6]" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-[#022c75] mb-2">Mid Level SMT Line</h3>
+                            <div className="text-sm font-bold text-[#e6e6e6] mb-4 bg-[#022c75] inline-block px-3 py-1 rounded-full w-fit">
+                                Up to 40,000 CPH
+                            </div>
+                            <p className="text-[#022c75] mb-8 flex-1 leading-relaxed">
+                                Balanced throughput and flexibility for growing EMS and OEM manufacturers handling multiple SKUs.
+                            </p>
+                            <Link
+                                href="/smt-line/mid-scale"
+                                className="group flex items-center justify-between w-full py-3 px-5 bg-[#022c75] text-white rounded-xl transition-all duration-300 font-semibold shadow-lg "
+                            >
+                                Explore Mid Level Line
+                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* High Speed Card */}
+                    <div className="bg-[#022c75] rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full border border-gray-100">
+                        <div className="h-2 bg-[#022c75]"></div>
+                        <div className="p-8 flex-1 flex flex-col">
+                            <div className="w-14 h-14 bg-[#e6e6e6] rounded-xl flex items-center justify-center mb-6">
+                                <BarChart3 className="w-8 h-8 text-[#022c75]" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-[#e6e6e6] mb-2">High Speed SMT Line</h3>
+                            <div className="text-sm font-bold text-[#022c75] mb-4 bg-[#e6e6e6] inline-block px-3 py-1 rounded-full w-fit">
+                                40,000–60,000+ CPH
+                            </div>
+                            <p className="text-[#e6e6e6] mb-8 flex-1 leading-relaxed">
+                                Engineered for high-volume production environments requiring speed, precision, and operational stability.
+                            </p>
+                            <Link
+                                href="/smt-line/high-speed"
+                                className="group flex items-center justify-between w-full py-3 px-5 bg-[#e6e6e6] text-[#022c75] rounded-xl transition-all duration-300 font-semibold"
+                            >
+                                Explore High Speed Line
+                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Section */}
+            <div className="container mx-auto px-4 max-w-4xl py-20 text-center">
+                <div className="bg-[#e6e6e6] rounded-3xl p-10 md:p-14 shadow-lg border border-[2px] border-[#022c75]">
+                    <h2 className="text-3xl font-bold text-[#022c75] mb-4">Not Sure Which Line Fits Your Production?</h2>
+                    <p className="text-lg text-[#022c75] mb-8 max-w-2xl mx-auto">
+                        Speak with our technical team to receive a structured recommendation based on your PCB type, target output, and budget.
+                    </p>
+                    <Link
+                        href="/quote"
+                        className="inline-flex items-center gap-2 bg-[#022c75] text-[#e6e6e6] px-8 py-4 rounded-full font-bold text-lg  transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                    >
+                        Schedule Consultation
+                        <ChevronRight className="w-5 h-5" />
+                    </Link>
                 </div>
             </div>
         </div>
