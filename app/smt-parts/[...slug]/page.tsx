@@ -11,31 +11,30 @@ import { prisma } from '@/lib/prisma';
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-    const { products } = await getProducts({ limit: 50 });
+    const { products } = await getProducts({ limit: 100 });
     const parts = products.filter(p => p.category?.slug === 'smt-parts');
 
     const paths = [];
 
-    // 1. Product Detail Pages: [subcat, brand, id]
+    // 1. Product Detail Pages
     for (const p of parts) {
-        paths.push({ slug: [p.subcategory?.slug || 'other', p.brand?.slug || 'generic', p.id] });
+        if (p.subcategory?.slug && p.subsubcategory?.slug) {
+            paths.push({ slug: [p.subcategory.slug, p.subsubcategory.slug, p.id] });
+        } else if (p.subcategory?.slug) {
+            paths.push({ slug: [p.subcategory.slug, p.id] });
+        }
     }
 
-    // 2. Listing Pages (Deduplicated)
+    // 2. Listing Pages
     const subcats = new Set(parts.map(p => p.subcategory?.slug).filter(Boolean));
-    const brands = new Set(parts.map(p => p.brand?.slug).filter(Boolean));
+    const subsubcats = new Set(parts.map(p => p.subsubcategory?.slug).filter(Boolean));
 
-    // [subcat]
     subcats.forEach(s => paths.push({ slug: [s!] }));
-    // [brand]
-    brands.forEach(b => paths.push({ slug: [b!] }));
-
-    // [subcat, brand]
     subcats.forEach(s => {
-        brands.forEach(b => {
-            const exists = parts.some(p => p.subcategory?.slug === s && p.brand?.slug === b);
+        subsubcats.forEach(ss => {
+            const exists = parts.some(p => p.subcategory?.slug === s && p.subsubcategory?.slug === ss);
             if (exists) {
-                paths.push({ slug: [s!, b!] });
+                paths.push({ slug: [s!, ss!] });
             }
         });
     });
@@ -65,14 +64,12 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
     }
 
     // Case 2: Listing Page 
-    let initialCategorySlug: string | undefined;
-    let initialCategoryName: string | undefined;
-    let initialBrandName: string | undefined;
-    let initialBrandSlug: string | undefined;
+    let initialSubcategorySlug: string | undefined;
+    let initialSubcategoryName: string | undefined;
+    let initialSubsubcategorySlug: string | undefined;
+    let initialSubsubcategoryName: string | undefined;
 
-    // Direct database lookups for each slug segment to be robust
     for (const s of slug) {
-        // Look up subcategory
         const subcategory = await prisma.subcategory.findFirst({
             where: {
                 slug: s,
@@ -81,49 +78,47 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
         });
 
         if (subcategory) {
-            initialCategorySlug = subcategory.slug;
-            initialCategoryName = subcategory.name;
+            initialSubcategorySlug = subcategory.slug;
+            initialSubcategoryName = subcategory.name;
             continue;
         }
 
-        // Look up brand
-        const brand = await prisma.brand.findUnique({
+        const subsubcat = await prisma.subSubcategory.findFirst({
             where: { slug: s }
         });
 
-        if (brand) {
-            initialBrandName = brand.name;
-            initialBrandSlug = brand.slug;
+        if (subsubcat) {
+            initialSubsubcategorySlug = subsubcat.slug;
+            initialSubsubcategoryName = subsubcat.name;
             continue;
         }
     }
 
-    // Always ensure we are filtering within SMT parts for this page
     const partsData = await getProducts({
         categorySlug: 'smt-parts',
-        subcategorySlug: initialCategorySlug,
-        brandSlug: initialBrandSlug,
+        subcategorySlug: initialSubcategorySlug,
+        subsubcategorySlug: initialSubsubcategorySlug,
         limit: 50
     });
 
-    if (initialCategorySlug || initialBrandSlug || slug.length === 0) {
+    if (initialSubcategorySlug || initialSubsubcategorySlug) {
         return (
             <div className="min-h-screen bg-[#e6e6e6]">
                 <div className="bg-[#e6e6e6] py-12 text-center text-[#022c75] mb-8">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        {initialCategoryName
-                            ? initialCategoryName
-                            : (initialBrandName ? `${initialBrandName} Parts` : 'SMT Parts')}
+                        {initialSubsubcategoryName
+                            ? initialSubsubcategoryName
+                            : (initialSubcategoryName ? initialSubcategoryName : 'SMT Parts')}
                     </h1>
                     <p className="text-xl text-[#022c75] max-w-2xl mx-auto px-4">
-                        Find the perfect parts for your {initialCategoryName || initialBrandName || 'SMT'} equipment.
+                        Quality spare parts for all your SMT machines and production lines.
                     </p>
                 </div>
                 <ProductBrowser
                     initialData={JSON.parse(JSON.stringify(partsData))}
                     rootCategorySlug="smt-parts"
-                    initialCategory={initialCategorySlug}
-                    initialBrandSlug={initialBrandSlug}
+                    initialSubcategory={initialSubcategorySlug}
+                    initialSubsubcategory={initialSubsubcategorySlug}
                 />
             </div>
         )

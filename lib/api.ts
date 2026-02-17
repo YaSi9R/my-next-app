@@ -12,9 +12,9 @@ export type Product = {
     images: string[];
     specifications: { label: string; value: string }[];
     features: string[];
-    brand: { name: string; slug: string };
     category: { name: string; slug: string };
     subcategory: { name: string; slug: string };
+    subsubcategory?: { name: string; slug: string };
     createdAt: string;
     updatedAt: string;
 };
@@ -52,17 +52,6 @@ export async function getProductsBySubcategorySlug(subcategorySlug: string, page
     }
 }
 
-export async function getProductsByBrandSlug(brandSlug: string, page = 1, limit = 10): Promise<{ products: Product[], total: number, totalPages: number }> {
-    try {
-        const res = await fetch(`${API_BASE_URL}/api/products?brandSlug=${brandSlug}&page=${page}&limit=${limit}`, { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to fetch products by brand');
-        return await res.json();
-    } catch (error) {
-        console.error('Error fetching products by brand:', error);
-        return { products: [], total: 0, totalPages: 0 };
-    }
-}
-
 export async function getProductById(id: string): Promise<Product | undefined> {
     try {
         const res = await fetch(`${API_BASE_URL}/api/products/${id}`, { cache: 'no-store' });
@@ -74,12 +63,12 @@ export async function getProductById(id: string): Promise<Product | undefined> {
     }
 }
 
-export async function getProductsByFilters(filters: { categorySlug?: string; subcategorySlug?: string; brandSlug?: string; page?: number; limit?: number }): Promise<{ products: Product[], total: number, totalPages: number }> {
+export async function getProductsByFilters(filters: { categorySlug?: string; subcategorySlug?: string; subsubcategorySlug?: string; page?: number; limit?: number }): Promise<{ products: Product[], total: number, totalPages: number }> {
     try {
         const queryParams = new URLSearchParams();
         if (filters.categorySlug) queryParams.append('categorySlug', filters.categorySlug);
         if (filters.subcategorySlug) queryParams.append('subcategorySlug', filters.subcategorySlug);
-        if (filters.brandSlug) queryParams.append('brandSlug', filters.brandSlug);
+        if (filters.subsubcategorySlug) queryParams.append('subsubcategorySlug', filters.subsubcategorySlug);
         if (filters.page) queryParams.append('page', filters.page.toString());
         if (filters.limit) queryParams.append('limit', filters.limit.toString());
 

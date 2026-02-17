@@ -11,30 +11,30 @@ import ProductBrowser from '@/components/products/ProductBrowser';
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-    const { products } = await getProducts({ limit: 50 });
-    const boardHandling = products.filter(p => (p as any).category?.slug === 'board-handling');
+    const { products } = await getProducts({ limit: 100 });
+    const boardHandling = products.filter(p => p.category?.slug === 'board-handling');
 
     const paths = [];
 
-    // 1. Product Detail Pages: [subcat, brand, id]
+    // 1. Product Detail Pages
     for (const p of boardHandling) {
-        paths.push({ slug: [(p as any).subcategory?.slug || 'other', (p as any).brand?.slug || 'generic', (p as any).id] });
+        if (p.subcategory?.slug && p.subsubcategory?.slug) {
+            paths.push({ slug: [p.subcategory.slug, p.subsubcategory.slug, p.id] });
+        } else if (p.subcategory?.slug) {
+            paths.push({ slug: [p.subcategory.slug, p.id] });
+        }
     }
 
-    // 2. Listing Pages (Deduplicated)
-    const subcats = new Set(boardHandling.map(p => (p as any).subcategory?.slug).filter(Boolean));
-    const brands = new Set(boardHandling.map(p => (p as any).brand?.slug).filter(Boolean));
+    // 2. Listing Pages
+    const subcats = new Set(boardHandling.map(p => p.subcategory?.slug).filter(Boolean));
+    const subsubcats = new Set(boardHandling.map(p => p.subsubcategory?.slug).filter(Boolean));
 
-    // [subcat]
     subcats.forEach(s => paths.push({ slug: [s!] }));
-    // [brand]
-    brands.forEach(b => paths.push({ slug: [b!] }));
-    // [subcat, brand]
     subcats.forEach(s => {
-        brands.forEach(b => {
-            const exists = boardHandling.some(p => (p as any).subcategory?.slug === s && (p as any).brand?.slug === b);
+        subsubcats.forEach(ss => {
+            const exists = boardHandling.some(p => p.subcategory?.slug === s && p.subsubcategory?.slug === ss);
             if (exists) {
-                paths.push({ slug: [s!, b!] });
+                paths.push({ slug: [s!, ss!] });
             }
         });
     });
@@ -64,14 +64,12 @@ export default async function BoardHandlingDynamicPage({ params }: Props) {
     }
 
     // Case 2: Listing Page 
-    let initialCategorySlug: string | undefined;
-    let initialCategoryName: string | undefined;
-    let initialBrandName: string | undefined;
-    let initialBrandSlug: string | undefined;
+    let initialSubcategorySlug: string | undefined;
+    let initialSubcategoryName: string | undefined;
+    let initialSubsubcategorySlug: string | undefined;
+    let initialSubsubcategoryName: string | undefined;
 
-    // Direct database lookups for each slug segment to be robust
     for (const s of slug) {
-        // Look up subcategory
         const subcategory = await prisma.subcategory.findFirst({
             where: {
                 slug: s,
@@ -80,52 +78,47 @@ export default async function BoardHandlingDynamicPage({ params }: Props) {
         });
 
         if (subcategory) {
-            initialCategorySlug = subcategory.slug;
-            initialCategoryName = subcategory.name;
+            initialSubcategorySlug = subcategory.slug;
+            initialSubcategoryName = subcategory.name;
             continue;
         }
 
-        // Look up brand
-        const brand = await prisma.brand.findUnique({
+        const subsubcat = await prisma.subSubcategory.findFirst({
             where: { slug: s }
         });
 
-        if (brand) {
-            initialBrandName = brand.name;
-            initialBrandSlug = brand.slug;
+        if (subsubcat) {
+            initialSubsubcategorySlug = subsubcat.slug;
+            initialSubsubcategoryName = subsubcat.name;
             continue;
         }
     }
 
-    // Always ensure we are filtering within board handling for this page
-    const productsData = await getProducts({
+    const bhData = await getProducts({
         categorySlug: 'board-handling',
-        subcategorySlug: initialCategorySlug,
-        brandSlug: initialBrandSlug,
+        subcategorySlug: initialSubcategorySlug,
+        subsubcategorySlug: initialSubsubcategorySlug,
         limit: 50
     });
 
-    if (initialCategorySlug || initialBrandSlug || slug.length === 0) {
+    if (initialSubcategorySlug || initialSubsubcategorySlug) {
         return (
             <div className="min-h-screen bg-[#e6e6e6]">
-                <div className="bg-[#e6e6e6] py-16 text-[#022c75] text-center mb-8 relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-10 bg-[url('/grid.svg')]"></div>
-                    <div className="relative z-10 max-w-4xl mx-auto px-4">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-                            {initialCategoryName
-                                ? initialCategoryName
-                                : (initialBrandName ? `${initialBrandName} Systems` : 'Board Handling Solutions')}
-                        </h1>
-                        <p className="text-xl text-[#022c75] max-w-2xl mx-auto  leading-relaxed">
-                            Premium PCB handling and automation systems for high-performance SMT manufacturing lines.
-                        </p>
-                    </div>
+                <div className="bg-[#e6e6e6] py-12 text-center text-[#022c75] mb-8">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        {initialSubsubcategoryName
+                            ? initialSubsubcategoryName
+                            : (initialSubcategoryName ? initialSubcategoryName : 'Board Handling')}
+                    </h1>
+                    <p className="text-xl text-[#022c75] max-w-2xl mx-auto px-4">
+                        Precision board handling systems for seamless production line integration.
+                    </p>
                 </div>
                 <ProductBrowser
-                    initialData={JSON.parse(JSON.stringify(productsData))}
+                    initialData={JSON.parse(JSON.stringify(bhData))}
                     rootCategorySlug="board-handling"
-                    initialCategory={initialCategorySlug}
-                    initialBrandSlug={initialBrandSlug}
+                    initialSubcategory={initialSubcategorySlug}
+                    initialSubsubcategory={initialSubsubcategorySlug}
                 />
             </div>
         )

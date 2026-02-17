@@ -14,9 +14,9 @@ interface ProductBrowserProps {
         total: number;
         totalPages: number;
     };
-    rootCategorySlug: "smt-machines" | "smt-parts" | "board-handling" | "consumables";
-    initialCategory?: string;
-    initialBrandSlug?: string;
+    rootCategorySlug: string;
+    initialSubcategory?: string;
+    initialSubsubcategory?: string;
 }
 
 const ITEMS_PER_PAGE = 12;
@@ -24,8 +24,8 @@ const ITEMS_PER_PAGE = 12;
 export default function ProductBrowser({
     initialData,
     rootCategorySlug,
-    initialCategory,
-    initialBrandSlug,
+    initialSubcategory,
+    initialSubsubcategory,
 }: ProductBrowserProps) {
     const router = useRouter();
 
@@ -34,68 +34,85 @@ export default function ProductBrowser({
     const [total, setTotal] = useState(initialData.total);
     const [totalPages, setTotalPages] = useState(initialData.totalPages);
 
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(
-        initialCategory || null
+    const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
+        initialSubcategory || null
     );
-    const [selectedBrands, setSelectedBrands] = useState<string[]>(
-        initialBrandSlug ? [initialBrandSlug] : []
+    const [selectedSubsubcategories, setSelectedSubsubcategories] = useState<string[]>(
+        initialSubsubcategory ? [initialSubsubcategory] : []
     );
-    const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    // Derive Categories and Brands from products (locally for the sidebar, though optimally these would come from APIs)
-    // For now, let's keep it based on what's available or fetch them.
-    // Given the previous architecture, let's stick to deriving from a larger set or fetch.
-    const categories = useMemo(() => {
+    // Sync state with props when navigation occurs
+    useEffect(() => {
+        setProducts(initialData.products);
+        setTotal(initialData.total);
+        setTotalPages(initialData.totalPages);
+    }, [initialData]);
+
+    useEffect(() => {
+        setSelectedSubcategory(initialSubcategory || null);
+        setSelectedSubsubcategories(initialSubsubcategory ? [initialSubsubcategory] : []);
+    }, [initialSubcategory, initialSubsubcategory]);
+
+    // Derive Categories (Subcategories) from products
+    const subcategories = useMemo(() => {
         const map = new Map();
         products.forEach((p) => {
-            if (p.category?.slug === rootCategorySlug && p.subcategory?.name && p.subcategory?.slug) {
+            if (p.subcategory?.name && p.subcategory?.slug) {
                 if (!map.has(p.subcategory.slug)) {
                     map.set(p.subcategory.slug, p.subcategory.name);
                 }
             }
         });
         return Array.from(map.entries()).map(([slug, name]) => ({ name, slug }));
-    }, [products, rootCategorySlug]);
-
-    const brands = useMemo(() => {
-        const relevantBrands = new Map();
-        products.forEach(p => {
-            if (p.brand?.name && p.brand?.slug) {
-                relevantBrands.set(p.brand.slug, p.brand.name);
-            }
-        });
-        return Array.from(relevantBrands.entries()).map(([slug, name]) => ({ name, slug }));
     }, [products]);
 
-    // In a real paginated app, we would fetch when filters change.
-    // For this implementation, we'll simulate the client-side experience but the initial data is from server.
+    // Derive Subsubcategories from products for the selected subcategory
+    const subsubcategories = useMemo(() => {
+        const relevantSubsubs = new Map();
+        products.forEach(p => {
+            if (p.subcategory?.slug === selectedSubcategory && p.subsubcategory?.name && p.subsubcategory?.slug) {
+                relevantSubsubs.set(p.subsubcategory.slug, p.subsubcategory.name);
+            }
+        });
+        return Array.from(relevantSubsubs.entries()).map(([slug, name]) => ({ name, slug }));
+    }, [products, selectedSubcategory]);
 
-    const handleCategoryChange = (slug: string | null) => {
+    const handleSubcategoryChange = (slug: string | null) => {
         setCurrentPage(1);
-        setSelectedTypes([]);
+        setSelectedSubsubcategories([]);
         const parts: string[] = [rootCategorySlug];
         if (slug) parts.push(slug);
         router.push(`/${parts.join('/')}`);
     };
 
-    const handleBrandChange = (brandSlug: string) => {
+    const handleSubsubcategoryChange = (slug: string) => {
         setCurrentPage(1);
-        setSelectedBrands(prev =>
-            prev.includes(brandSlug) ? prev.filter(b => b !== brandSlug) : [...prev, brandSlug]
-        );
+
+        const isRemoving = selectedSubsubcategories.includes(slug);
+
+        // Update URL to reflect the new selection
+        const parts: string[] = [rootCategorySlug];
+        if (selectedSubcategory) parts.push(selectedSubcategory);
+
+        if (!isRemoving) {
+            // If checking a new one, add it to URL
+            parts.push(slug);
+        }
+        // If removing, we don't add it to parts, so URL becomes the parent category
+
+        router.push(`/${parts.join('/')}`);
     };
 
-    // Filter local products for this demo (ideally this triggers a re-fetch)
+    // Filter local products
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
-            if (selectedCategory && product.subcategory?.slug !== selectedCategory) return false;
-            // Brand filtering (using slug for robustness)
-            if (selectedBrands.length > 0 && !selectedBrands.includes(product.brand?.slug)) return false;
+            if (selectedSubcategory && product.subcategory?.slug !== selectedSubcategory) return false;
+            if (selectedSubsubcategories.length > 0 && !selectedSubsubcategories.includes(product.subsubcategory?.slug || '')) return false;
             return true;
         });
-    }, [products, selectedCategory, selectedBrands]);
+    }, [products, selectedSubcategory, selectedSubsubcategories]);
 
     const paginatedProducts = useMemo(() => {
         const start = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -118,15 +135,15 @@ export default function ProductBrowser({
                 {/* Sidebar */}
                 <div className="lg:w-1/4 flex-shrink-0">
                     <SidebarFilter
-                        categories={categories}
-                        types={[]} // Types logic can be added if needed
-                        brands={brands}
-                        selectedCategory={selectedCategory}
-                        selectedTypes={[]}
-                        selectedBrands={selectedBrands}
-                        onCategoryChange={handleCategoryChange}
-                        onTypeChange={() => { }}
-                        onBrandChange={handleBrandChange}
+                        categories={subcategories}
+                        types={subsubcategories}
+                        brands={[]} // Brands are now removed
+                        selectedCategory={selectedSubcategory}
+                        selectedTypes={selectedSubsubcategories}
+                        selectedBrands={[]}
+                        onCategoryChange={handleSubcategoryChange}
+                        onTypeChange={handleSubsubcategoryChange}
+                        onBrandChange={() => { }}
                     />
                 </div>
 
@@ -135,8 +152,8 @@ export default function ProductBrowser({
                     <div className="mb-8 flex items-end justify-between">
                         <div>
                             <h1 className="text-3xl font-bold text-[#022c75]">
-                                {selectedCategory
-                                    ? categories.find(c => c.slug === selectedCategory)?.name
+                                {selectedSubcategory
+                                    ? subcategories.find(c => c.slug === selectedSubcategory)?.name
                                     : `All ${getRootTitle()}`}
                             </h1>
                             <p className="text-gray-500 mt-2">
@@ -151,7 +168,7 @@ export default function ProductBrowser({
                                 {paginatedProducts.map((product) => (
                                     <Link
                                         key={product.id}
-                                        href={`/${rootCategorySlug}/${product.subcategory?.slug || 'other'}/${product.brand?.slug || 'generic'}/${product.id}`}
+                                        href={`/${rootCategorySlug}/${product.subcategory?.slug || 'other'}${product.subsubcategory?.slug ? `/${product.subsubcategory.slug}` : ''}/${product.id}`}
                                         className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col"
                                     >
                                         <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden p-3 flex items-center justify-center">
@@ -162,7 +179,7 @@ export default function ProductBrowser({
                                                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 />
                                             ) : (
-                                                <div className="text-gray-300 font-bold text-xl uppercase">{product.brand?.name || 'N/A'}</div>
+                                                <div className="text-gray-300 font-bold text-xl uppercase">{product.subcategory?.name || 'N/A'}</div>
                                             )}
                                             <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${product.condition === 'New' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
                                                 {product.condition}
@@ -175,7 +192,7 @@ export default function ProductBrowser({
                                                     {product.name}
                                                 </h3>
                                                 <p className="text-sm text-gray-500 font-medium">
-                                                    {product.subcategory?.name} | {product.brand?.name}
+                                                    {product.subcategory?.name} {product.subsubcategory?.name ? `| ${product.subsubcategory.name}` : ''}
                                                 </p>
                                             </div>
 

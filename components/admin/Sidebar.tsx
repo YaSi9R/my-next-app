@@ -10,7 +10,7 @@ import { CircleGauge, ListChevronsDownUp, PackageSearch, Send, ShieldCheckIcon }
 const menu = [
   { name: "Dashboard", path: "/admin", icon: CircleGauge },
   { name: "Products", path: "/admin/products", icon: PackageSearch },
-  { name: "Brands", path: "/admin/brands", icon: ShieldCheckIcon },
+  
   { name: "Categories", path: "/admin/categories", icon: ListChevronsDownUp },
   // { name: "Subcategories", path: "/admin/subcategories" },
   { name: "Queries", path: "/admin/queries", icon: Send },

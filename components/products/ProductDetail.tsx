@@ -17,12 +17,30 @@ export default function ProductDetail({ product }: Props) {
             setActiveImage(product.images[0]);
         }
     }, [product.images]);
-    const backLink = product.brand?.slug
-        ? `/${product.category?.slug}/${product.subcategory?.slug}/${product.brand.slug}`
-        : `/${product.category?.slug}/${product.subcategory?.slug}`;
 
-    const backLabel = product.brand?.name
-        ? `Back to ${product.brand.name} Machines`
+    // Keyboard Navigation for Images
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!product.images || product.images.length <= 1) return;
+
+            const currentIndex = product.images.indexOf(activeImage);
+            if (e.key === 'ArrowRight') {
+                const nextIndex = (currentIndex + 1) % product.images.length;
+                setActiveImage(product.images[nextIndex]);
+            } else if (e.key === 'ArrowLeft') {
+                const prevIndex = (currentIndex - 1 + product.images.length) % product.images.length;
+                setActiveImage(product.images[prevIndex]);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [activeImage, product.images]);
+
+    const backLink = `/${product.category?.slug}/${product.subcategory?.slug}${product.subsubcategory?.slug ? `/${product.subsubcategory.slug}` : ''}`;
+
+    const backLabel = product.subsubcategory?.name
+        ? `Back to ${product.subsubcategory.name}`
         : `Back to ${product.subcategory?.name}`;
 
     return (
@@ -40,11 +58,11 @@ export default function ProductDetail({ product }: Props) {
                 <div className="grid lg:grid-cols-2 gap-12">
                     {/* Product Image */}
                     <div className="bg-white rounded-2xl p-8 shadow-lg">
-                        <div className=" bg-gradient-to-br from-blue-50 to-gray-100 rounded-xl flex items-center justify-center mb-6 overflow-hidden relative border border-gray-100 h-[400px]">
+                        <div className=" rounded-xl flex items-center justify-center mb-6 overflow-hidden relative  h-[400px]">
                             {activeImage ? (
                                 <img src={activeImage} alt={product.name} className="w-full h-full object-contain transition-all duration-300" />
                             ) : (
-                                <div className="text-4xl font-bold text-gray-300 uppercase">{product.brand?.name || product.name}</div>
+                                <div className="text-4xl font-bold text-gray-300 uppercase">{product.name}</div>
                             )}
                         </div>
 
@@ -70,9 +88,11 @@ export default function ProductDetail({ product }: Props) {
                             <div className="flex items-start justify-between mb-6">
                                 <div>
                                     <h1 className="text-4xl font-bold text-[#022c75] mb-2 leading-tight">
-                                        {product.brand?.name} {product.name}
+                                        {product.name}
                                     </h1>
-                                    <p className="text-[#022c75] font-bold uppercase tracking-widest text-xs">{product.subcategory?.name}</p>
+                                    <p className="text-[#022c75] font-bold uppercase tracking-widest text-xs">
+                                        {product.subcategory?.name} {product.subsubcategory?.name ? `| ${product.subsubcategory.name}` : ''}
+                                    </p>
                                 </div>
                                 <span
                                     className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest ${product.condition === 'New'

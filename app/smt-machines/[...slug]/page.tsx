@@ -12,30 +12,33 @@ import { prisma } from '@/lib/prisma';
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-    const { products } = await getProducts({ limit: 50 });
+    const { products } = await getProducts({ limit: 100 });
     const machines = products.filter(p => p.category?.slug === 'smt-machines');
 
     const paths = [];
 
-    // 1. Product Detail Pages: [subcat, brand, id]
+    // 1. Product Detail Pages: [subcat, subsubcat, id] or [subcat, id]
     for (const p of machines) {
-        paths.push({ slug: [p.subcategory?.slug || 'other', p.brand?.slug || 'generic', p.id] });
+        if (p.subcategory?.slug && p.subsubcategory?.slug) {
+            paths.push({ slug: [p.subcategory.slug, p.subsubcategory.slug, p.id] });
+        } else if (p.subcategory?.slug) {
+            paths.push({ slug: [p.subcategory.slug, p.id] });
+        }
     }
 
     // 2. Listing Pages (Deduplicated)
     const subcats = new Set(machines.map(p => p.subcategory?.slug).filter(Boolean));
-    const brands = new Set(machines.map(p => p.brand?.slug).filter(Boolean));
+    const subsubcats = new Set(machines.map(p => p.subsubcategory?.slug).filter(Boolean));
 
     // [subcat]
     subcats.forEach(s => paths.push({ slug: [s!] }));
-    // [brand]
-    brands.forEach(b => paths.push({ slug: [b!] }));
-    // [subcat, brand]
+
+    // [subcat, subsubcat]
     subcats.forEach(s => {
-        brands.forEach(b => {
-            const exists = machines.some(p => p.subcategory?.slug === s && p.brand?.slug === b);
+        subsubcats.forEach(ss => {
+            const exists = machines.some(p => p.subcategory?.slug === s && p.subsubcategory?.slug === ss);
             if (exists) {
-                paths.push({ slug: [s!, b!] });
+                paths.push({ slug: [s!, ss!] });
             }
         });
     });
@@ -56,8 +59,6 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
     const potentialId = slug[slug.length - 1];
     let product = null;
 
-    // Only attempt lookup if it looks like a MongoDB ObjectId
-    // Regular text (like "yamaha") will skip this and move to category/brand lookup
     if (/^[0-9a-fA-F]{24}$/.test(potentialId)) {
         product = await getProductById(potentialId);
     }
@@ -65,13 +66,14 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
     if (product && (product as any).category?.slug === 'smt-machines') {
         return <ProductDetail product={JSON.parse(JSON.stringify(product))} />;
     }
-    // Case 2: Listing Page 
-    let initialCategorySlug: string | undefined;
-    let initialCategoryName: string | undefined;
-    let initialBrandName: string | undefined;
-    let initialBrandSlug: string | undefined;
 
-    // Direct database lookups for each slug segment to be robust
+    // Case 2: Listing Page 
+    let initialSubcategorySlug: string | undefined;
+    let initialSubcategoryName: string | undefined;
+    let initialSubsubcategorySlug: string | undefined;
+    let initialSubsubcategoryName: string | undefined;
+
+    // Direct database lookups for each slug segment
     for (const s of slug) {
         // Look up subcategory
         const subcategory = await prisma.subcategory.findFirst({
@@ -82,19 +84,19 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
         });
 
         if (subcategory) {
-            initialCategorySlug = subcategory.slug;
-            initialCategoryName = subcategory.name;
+            initialSubcategorySlug = subcategory.slug;
+            initialSubcategoryName = subcategory.name;
             continue;
         }
 
-        // Look up brand
-        const brand = await prisma.brand.findUnique({
+        // Look up subsubcategory
+        const subsubcat = await prisma.subSubcategory.findFirst({
             where: { slug: s }
         });
 
-        if (brand) {
-            initialBrandName = brand.name;
-            initialBrandSlug = brand.slug;
+        if (subsubcat) {
+            initialSubsubcategorySlug = subsubcat.slug;
+            initialSubsubcategoryName = subsubcat.name;
             continue;
         }
     }
@@ -102,19 +104,19 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
     // Always ensure we are filtering within SMT machines for this page
     const machinesData = await getProducts({
         categorySlug: 'smt-machines',
-        subcategorySlug: initialCategorySlug,
-        brandSlug: initialBrandSlug,
+        subcategorySlug: initialSubcategorySlug,
+        subsubcategorySlug: initialSubsubcategorySlug,
         limit: 50
     });
 
-    if (initialCategorySlug || initialBrandSlug) {
+    if (initialSubcategorySlug || initialSubsubcategorySlug) {
         return (
             <div className="min-h-screen bg-[#e6e6e6]">
                 <div className="bg-[#e6e6e6] py-12 text-center text-[#022c75] mb-8">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                        {initialCategoryName
-                            ? initialCategoryName
-                            : (initialBrandName ? `${initialBrandName} Machines` : 'SMT Machines')}
+                        {initialSubsubcategoryName
+                            ? initialSubsubcategoryName
+                            : (initialSubcategoryName ? initialSubcategoryName : 'SMT Machines')}
                     </h1>
                     <p className="text-xl text-[#022c75] max-w-2xl mx-auto px-4">
                         Explore our comprehensive range of high-quality SMT equipment tailored for your production needs.
@@ -123,8 +125,8 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
                 <ProductBrowser
                     initialData={JSON.parse(JSON.stringify(machinesData))}
                     rootCategorySlug="smt-machines"
-                    initialCategory={initialCategorySlug}
-                    initialBrandSlug={initialBrandSlug}
+                    initialSubcategory={initialSubcategorySlug}
+                    initialSubsubcategory={initialSubsubcategorySlug}
                 />
             </div>
         )

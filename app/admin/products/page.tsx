@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import slugify from "slugify";
 import TableShimmer from "@/components/admin/TableShimmer";
 
-interface Brand {
-  id: string;
-  name: string;
-}
 
 interface Category {
   id: string;
@@ -34,7 +30,6 @@ interface Product {
   shortDescription: string;
   longDescription: string;
   availability: string;
-  brandId: string;
   categoryId: string;
   subcategoryId: string;
   subsubcategoryId?: string; // Optional
@@ -48,7 +43,6 @@ const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [brands, setBrands] = useState<Brand[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
   const [subsubcategories, setSubSubcategories] = useState<SubSubcategory[]>([]);
@@ -64,7 +58,6 @@ export default function ProductsPage() {
     shortDescription: "",
     longDescription: "",
     availability: "",
-    brandId: "",
     categoryId: "",
     subcategoryId: "",
     subsubcategoryId: "",
@@ -188,16 +181,14 @@ export default function ProductsPage() {
   const fetchData = async () => {
     setLoadingData(true);
     try {
-      const [p, b, c, s, ss] = await Promise.all([
+      const [p, c, s, ss] = await Promise.all([
         fetch("/api/products"),
-        fetch("/api/brands"),
         fetch("/api/categories"),
         fetch("/api/subcategories"),
         fetch("/api/subsubcategories"),
       ]);
       const list = await p.json();
       setProducts(list.products || []);
-      setBrands(await b.json());
       setCategories(await c.json());
       setSubcategories(await s.json());
       setSubSubcategories(await ss.json());
@@ -265,7 +256,6 @@ export default function ProductsPage() {
       shortDescription: "",
       longDescription: "",
       availability: "",
-      brandId: "",
       categoryId: "",
       subcategoryId: "",
       subsubcategoryId: "",
@@ -319,19 +309,6 @@ export default function ProductsPage() {
             className="border rounded p-2 md:col-span-2 text-[#022c75]"
           />
 
-          <select
-            value={form.brandId}
-            onChange={(e) => setForm({ ...form, brandId: e.target.value })}
-            className="border rounded p-2 col-span-2 md:col-span-1 w-full"
-            required
-          >
-            <option value="">Select Brand</option>
-            {brands.map((b) => (
-              <option key={b.id} value={b.id}>
-                {b.name}
-              </option>
-            ))}
-          </select>
 
           <select
             value={form.categoryId}

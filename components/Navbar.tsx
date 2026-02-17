@@ -39,17 +39,17 @@ const initialNavItems: NavItem[] = [
             {
                 name: "Entry Level SMT Line",
                 href: "/smt-line/entry-level",
-                
+
             },
             {
                 name: "Mid-Scale SMT Line",
                 href: "/smt-line/mid-scale",
-                
+
             },
             {
                 name: "High-Speed SMT Line",
                 href: "/smt-line/high-speed",
-                
+
             },
         ],
     },
@@ -66,12 +66,12 @@ const initialNavItems: NavItem[] = [
     {
         name: "Services",
         href: "/service",
-       
+
     },
     {
         name: "Our Customers",
         href: "/customers",
-        
+
     },
 ];
 
@@ -107,62 +107,29 @@ const Navbar = () => {
                 const response = await fetch('/api/navigation');
                 if (!response.ok) return;
                 const data = await response.json();
-                const { subcategories, brands } = data;
+                const { categories, subcategories } = data;
 
                 const dynamicNav = initialNavItems.map(item => {
-                    // SMT Machines Logic
-                    if (item.name === "SMT Machines") {
-                        const smtMachineSubcats = subcategories
-                            .filter((s: any) => s.category.slug === 'smt-machines')
-                            .sort((a: any, b: any) => {
-                                if (a.slug === 'pick-and-place-machines') return -1;
-                                if (b.slug === 'pick-and-place-machines') return 1;
-                                return 0;
-                            });
-                        return {
-                            ...item,
-                            children: smtMachineSubcats.map((s: any) => ({
-                                name: s.name,
-                                href: `/smt-machines/${s.slug}`,
-                                children: s.slug === 'pick-and-place-machines' ? brands.map((b: any) => ({
-                                    name: b.name.charAt(0).toUpperCase() + b.name.slice(1),
-                                    href: `/smt-machines/pick-and-place-machines/${b.slug}`
-                                })) : undefined
-                            }))
-                        };
-                    }
+                    // Try to find a matching category from the database
+                    // We match by checking if the item's href (e.g. /smt-machines) matches /category-slug
+                    const category = categories.find((c: any) => `/${c.slug}` === item.href);
 
-                    // SMT Parts Logic
-                    if (item.name === "SMT Parts") {
-                        const smtPartsSubcats = subcategories.filter((s: any) => s.category.slug === 'smt-parts');
-                        return {
-                            ...item,
-                            children: brands.map((b: any) => ({
-                                name: `${b.name.charAt(0).toUpperCase() + b.name.slice(1)} Parts`,
-                                href: `/smt-parts/${b.slug}`,
-                                children: smtPartsSubcats.map((s: any) => ({
-                                    name: s.name,
-                                    href: `/smt-parts/${s.slug}/${b.slug}`
-                                }))
-                            }))
-                        };
-                    }
+                    if (category) {
+                        // Filter subcategories for this category
+                        const catSubcats = subcategories.filter((s: any) => s.categoryId === category.id);
 
-                    // Board Handling Logic
-                    if (item.name === "Board Handling") {
-                        const boardHandlingSubcats = subcategories.filter((s: any) =>
-                            s.category.slug === 'board-handling'
-                        );
                         return {
                             ...item,
-                            children: boardHandlingSubcats.map((s: any) => ({
+                            children: catSubcats.map((s: any) => ({
                                 name: s.name,
-                                href: `/board-handling/${s.slug}`,
-                                // Map subsubcategories (third level)
-                                children: s.subsubcategories?.map((subsub: any) => ({
-                                    name: subsub.name,
-                                    href: `/board-handling/${s.slug}/${subsub.slug}`
-                                }))
+                                href: `/${category.slug}/${s.slug}`,
+                                // Map sub-subcategories (third level)
+                                children: s.subsubcategories && s.subsubcategories.length > 0
+                                    ? s.subsubcategories.map((ss: any) => ({
+                                        name: ss.name,
+                                        href: `/${category.slug}/${s.slug}/${ss.slug}`
+                                    }))
+                                    : undefined
                             }))
                         };
                     }

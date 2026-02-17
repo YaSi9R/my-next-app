@@ -15,9 +15,9 @@ export async function GET(
     const product = await prisma.product.findUnique({
       where: { id },
       include: {
-        brand: true,
         category: true,
         subcategory: true,
+        subsubcategory: true,
       },
     });
 
@@ -55,9 +55,9 @@ export async function PUT(
       shortDescription,
       longDescription,
       availability,
-      brandId,
       categoryId,
       subcategoryId,
+      subsubcategoryId,
       specifications,
       features,
     } = body;
@@ -82,9 +82,9 @@ export async function PUT(
         shortDescription,
         longDescription,
         availability,
-        brandId,
         categoryId,
         subcategoryId,
+        subsubcategoryId,
         specifications,
         features,
       },

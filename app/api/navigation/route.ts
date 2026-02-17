@@ -3,31 +3,19 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const [categories, subcategories, brands, subsubcategories] = await Promise.all([
-            prisma.category.findMany({
-                orderBy: { name: 'asc' }
-            }),
+        const [categories, subcategories] = await Promise.all([
+            prisma.category.findMany(),
             prisma.subcategory.findMany({
                 include: {
                     category: true,
-                    subsubcategories: true // Include third-level items
-                },
-                orderBy: { name: 'asc' }
-            }),
-            prisma.brand.findMany({
-                orderBy: { name: 'asc' }
-            }),
-            prisma.subSubcategory.findMany({
-                include: { subcategory: true },
-                orderBy: { name: 'asc' }
+                    subsubcategories: true
+                }
             })
         ]);
 
         return NextResponse.json({
             categories,
-            subcategories,
-            brands,
-            subsubcategories
+            subcategories
         }, {
             headers: {
                 'Cache-Control': 'no-store, max-age=0'

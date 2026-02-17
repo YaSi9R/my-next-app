@@ -6,26 +6,20 @@ import { ChevronDown, ChevronRight, X, Filter } from "lucide-react";
 interface SidebarFilterProps {
     categories: { name: string; slug: string }[];
     types?: { name: string; slug: string }[];
-    brands: { name: string; slug: string }[];
     selectedCategory: string | null;
     selectedTypes?: string[];
-    selectedBrands: string[];
     onCategoryChange: (categorySlug: string | null) => void;
     onTypeChange?: (typeSlug: string) => void;
-    onBrandChange: (brandSlug: string) => void;
     className?: string;
 }
 
 export default function SidebarFilter({
     categories,
     types = [],
-    brands,
     selectedCategory,
     selectedTypes = [],
-    selectedBrands,
     onCategoryChange,
     onTypeChange,
-    onBrandChange,
     className = "",
 }: SidebarFilterProps) {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -61,10 +55,10 @@ export default function SidebarFilter({
                         </button>
                     </div>
 
-                    {/* Categories */}
+                    {/* Categories (Subcategories in our new flow) */}
                     <div className="mb-10">
                         <h3 className="text-xl font-bold text-[#022c75] mb-6 flex items-center gap-2">
-                            Category
+                            Categories
                         </h3>
                         <ul className="space-y-4">
                             <li>
@@ -78,11 +72,11 @@ export default function SidebarFilter({
                                         : "text-gray-600 hover:bg-gray-100"
                                         }`}
                                 >
-                                    All Categories
+                                    All Items
                                 </button>
                             </li>
                             {categories.map((cat) => (
-                                <li key={cat.slug} className="space-y-2">
+                                <li key={cat.slug}>
                                     <button
                                         onClick={() => {
                                             onCategoryChange(selectedCategory === cat.slug ? null : cat.slug);
@@ -94,63 +88,45 @@ export default function SidebarFilter({
                                             }`}
                                     >
                                         {cat.name}
-                                        {selectedCategory === cat.slug && <ChevronDown size={14} className="opacity-70" />}
                                     </button>
-
-                                    {/* Sub-categories (Types) */}
-                                    {selectedCategory === cat.slug && types.length > 0 && (
-                                        <ul className="ml-4 space-y-1 animate-in slide-in-from-top-2 duration-300">
-                                            {types.map((type) => (
-                                                <li key={type.slug}>
-                                                    <button
-                                                        onClick={() => onTypeChange?.(type.slug)}
-                                                        className={`w-full text-left px-3 py-1.5 rounded-md text-xs font-semibold transition-all border-l-2 ${selectedTypes.includes(type.slug)
-                                                            ? "border-[#022c75] text-[#022c75] bg-blue-50"
-                                                            : "border-transparent text-gray-500 hover:text-[#022c75] hover:bg-gray-50 hover:border-gray-200"
-                                                            }`}
-                                                    >
-                                                        {type.name}
-                                                    </button>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    )}
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* Brands */}
-                    <div>
-                        <h3 className="text-xl font-bold text-[#022c75] mb-6 flex items-center gap-2">
-                            Filter by Brands
-                        </h3>
-                        <div className="space-y-3">
-                            {brands.map((brand) => (
-                                <label
-                                    key={brand.slug}
-                                    className="flex items-center gap-3 cursor-pointer group p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                                >
-                                    <div className="relative flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            checked={selectedBrands.includes(brand.slug)}
-                                            onChange={() => onBrandChange(brand.slug)}
-                                            className="peer w-5 h-5 border-2 border-gray-300 rounded focus:ring-0 checked:bg-[#022c75] checked:border-[#022c75] transition-all"
-                                        />
-                                        <ChevronDown
-                                            size={12}
-                                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100 pointer-events-none"
-                                            strokeWidth={4}
-                                        />
-                                    </div>
-                                    <span className={`text-sm font-medium transition-colors ${selectedBrands.includes(brand.slug) ? 'text-[#022c75]' : 'text-gray-600'}`}>
-                                        {brand.name}
-                                    </span>
-                                </label>
-                            ))}
+                    {/* Types (Sub-subcategories in a separate section) */}
+                    {types.length > 0 && (
+                        <div className="mb-10 animate-in slide-in-from-bottom-4 duration-500">
+                            <h3 className="text-xl font-bold text-[#022c75] mb-6 flex items-center gap-2">
+                                Sub-Categories
+                            </h3>
+                            <div className="space-y-3">
+                                {types.map((type) => (
+                                    <label
+                                        key={type.slug}
+                                        className="flex items-center gap-3 cursor-pointer group p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                                    >
+                                        <div className="relative flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedTypes.includes(type.slug)}
+                                                onChange={() => onTypeChange?.(type.slug)}
+                                                className="peer w-5 h-5 border-2 border-gray-300 rounded focus:ring-0 checked:bg-[#022c75] checked:border-[#022c75] transition-all"
+                                            />
+                                            <ChevronDown
+                                                size={12}
+                                                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100 pointer-events-none"
+                                                strokeWidth={4}
+                                            />
+                                        </div>
+                                        <span className={`text-sm font-medium transition-colors ${selectedTypes.includes(type.slug) ? 'text-[#022c75]' : 'text-gray-600'}`}>
+                                            {type.name}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Mobile Apply Button */}
                     <div className="mt-8 lg:hidden">

@@ -15,7 +15,6 @@ export async function POST(req: Request) {
       shortDescription,
       longDescription,
       availability,
-      brandId,
       categoryId,
       subcategoryId,
       subsubcategoryId, // Optional
@@ -23,7 +22,7 @@ export async function POST(req: Request) {
       features,
     } = body;
 
-    if (!name || !brandId || !categoryId || !subcategoryId) {
+    if (!name || !categoryId || !subcategoryId) {
       return NextResponse.json(
         { error: "Required fields missing" },
         { status: 400 }
@@ -44,7 +43,6 @@ export async function POST(req: Request) {
         shortDescription,
         longDescription,
         availability,
-        brandId,
         categoryId,
         subcategoryId,
         subsubcategoryId,
@@ -78,12 +76,12 @@ export async function GET(req: Request) {
     const limit = Number(searchParams.get("limit")) || 50;
     const categorySlug = searchParams.get("categorySlug") || undefined;
     const subcategorySlug = searchParams.get("subcategorySlug") || undefined;
-    const brandSlug = searchParams.get("brandSlug") || undefined;
+    const subsubcategorySlug = searchParams.get("subsubcategorySlug") || undefined;
 
     const data = await getProducts({
       categorySlug,
       subcategorySlug,
-      brandSlug,
+      subsubcategorySlug,
       page,
       limit,
     });

@@ -118,7 +118,7 @@ const Footer = () => {
                             <li><Link href="/smt-line" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">SMT Production Line</Link></li>
                             <li><Link href="/smt-machines/reflow-ovens" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">Reflow Oven</Link></li>
                             <li><Link href="/smt-machines/screen-printers" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">SMT Stencil Printer</Link></li>
-                            <li><Link href="/smt-machines/pick-and-place-machines" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">Pick & Place Machine</Link></li>
+                            <li><Link href="/smt-machines/pick-and-place" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">Pick & Place Machine</Link></li>
                             <li><Link href="/smt-machines/aoi" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">Wave Soldering Machine</Link></li>
                             <li><Link href="/smt-machines/pcb-cutting" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">PCB Handling Machine</Link></li>
                             {/* <li><Link href="/video" className="hover:text-[#e6e6e6] hover:bg-[#022c75] rounded-12">Video</Link></li> */}

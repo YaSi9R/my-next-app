@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 export interface ProductFilters {
     categorySlug?: string;
     subcategorySlug?: string;
-    brandSlug?: string;
+    subsubcategorySlug?: string;
     page?: number;
     limit?: number;
 }
@@ -12,7 +12,7 @@ export async function getProducts(filters: ProductFilters = {}) {
     const {
         categorySlug,
         subcategorySlug,
-        brandSlug,
+        subsubcategorySlug,
         page = 1,
         limit = 50,
     } = filters;
@@ -32,9 +32,9 @@ export async function getProducts(filters: ProductFilters = {}) {
         else return { products: [], total: 0, page, limit, totalPages: 0 };
     }
 
-    if (brandSlug) {
-        const brand = await prisma.brand.findUnique({ where: { slug: brandSlug } });
-        if (brand) where.brandId = brand.id;
+    if (subsubcategorySlug) {
+        const subsubcategory = await prisma.subSubcategory.findFirst({ where: { slug: subsubcategorySlug } });
+        if (subsubcategory) where.subsubcategoryId = subsubcategory.id;
         else return { products: [], total: 0, page, limit, totalPages: 0 };
     }
 
@@ -47,9 +47,9 @@ export async function getProducts(filters: ProductFilters = {}) {
                 createdAt: "desc",
             },
             include: {
-                brand: { select: { name: true, slug: true } },
                 category: { select: { name: true, slug: true } },
                 subcategory: { select: { name: true, slug: true } },
+                subsubcategory: { select: { name: true, slug: true } },
             },
         }),
         prisma.product.count({ where }),
@@ -68,9 +68,9 @@ export async function getProductById(id: string) {
     return await prisma.product.findUnique({
         where: { id },
         include: {
-            brand: { select: { name: true, slug: true } },
             category: { select: { name: true, slug: true } },
             subcategory: { select: { name: true, slug: true } },
+            subsubcategory: { select: { name: true, slug: true } },
         },
     });
 }
@@ -79,9 +79,9 @@ export async function getProductBySlug(slug: string) {
     return await prisma.product.findUnique({
         where: { slug },
         include: {
-            brand: { select: { name: true, slug: true } },
             category: { select: { name: true, slug: true } },
             subcategory: { select: { name: true, slug: true } },
+            subsubcategory: { select: { name: true, slug: true } },
         },
     });
 }
