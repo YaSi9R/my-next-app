@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { CheckCircle2, Play } from "lucide-react";
 import { motion } from "framer-motion";
-import warehouseImage from "../../public/image1 (3).png"
+import warehouseImage from "../../public/DEK-Printer-Photoroom.png"
 import Link from "next/link";
 
 const features = [
@@ -49,19 +49,15 @@ const AboutSection = () => {
                 {/* Content Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     {/* Left: Video/Image Placeholder */}
-                    <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer">
-                        <div className="aspect-video relative bg-gray-200">
+                    <div className="relative rounded-2xl overflow-hidden  group cursor-pointer">
+                        <div className="aspect-video relative ">
                             <Image
                                 src={warehouseImage}
                                 alt="TekMart Facility"
                                 fill
                                 className="object-cover group-hover:scale-105 transition-transform duration-700"
                             />
-                            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                                <div className="w-20 h-20 rounded-full bg-[#022c75] flex items-center justify-center text-white shadow-xl transform group-hover:scale-110 transition-transform">
-                                    <Play size={32} fill="currentColor" />
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
 

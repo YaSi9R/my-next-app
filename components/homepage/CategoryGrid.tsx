@@ -5,12 +5,12 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 // Placeholder images from the public directory
-import machine1 from "../../public/MAIN PAGE PICK AND PLACE.png";
-import machine2 from "../../public/MAIN PAGE REFLOW.png";
+import machine1 from "../../public/SMTCATEGORY.png";
+import machine2 from "../../public/heller-1809-mark-5-reflow-oven.png";
 import machine3 from "../../public/MAIN PAGE SCREEN PRINTER.png";
 import machine4 from "../../public/MAIN PAGE SPI.png";
 import machine5 from "../../public/MAIN PAGE AOI.png";
-import machine6 from "../../public/SMT LINE.png";
+import machine6 from "../../public/smt-assembly-line.png";
 import machine7 from "../../public/MAIN PAGE BOARD HANDLING.png";
 import machine8 from "../../public/MAIN PAGE SPARE PARTS.png";
 // chchhf
@@ -68,7 +68,7 @@ export default function CategoryGrid() {
                         <Link
                             key={index}
                             href={category.href}
-                            className="group relative overflow-hidden rounded-xl bg-white shadow-md aspect-[4/3] block"
+                            className="group relative overflow-hidden rounded-xl  shadow-md aspect-[4/3] block"
                         >
                             <div className="absolute inset-0 z-0">
                                 <Image

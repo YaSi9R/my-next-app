@@ -5,18 +5,26 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, useAnimation, useMotionValue } from "framer-motion";
 
-import yamahalogo from "../../public/yamaha.jpg";
-import fuji from "../../public/fuji.png";
-import goldland from "../../public/goldland.png";
-import panasonic from "../../public/panasonic.jpg";
-import asm from "../../public/asm.png";
-
+import yamahalogo from "../../public/hd-yamaha-motor-logo-transparent-background-701751694771525iicfmgap8a-Photoroom.png";
+import fuji from "../../public/images-Photoroom.png";
+import goldland from "../../public/logo_heller_optimizada (1)-Photoroom.png";
+import panasonic from "../../public/logo-omron-healthcare-co-ltd-brand-microscan-systems-inc-business-Photoroom.png";
+import asm from "../../public/logo_sticky-Photoroom.png";
+import asmReal from "../../public/asm-pacific-technology-limited-asm-assembly-systems-llc-asm-international-electronics-technology-Photoroom.png";
+import kohyoung from "../../public/circle-design-logo-koh-young-organization-koh-young-technology-angle-text-green-png-clipart-Photoroom.png";
+import hanwa from "../../public/png-transparent-juki-hd-logo-Photoroom.png";
+import juki from "../../public/png-transparent-hanwha-hd-logo-Photoroom.png";
 const brands = [
     { name: "Goldland", logo: goldland },
     { name: "FUJI", logo: fuji },
     { name: "Panasonic", logo: panasonic },
     { name: "ASM", logo: asm },
     { name: "YAMAHA", logo: yamahalogo },
+
+{name:"juki",logo:juki},
+     { name: "ASM", logo: asmReal },
+    { name: "YAMAHA", logo: kohyoung },
+    {name:"hanwa",logo:hanwa}
 ];
 
 const BrandSlider = () => {
@@ -42,7 +50,7 @@ const BrandSlider = () => {
         <section className="py-20 bg-[#e6e6e6] overflow-hidden">
             <div className="container mx-auto px-4 max-w-6xl">
                 <h2 className="text-3xl md:text-5xl font-bold text-center text-[#022c75] mb-16">
-                    Brands We Support, But Are Not Limited to
+                    Global SMT Brands We Support
                 </h2>
 
                 <div className="relative group px-12">

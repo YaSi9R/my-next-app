@@ -5,12 +5,16 @@ import Link from 'next/link';
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import machine from "../../public/image copy1.png";
-import machine2 from "../../public/image_copy3-.png";
+import machine1 from "../../public/Untitled design (1).png";
+import machine2 from "../../public/NXTIII1280 (1) (1).png";
+import machine3 from "../../public/RS-2_still_angle-02_1009_re-2048x2048-1-Photoroom.png";
+
 
 const images = [
-  { src: machine, alt: "SMT & PCB Manufacturing Equipment 1" },
+  { src: machine1, alt: "SMT & PCB Manufacturing Equipment 1" },
   { src: machine2, alt: "SMT & PCB Manufacturing Equipment 2" },
+  { src: machine3, alt: "SMT & PCB Manufacturing Equipment 1" },
+  
 ];
 
 export function HeroSlider() {
