@@ -19,7 +19,7 @@ import {
 // Assets
 import heroImage from "@/public/image copy.png";
 import qualityImage from "@/public/image1 (2).png";
-import serviceImage from "@/public/image_copy3-.png";
+import serviceImage from "@/public/img01.png";
 import AboutSection from "@/components/homepage/AboutSection";
 
 const pillars = [

@@ -17,8 +17,8 @@ import {
 
 // Assets
 import heroImage from "@/public/heroBanner.jpg";
-import warehouseImage from "@/public/image1 (1).png";
-import machineImage from "@/public/machine.png";
+import warehouseImage from "@/public/J-Photoroom.png";
+import machineImage from "@/public/Products_450x350px-03-Photoroom.png";
 
 const stats = [
     { label: "Years of Excellence", value: "24+" },
@@ -167,11 +167,11 @@ export default function CompanyOverview() {
                             transition={{ duration: 0.8 }}
                             className="lg:w-1/2 relative"
                         >
-                            <div className="relative rounded-3xl overflow-hidden shadow-2xl z-20">
+                            <div className="relative rounded-3xl overflow-hidden  z-20">
                                 <Image
                                     src={warehouseImage}
                                     alt="Tekmart Warehouse"
-                                    className="w-full h-auto object-cover"
+                                    className="w-full h-auto object-cover p-8"
                                 />
                             </div>
                             <div className="absolute -bottom-10 -left-10 w-64 h-64 bg-[#022c75]/5 rounded-full -z-10 blur-3xl" />

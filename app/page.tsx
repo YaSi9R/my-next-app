@@ -41,22 +41,7 @@ export default function Home() {
       <BrandSlider />
       <ServicesSection />
       {/* CTA Banner */}
-      <section className="bg-[#e6e6e6] py-16">
-        <div className="container mx-auto px-4 max-w-7xl">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-            <div className="text-[#022c75] text-center md:text-left">
-              <h2 className="text-3xl md:text-5xl font-bold mb-4">
-                Ready to Boost Your Business with TekMart?
-              </h2>
-              <p className="text-[#022c75]/80 text-lg">
-                Let TekMart's expertise and experience propel your brand to greater heights. Book a consultation today to find out how.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-      </section>
+    
       <div className="h-[80px] bg-[#022c75]"></div>
 
 
