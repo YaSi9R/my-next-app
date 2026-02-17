@@ -27,8 +27,8 @@ export default function SidebarFilter({
     const handleTypeChange = (slug: string) => {
         if (!onTypeChange) return;
         const newTypes = selectedTypes.includes(slug)
-            ? selectedTypes.filter((t) => t !== slug)
-            : [...selectedTypes, slug];
+            ? [] // Deselect if already selected
+            : [slug]; // Select only the new one
         onTypeChange(newTypes);
     };
 

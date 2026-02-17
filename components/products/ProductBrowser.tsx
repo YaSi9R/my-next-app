@@ -228,12 +228,17 @@ export default function ProductBrowser({
                         </div>
                     ) : (
                         <>
+                            <div className="mb-6">
+                                <p className="text-[#022c75] font-semibold">
+                                    Showing <span className="font-bold text-[#022c75]">{products.length}</span> results
+                                </p>
+                            </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                                 {products.map((product) => (
                                     <Link
                                         key={product.id}
                                         href={`/${rootCategorySlug}/${product.subcategory?.slug || 'unknown'}/${product.subsubcategory?.slug || product.slug}/${product.slug}`}
-                                        className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+                                        className="group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border "
                                     >
                                         <div className="aspect-[4/3] relative overflow-hidden bg-gray-50">
                                             {product.images && product.images[0] ? (
@@ -249,7 +254,7 @@ export default function ProductBrowser({
                                             )}
                                             {product.condition && (
                                                 <div className="absolute top-3 right-3">
-                                                    <span className="bg-[#022c75] text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                    <span className="bg-[#022c75] text-[#e6e6e6] text-xs font-bold px-3 py-1 rounded-full">
                                                         {product.condition}
                                                     </span>
                                                 </div>
@@ -262,18 +267,18 @@ export default function ProductBrowser({
                                                     {product.subsubcategory.name}
                                                 </p>
                                             )}
-                                            <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#022c75] transition-colors">
+                                            <h3 className="text-lg font-bold text-[#022c75] mb-2 ">
                                                 {product.name}
                                             </h3>
                                             {product.shortDescription && (
-                                                <p className="text-sm text-gray-600 line-clamp-2 mb-4">
+                                                <p className="text-sm text-[#022c75] mb-4">
                                                     {product.shortDescription}
                                                 </p>
                                             )}
 
                                             <div className="flex items-center justify-between">
                                                 {product.availability && (
-                                                    <span className="text-sm font-semibold text-green-600">
+                                                    <span className="text-sm font-semibold text-[#e6e6e6] bg-[#022c75] px-1  rounded-lg">
                                                         {product.availability}
                                                     </span>
                                                 )}
