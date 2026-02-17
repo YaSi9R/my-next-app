@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Send, MapPin, Phone, Mail, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const ContactSection = () => {
     const [formData, setFormData] = useState({
@@ -15,6 +16,21 @@ const ContactSection = () => {
         company: "",
         message: ""
     });
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const product = searchParams.get('product');
+        const subcategory = searchParams.get('subcategory');
+
+        if (product) {
+            const initialMessage = `I am interested in ${product}${subcategory ? ` from ${subcategory} category` : ''}. Please provide more details.`;
+            setFormData(prev => ({
+                ...prev,
+                message: initialMessage,
+                interest: subcategory && subcategory.toLowerCase().includes('machine') ? 'SMT Machines' : 'SMT Parts / Consumables'
+            }));
+        }
+    }, [searchParams]);
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error" | "submitted">("idle");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -125,7 +141,7 @@ const ContactSection = () => {
                                 </div>
                             </div>
                             <div className="bg-[#022c75] backdrop-blur-md p-8 rounded-2xl shadow-sm border border-[#e6e6e6]/20 flex items-start gap-4">
-                               <div className="w-12 h-12 rounded-full bg-[#e6e6e6] flex items-center justify-center flex-shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-[#e6e6e6] flex items-center justify-center flex-shrink-0">
                                     <MapPin size={24} className="text-[#022c75]" />
                                 </div>
                                 <div>
@@ -271,7 +287,7 @@ const ContactSection = () => {
 
                 </div>
             </section>
-            
+
         </div>
     );
 };
