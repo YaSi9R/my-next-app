@@ -80,8 +80,8 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
         // Look up subcategory
         const subcategory = await prisma.subcategory.findFirst({
             where: {
-                slug: { equals: normalizedSlug },
-                category: { slug: 'smt-machines' }
+                slug: { equals: normalizedSlug, mode: 'insensitive' },
+                category: { slug: { equals: 'smt-machines', mode: 'insensitive' } }
             }
         });
 
@@ -93,7 +93,7 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
 
         // Look up subsubcategory
         const subsubcat = await prisma.subSubcategory.findFirst({
-            where: { slug: { equals: normalizedSlug } }
+            where: { slug: { equals: normalizedSlug, mode: 'insensitive' } }
         });
 
         if (subsubcat) {

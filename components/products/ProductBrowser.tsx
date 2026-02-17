@@ -108,8 +108,12 @@ export default function ProductBrowser({
     // Filter local products
     const filteredProducts = useMemo(() => {
         return products.filter((product) => {
-            if (selectedSubcategory && product.subcategory?.slug !== selectedSubcategory) return false;
-            if (selectedSubsubcategories.length > 0 && !selectedSubsubcategories.includes(product.subsubcategory?.slug || '')) return false;
+            if (selectedSubcategory && product.subcategory?.slug.toLowerCase() !== selectedSubcategory.toLowerCase()) return false;
+            if (selectedSubsubcategories.length > 0) {
+                const productSubsubSlug = product.subsubcategory?.slug?.toLowerCase() || '';
+                const hasMatch = selectedSubsubcategories.some(s => s.toLowerCase() === productSubsubSlug);
+                if (!hasMatch) return false;
+            }
             return true;
         });
     }, [products, selectedSubcategory, selectedSubsubcategories]);

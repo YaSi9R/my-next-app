@@ -23,7 +23,7 @@ export async function getProducts(filters: ProductFilters = {}) {
     if (categorySlug) {
         const category = await prisma.category.findFirst({
             where: {
-                slug: { equals: categorySlug.toLowerCase() }
+                slug: { equals: categorySlug, mode: 'insensitive' }
             }
         });
         if (category) where.categoryId = category.id;
@@ -33,7 +33,7 @@ export async function getProducts(filters: ProductFilters = {}) {
     if (subcategorySlug) {
         const subcategory = await prisma.subcategory.findFirst({
             where: {
-                slug: { equals: subcategorySlug.toLowerCase() }
+                slug: { equals: subcategorySlug, mode: 'insensitive' }
             }
         });
         if (subcategory) where.subcategoryId = subcategory.id;
@@ -43,7 +43,7 @@ export async function getProducts(filters: ProductFilters = {}) {
     if (subsubcategorySlug) {
         const subsubcategory = await prisma.subSubcategory.findFirst({
             where: {
-                slug: { equals: subsubcategorySlug.toLowerCase() }
+                slug: { equals: subsubcategorySlug, mode: 'insensitive' }
             }
         });
         if (subsubcategory) where.subsubcategoryId = subsubcategory.id;

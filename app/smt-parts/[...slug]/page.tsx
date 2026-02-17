@@ -74,8 +74,8 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
 
         const subcategory = await prisma.subcategory.findFirst({
             where: {
-                slug: { equals: normalizedSlug },
-                category: { slug: 'smt-parts' }
+                slug: { equals: normalizedSlug, mode: 'insensitive' },
+                category: { slug: { equals: 'smt-parts', mode: 'insensitive' } }
             }
         });
 
@@ -86,7 +86,7 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
         }
 
         const subsubcat = await prisma.subSubcategory.findFirst({
-            where: { slug: { equals: normalizedSlug } }
+            where: { slug: { equals: normalizedSlug, mode: 'insensitive' } }
         });
 
         if (subsubcat) {
