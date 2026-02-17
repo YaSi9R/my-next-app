@@ -11,6 +11,8 @@ import machine2 from "../../public/image_copy3-.png";
 const images = [
   { src: machine, alt: "SMT & PCB Manufacturing Equipment 1" },
   { src: machine2, alt: "SMT & PCB Manufacturing Equipment 2" },
+  { src: machine, alt: "SMT & PCB Manufacturing Equipment 1" },
+  { src: machine2, alt: "SMT & PCB Manufacturing Equipment 2" },
 ];
 
 export function HeroSlider() {
