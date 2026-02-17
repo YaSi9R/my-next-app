@@ -9,7 +9,7 @@ interface SidebarFilterProps {
     selectedCategory: string | null;
     selectedTypes?: string[];
     onCategoryChange: (categorySlug: string | null) => void;
-    onTypeChange?: (typeSlug: string) => void;
+    onTypeChange?: (typeSlugs: string[]) => void;
     className?: string;
 }
 
@@ -23,6 +23,14 @@ export default function SidebarFilter({
     className = "",
 }: SidebarFilterProps) {
     const [isMobileOpen, setIsMobileOpen] = useState(false);
+
+    const handleTypeChange = (slug: string) => {
+        if (!onTypeChange) return;
+        const newTypes = selectedTypes.includes(slug)
+            ? selectedTypes.filter((t) => t !== slug)
+            : [...selectedTypes, slug];
+        onTypeChange(newTypes);
+    };
 
     return (
         <>
@@ -110,7 +118,7 @@ export default function SidebarFilter({
                                             <input
                                                 type="checkbox"
                                                 checked={selectedTypes.includes(type.slug)}
-                                                onChange={() => onTypeChange?.(type.slug)}
+                                                onChange={() => handleTypeChange(type.slug)}
                                                 className="peer w-5 h-5 border-2 border-gray-300 rounded focus:ring-0 checked:bg-[#022c75] checked:border-[#022c75] transition-all"
                                             />
                                             <ChevronDown

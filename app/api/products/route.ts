@@ -79,6 +79,15 @@ export async function GET(req: Request) {
     const subsubcategorySlug = searchParams.get("subsubcategorySlug") || undefined;
     const productSlug = searchParams.get("productSlug") || undefined;
 
+    console.log('[API /products GET] Request params:', {
+      page,
+      limit,
+      categorySlug,
+      subcategorySlug,
+      subsubcategorySlug,
+      productSlug
+    });
+
     const data = await getProducts({
       categorySlug,
       subcategorySlug,
@@ -87,6 +96,8 @@ export async function GET(req: Request) {
       page,
       limit,
     });
+
+    console.log('[API /products GET] Returning', data.products.length, 'products out of', data.total, 'total');
 
     return NextResponse.json(data);
   } catch (error: any) {
