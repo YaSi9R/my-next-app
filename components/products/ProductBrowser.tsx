@@ -137,13 +137,10 @@ export default function ProductBrowser({
                     <SidebarFilter
                         categories={subcategories}
                         types={subsubcategories}
-                        brands={[]} // Brands are now removed
                         selectedCategory={selectedSubcategory}
                         selectedTypes={selectedSubsubcategories}
-                        selectedBrands={[]}
                         onCategoryChange={handleSubcategoryChange}
                         onTypeChange={handleSubsubcategoryChange}
-                        onBrandChange={() => { }}
                     />
                 </div>
 
