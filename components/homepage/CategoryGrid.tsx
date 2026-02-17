@@ -13,6 +13,7 @@ import machine5 from "../../public/MAIN PAGE AOI.png";
 import machine6 from "../../public/SMT LINE.png";
 import machine7 from "../../public/MAIN PAGE BOARD HANDLING.png";
 import machine8 from "../../public/MAIN PAGE SPARE PARTS.png";
+// chchhf
 
 const categories = [
     {
