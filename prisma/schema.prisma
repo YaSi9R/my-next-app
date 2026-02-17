@@ -86,3 +86,13 @@ model Newsletter {
   email     String   @unique
   createdAt DateTime @default(now())
 }
+
+model PageSection {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  pageSlug  String
+  sectionId String
+  content   Json
+  updatedAt DateTime @updatedAt
+
+  @@unique([pageSlug, sectionId])
+}

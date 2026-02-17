@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
 import image1 from "../../../public/highscalesmt.png";
+import AvailableConfig from '@/components/smt-line/AvailableConfig';
+
 export default function HighSpeedLinePage() {
     return (
         <div className="min-h-screen bg-[#e6e6e6]">
@@ -49,14 +51,14 @@ export default function HighSpeedLinePage() {
                         </div>
                         <div className="relative hidden lg:block">
                             <div className="relative border border-white/10 rounded-2xl p-6 ">
-                                                           {/* Placeholder for Line Diagram or Image */}
-                                                           <Image
-                                                               src={image1}
-                                                               alt="Entry Level SMT Line"
-                                                               width={500}
-                                                               height={500}
-                                                           />
-                                                       </div>
+                                {/* Placeholder for Line Diagram or Image */}
+                                <Image
+                                    src={image1}
+                                    alt="Entry Level SMT Line"
+                                    width={500}
+                                    height={500}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,29 +100,7 @@ export default function HighSpeedLinePage() {
                         </section>
 
                         {/* Available Configurations */}
-                        <section>
-                            <h2 className="text-3xl font-bold text-[#022c75] mb-6 flex items-center gap-3">
-                                <Settings className="w-8 h-8 text-[#022c75]" />
-                                Available Configurations
-                            </h2>
-                            <div className="grid gap-6">
-                                {/* Option A */}
-                                <div className="bg-[#e6e6e6] rounded-xl p-6 shadow-sm border border-[2px] border-[#022c75] transition-colors">
-                                    <h3 className="text-xl font-bold text-[#022c75] mb-2">Option A – High-Speed Yamaha Configuration</h3>
-                                    <p className="text-[#022c75]">Stable output exceeding 50K CPH.</p>
-                                </div>
-                                {/* Option B */}
-                                <div className="bg-[#e6e6e6] rounded-xl p-6 shadow-sm border border-[2px] border-[#022c75] hover:border-blue-200 transition-colors">
-                                    <h3 className="text-xl font-bold text-[#022c75] mb-2">Option B – Parallel PnP Architecture</h3>
-                                    <p className="text-[#022c75]">Multi-machine structure for increased capacity.</p>
-                                </div>
-                                {/* Option C */}
-                                <div className="bg-[#e6e6e6] rounded-xl p-6 shadow-sm border border-[2px] border-[#022c75] hover:border-blue-200 transition-colors">
-                                    <h3 className="text-xl font-bold text-[#022c75] mb-2">Option C – Hybrid with Advanced Inspection</h3>
-                                    <p className="text-[#022c75]">Integrated 3D SPI and AOI for industrial-grade quality control.</p>
-                                </div>
-                            </div>
-                        </section>
+                        <AvailableConfig pageSlug="high-speed" />
 
                     </div>
 
