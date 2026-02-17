@@ -77,11 +77,13 @@ export async function GET(req: Request) {
     const categorySlug = searchParams.get("categorySlug") || undefined;
     const subcategorySlug = searchParams.get("subcategorySlug") || undefined;
     const subsubcategorySlug = searchParams.get("subsubcategorySlug") || undefined;
+    const productSlug = searchParams.get("productSlug") || undefined;
 
     const data = await getProducts({
       categorySlug,
       subcategorySlug,
       subsubcategorySlug,
+      productSlug,
       page,
       limit,
     });

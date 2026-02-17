@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search, Loader2 } from "lucide-react";
 import SidebarFilter from "./SidebarFilter";
 import { Product } from "@/lib/api";
 import Pagination from "@/components/ui/Pagination";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface ProductBrowserProps {
     initialData: {
@@ -33,6 +33,11 @@ export default function ProductBrowser({
     const [products, setProducts] = useState<Product[]>(initialData.products);
     const [total, setTotal] = useState(initialData.total);
     const [totalPages, setTotalPages] = useState(initialData.totalPages);
+    const [loading, setLoading] = useState(false);
+
+    // Filter structure state (fetched from API)
+    const [availableSubcategories, setAvailableSubcategories] = useState<{ name: string; slug: string; id: string }[]>([]);
+    const [availableSubsubcategories, setAvailableSubsubcategories] = useState<{ name: string; slug: string; subcategoryId: string }[]>([]);
 
     const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
         initialSubcategory || null
@@ -41,47 +46,86 @@ export default function ProductBrowser({
         initialSubsubcategory ? [initialSubsubcategory] : []
     );
     const [currentPage, setCurrentPage] = useState(1);
-    const [loading, setLoading] = useState(false);
 
-    // Sync state with props when navigation occurs
+    // Fetch navigation structure once
+    useEffect(() => {
+        const fetchNav = async () => {
+            try {
+                const res = await fetch('/api/navigation');
+                if (!res.ok) return;
+                const data = await res.json();
+
+                // Find our root category
+                const rootCat = data.categories.find((c: any) => c.slug === rootCategorySlug);
+                if (rootCat) {
+                    const subcats = data.subcategories.filter((s: any) => s.categoryId === rootCat.id);
+                    setAvailableSubcategories(subcats);
+
+                    const subsubs: any[] = [];
+                    subcats.forEach((s: any) => {
+                        if (s.subsubcategories) {
+                            subsubs.push(...s.subsubcategories);
+                        }
+                    });
+                    setAvailableSubsubcategories(subsubs);
+                }
+            } catch (err) {
+                console.error("Failed to fetch filters:", err);
+            }
+        };
+        fetchNav();
+    }, [rootCategorySlug]);
+
+    // Fetch products whenever filters or page changes
+    const fetchProducts = useCallback(async () => {
+        setLoading(true);
+        try {
+            const params = new URLSearchParams({
+                categorySlug: rootCategorySlug,
+                page: String(currentPage),
+                limit: String(ITEMS_PER_PAGE),
+            });
+            if (selectedSubcategory) params.append('subcategorySlug', selectedSubcategory);
+
+            // Note: our API supports one subsubcategory filter at a time for now based on implementation_plan
+            // If multiple are selected, we might need to adjust, but based on ProductBrowser's logic 
+            // it seems to transition to a single subsubcategory URL.
+            if (selectedSubsubcategories.length > 0) {
+                params.append('subsubcategorySlug', selectedSubsubcategories[0]);
+            }
+
+            const res = await fetch(`/api/products?${params.toString()}`);
+            if (!res.ok) throw new Error("Failed to fetch");
+            const data = await res.json();
+            setProducts(data.products);
+            setTotal(data.total);
+            setTotalPages(data.totalPages);
+        } catch (err) {
+            console.error("Fetch error:", err);
+        } finally {
+            setLoading(false);
+        }
+    }, [rootCategorySlug, selectedSubcategory, selectedSubsubcategories, currentPage]);
+
+    // Update state when initialData changes (navigating via browser back/forward)
     useEffect(() => {
         setProducts(initialData.products);
         setTotal(initialData.total);
         setTotalPages(initialData.totalPages);
-    }, [initialData]);
-
-    useEffect(() => {
         setSelectedSubcategory(initialSubcategory || null);
         setSelectedSubsubcategories(initialSubsubcategory ? [initialSubsubcategory] : []);
-    }, [initialSubcategory, initialSubsubcategory]);
+        setCurrentPage(1);
+    }, [initialData, initialSubcategory, initialSubsubcategory]);
 
-    // Derive Categories (Subcategories) from products
-    const subcategories = useMemo(() => {
-        const map = new Map();
-        products.forEach((p) => {
-            if (p.subcategory?.name && p.subcategory?.slug) {
-                if (!map.has(p.subcategory.slug)) {
-                    map.set(p.subcategory.slug, p.subcategory.name);
-                }
-            }
-        });
-        return Array.from(map.entries()).map(([slug, name]) => ({ name, slug }));
-    }, [products]);
-
-    // Derive Subsubcategories from products for the selected subcategory
-    const subsubcategories = useMemo(() => {
-        const relevantSubsubs = new Map();
-        products.forEach(p => {
-            if (p.subcategory?.slug === selectedSubcategory && p.subsubcategory?.name && p.subsubcategory?.slug) {
-                relevantSubsubs.set(p.subsubcategory.slug, p.subsubcategory.name);
-            }
-        });
-        return Array.from(relevantSubsubs.entries()).map(([slug, name]) => ({ name, slug }));
-    }, [products, selectedSubcategory]);
+    // Only fetch if NOT the initial render (initialData handles that)
+    // Actually, it's safer to always fetch when filters change to ensure sync
+    // But let's rely on router.push to trigger the page component which passes new initialData
 
     const handleSubcategoryChange = (slug: string | null) => {
-        setCurrentPage(1);
+        setSelectedSubcategory(slug);
         setSelectedSubsubcategories([]);
+        setCurrentPage(1);
+
         const parts: string[] = [rootCategorySlug];
         if (slug) parts.push(slug);
         router.push(`/${parts.join('/')}`);
@@ -89,39 +133,20 @@ export default function ProductBrowser({
 
     const handleSubsubcategoryChange = (slug: string) => {
         setCurrentPage(1);
-
         const isRemoving = selectedSubsubcategories.includes(slug);
 
-        // Update URL to reflect the new selection
         const parts: string[] = [rootCategorySlug];
         if (selectedSubcategory) parts.push(selectedSubcategory);
 
         if (!isRemoving) {
-            // If checking a new one, add it to URL
             parts.push(slug);
+            setSelectedSubsubcategories([slug]);
+        } else {
+            setSelectedSubsubcategories([]);
         }
-        // If removing, we don't add it to parts, so URL becomes the parent category
 
         router.push(`/${parts.join('/')}`);
     };
-
-    // Filter local products
-    const filteredProducts = useMemo(() => {
-        return products.filter((product) => {
-            if (selectedSubcategory && product.subcategory?.slug.toLowerCase() !== selectedSubcategory.toLowerCase()) return false;
-            if (selectedSubsubcategories.length > 0) {
-                const productSubsubSlug = product.subsubcategory?.slug?.toLowerCase() || '';
-                const hasMatch = selectedSubsubcategories.some(s => s.toLowerCase() === productSubsubSlug);
-                if (!hasMatch) return false;
-            }
-            return true;
-        });
-    }, [products, selectedSubcategory, selectedSubsubcategories]);
-
-    const paginatedProducts = useMemo(() => {
-        const start = (currentPage - 1) * ITEMS_PER_PAGE;
-        return filteredProducts.slice(start, start + ITEMS_PER_PAGE);
-    }, [filteredProducts, currentPage]);
 
     const getRootTitle = () => {
         switch (rootCategorySlug) {
@@ -133,14 +158,22 @@ export default function ProductBrowser({
         }
     }
 
+    // Determine types (sub-subcategories) for the selected subcategory
+    const currentTypes = useMemo(() => {
+        if (!selectedSubcategory) return [];
+        const subcat = availableSubcategories.find(s => s.slug === selectedSubcategory);
+        if (!subcat) return [];
+        return availableSubsubcategories.filter(ss => ss.subcategoryId === subcat.id);
+    }, [selectedSubcategory, availableSubcategories, availableSubsubcategories]);
+
     return (
         <div className="container mx-auto px-4 max-w-7xl py-12">
             <div className="flex flex-col lg:flex-row gap-8">
                 {/* Sidebar */}
                 <div className="lg:w-1/4 flex-shrink-0">
                     <SidebarFilter
-                        categories={subcategories}
-                        types={subsubcategories}
+                        categories={availableSubcategories}
+                        types={currentTypes}
                         selectedCategory={selectedSubcategory}
                         selectedTypes={selectedSubsubcategories}
                         onCategoryChange={handleSubcategoryChange}
@@ -148,28 +181,35 @@ export default function ProductBrowser({
                     />
                 </div>
 
-                {/* Product Grid */}
+                {/* Product Grid Area */}
                 <div className="lg:w-3/4">
                     <div className="mb-8 flex items-end justify-between">
                         <div>
                             <h1 className="text-3xl font-bold text-[#022c75]">
                                 {selectedSubcategory
-                                    ? subcategories.find(c => c.slug === selectedSubcategory)?.name
+                                    ? availableSubcategories.find(c => c.slug === selectedSubcategory)?.name
                                     : `All ${getRootTitle()}`}
                             </h1>
                             <p className="text-gray-500 mt-2">
-                                Showing {filteredProducts.length} results
+                                Showing {total} results
+                                {loading && <Loader2 className="inline ml-2 animate-spin h-4 w-4" />}
                             </p>
                         </div>
                     </div>
 
-                    {paginatedProducts.length > 0 ? (
+                    {loading ? (
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 opacity-50">
+                            {[...Array(6)].map((_, i) => (
+                                <div key={i} className="bg-white rounded-2xl h-80 animate-pulse border border-gray-100" />
+                            ))}
+                        </div>
+                    ) : products.length > 0 ? (
                         <>
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {paginatedProducts.map((product) => (
+                                {products.map((product) => (
                                     <Link
                                         key={product.id}
-                                        href={`/${rootCategorySlug}/${product.subcategory?.slug || 'other'}${product.subsubcategory?.slug ? `/${product.subsubcategory.slug}` : ''}/${product.id}`}
+                                        href={`/${rootCategorySlug}/${product.subcategory?.slug || 'other'}${product.subsubcategory?.slug ? `/${product.subsubcategory.slug}` : ''}/${product.slug}`}
                                         className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col"
                                     >
                                         <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden p-3 flex items-center justify-center">
@@ -212,11 +252,13 @@ export default function ProductBrowser({
                                 ))}
                             </div>
 
-                            <Pagination
-                                currentPage={currentPage}
-                                totalPages={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
-                                onPageChange={setCurrentPage}
-                            />
+                            {totalPages > 1 && (
+                                <Pagination
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    onPageChange={setCurrentPage}
+                                />
+                            )}
                         </>
                     ) : (
                         <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">

@@ -1,47 +1,44 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import {
-    getProductById,
+    getProductBySlug,
     getProducts
 } from '@/lib/services/product-service';
 import ProductDetail from '@/components/products/ProductDetail';
 import ProductBrowser from '@/components/products/ProductBrowser';
-
 import { prisma } from '@/lib/prisma';
 
 export const dynamicParams = true;
 
 export async function generateStaticParams() {
-    const { products } = await getProducts({ limit: 100 });
-    const machines = products.filter(p => p.category?.slug === 'smt-machines');
+    const { products } = await getProducts({ categorySlug: 'smt-machines', limit: 500 });
 
     const paths = [];
 
-    // 1. Product Detail Pages: [subcat, subsubcat, id] or [subcat, id]
-    for (const p of machines) {
+    for (const p of products) {
         if (p.subcategory?.slug && p.subsubcategory?.slug) {
-            paths.push({ slug: [p.subcategory.slug, p.subsubcategory.slug, p.id] });
+            // [subcat, subsubcat, product-slug]
+            paths.push({ slug: [p.subcategory.slug, p.subsubcategory.slug, p.slug] });
         } else if (p.subcategory?.slug) {
-            paths.push({ slug: [p.subcategory.slug, p.id] });
+            // [subcat, product-slug]
+            paths.push({ slug: [p.subcategory.slug, p.slug] });
         }
     }
 
-    // 2. Listing Pages (Deduplicated)
-    const subcats = new Set(machines.map(p => p.subcategory?.slug).filter(Boolean));
-    const subsubcats = new Set(machines.map(p => p.subsubcategory?.slug).filter(Boolean));
-
-    // [subcat]
-    subcats.forEach(s => paths.push({ slug: [s!] }));
-
-    // [subcat, subsubcat]
-    subcats.forEach(s => {
-        subsubcats.forEach(ss => {
-            const exists = machines.some(p => p.subcategory?.slug === s && p.subsubcategory?.slug === ss);
-            if (exists) {
-                paths.push({ slug: [s!, ss!] });
-            }
-        });
+    // Listing Pages
+    const subcats = await prisma.subcategory.findMany({
+        where: { category: { slug: 'smt-machines' } }
     });
+
+    for (const s of subcats) {
+        paths.push({ slug: [s.slug] });
+        const subsubs = await prisma.subSubcategory.findMany({
+            where: { subcategoryId: s.id }
+        });
+        for (const ss of subsubs) {
+            paths.push({ slug: [s.slug, ss.slug] });
+        }
+    }
 
     return paths;
 }
@@ -55,16 +52,15 @@ interface Props {
 export default async function SmtMachinesDynamicPage({ params }: Props) {
     const { slug } = await params;
 
-    // Case 1: Product Detail Page
-    const potentialId = slug[slug.length - 1];
-    let product = null;
+    // Case 1: Try resolving as a Product Detail Page (last segment is product slug)
+    // Products can be at length 2 (subcat/prod) or length 3 (subcat/subsubcat/prod)
+    if (slug.length >= 2) {
+        const potentialProductSlug = slug[slug.length - 1];
+        const product = await getProductBySlug(potentialProductSlug);
 
-    if (/^[0-9a-fA-F]{24}$/.test(potentialId)) {
-        product = await getProductById(potentialId);
-    }
-
-    if (product && (product as any).category?.slug.toLowerCase() === 'smt-machines') {
-        return <ProductDetail product={JSON.parse(JSON.stringify(product))} />;
+        if (product && product.category?.slug.toLowerCase() === 'smt-machines') {
+            return <ProductDetail product={JSON.parse(JSON.stringify(product))} />;
+        }
     }
 
     // Case 2: Listing Page 
@@ -74,58 +70,52 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
     let initialSubsubcategorySlug: string | undefined;
     let initialSubsubcategoryName: string | undefined;
 
-    // First pass: Find subcategory
+    // Resolve hierarchy from slugs
     for (const s of slug) {
         const normalizedSlug = s.toLowerCase();
-        const subcategory = await prisma.subcategory.findFirst({
-            where: {
-                slug: { equals: normalizedSlug, mode: 'insensitive' },
-                category: { slug: { equals: 'smt-machines', mode: 'insensitive' } }
+
+        // Try to find subcategory first
+        if (!initialSubcategorySlug) {
+            const subcategory = await prisma.subcategory.findFirst({
+                where: {
+                    slug: { equals: normalizedSlug, mode: 'insensitive' },
+                    category: { slug: { equals: 'smt-machines', mode: 'insensitive' } }
+                }
+            });
+            if (subcategory) {
+                initialSubcategorySlug = subcategory.slug;
+                initialSubcategoryName = subcategory.name;
+                initialSubcategoryId = subcategory.id;
+                continue;
             }
-        });
-        if (subcategory) {
-            initialSubcategorySlug = subcategory.slug;
-            initialSubcategoryName = subcategory.name;
-            initialSubcategoryId = subcategory.id;
-            break;
+        }
+
+        // If we have subcategory, try to find sub-subcategory
+        if (initialSubcategoryId && !initialSubsubcategorySlug) {
+            const subsubcat = await prisma.subSubcategory.findFirst({
+                where: {
+                    slug: { equals: normalizedSlug, mode: 'insensitive' },
+                    subcategoryId: initialSubcategoryId
+                }
+            });
+            if (subsubcat) {
+                initialSubsubcategorySlug = subsubcat.slug;
+                initialSubsubcategoryName = subsubcat.name;
+                continue;
+            }
         }
     }
 
-    // Second pass: Find subsubcategory
-    for (const s of slug) {
-        const normalizedSlug = s.toLowerCase();
-        // Skip if it's the same as the subcategory (case-insensitive comparison)
-        if (normalizedSlug === initialSubcategorySlug?.toLowerCase()) continue;
-
-        const whereClause: any = {
-            slug: { equals: normalizedSlug, mode: 'insensitive' }
-        };
-        
-        // If we have a subcategory ID, ensure the subsubcategory belongs to it
-        if (initialSubcategoryId) {
-            whereClause.subcategoryId = initialSubcategoryId;
-        }
-
-        const subsubcat = await prisma.subSubcategory.findFirst({
-            where: whereClause
+    // If we resolved at least a subcategory, it's a valid listing page
+    if (initialSubcategorySlug) {
+        // Fetch initial data for the browser
+        const machinesData = await getProducts({
+            categorySlug: 'smt-machines',
+            subcategorySlug: initialSubcategorySlug,
+            subsubcategorySlug: initialSubsubcategorySlug,
+            limit: 12
         });
 
-        if (subsubcat) {
-            initialSubsubcategorySlug = subsubcat.slug;
-            initialSubsubcategoryName = subsubcat.name;
-            break;
-        }
-    }
-
-    // Always ensure we are filtering within SMT machines for this page
-    const machinesData = await getProducts({
-        categorySlug: 'smt-machines',
-        subcategorySlug: initialSubcategorySlug,
-        subsubcategorySlug: initialSubsubcategorySlug,
-        limit: 50
-    });
-
-    if (initialSubcategorySlug || initialSubsubcategorySlug) {
         return (
             <div className="min-h-screen bg-[#e6e6e6]">
                 <div className="bg-[#e6e6e6] py-12 text-center text-[#022c75] mb-8">
@@ -145,7 +135,7 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
                     initialSubsubcategory={initialSubsubcategorySlug}
                 />
             </div>
-        )
+        );
     }
 
     return notFound();

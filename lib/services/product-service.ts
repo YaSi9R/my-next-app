@@ -4,6 +4,7 @@ export interface ProductFilters {
     categorySlug?: string;
     subcategorySlug?: string;
     subsubcategorySlug?: string;
+    productSlug?: string;
     page?: number;
     limit?: number;
 }
@@ -13,12 +14,17 @@ export async function getProducts(filters: ProductFilters = {}) {
         categorySlug,
         subcategorySlug,
         subsubcategorySlug,
+        productSlug,
         page = 1,
         limit = 50,
     } = filters;
 
     const skip = (page - 1) * limit;
     const where: any = {};
+
+    if (productSlug) {
+        where.slug = { equals: productSlug, mode: 'insensitive' };
+    }
 
     let categoryId: string | null = null;
     if (categorySlug) {
@@ -30,7 +36,8 @@ export async function getProducts(filters: ProductFilters = {}) {
         if (category) {
             categoryId = category.id;
             where.categoryId = category.id;
-        } else {
+        } else if (!productSlug) {
+            // Only return empty if we aren't looking for a specific product slug
             return { products: [], total: 0, page, limit, totalPages: 0 };
         }
     }
@@ -39,7 +46,6 @@ export async function getProducts(filters: ProductFilters = {}) {
         const subcategoryWhere: any = {
             slug: { equals: subcategorySlug, mode: 'insensitive' }
         };
-        // If category is specified, ensure subcategory belongs to it
         if (categoryId) {
             subcategoryWhere.categoryId = categoryId;
         }
@@ -48,7 +54,7 @@ export async function getProducts(filters: ProductFilters = {}) {
         });
         if (subcategory) {
             where.subcategoryId = subcategory.id;
-        } else {
+        } else if (!productSlug) {
             return { products: [], total: 0, page, limit, totalPages: 0 };
         }
     }
@@ -57,7 +63,6 @@ export async function getProducts(filters: ProductFilters = {}) {
         const subsubcatWhere: any = {
             slug: { equals: subsubcategorySlug, mode: 'insensitive' }
         };
-        // If subcategory is specified, ensure subsubcategory belongs to it
         if (where.subcategoryId) {
             subsubcatWhere.subcategoryId = where.subcategoryId;
         }
@@ -66,7 +71,7 @@ export async function getProducts(filters: ProductFilters = {}) {
         });
         if (subsubcategory) {
             where.subsubcategoryId = subsubcategory.id;
-        } else {
+        } else if (!productSlug) {
             return { products: [], total: 0, page, limit, totalPages: 0 };
         }
     }
@@ -98,6 +103,7 @@ export async function getProducts(filters: ProductFilters = {}) {
 }
 
 export async function getProductById(id: string) {
+    if (!id || !/^[0-9a-fA-F]{24}$/.test(id)) return null;
     return await prisma.product.findUnique({
         where: { id },
         include: {
@@ -109,8 +115,9 @@ export async function getProductById(id: string) {
 }
 
 export async function getProductBySlug(slug: string) {
-    return await prisma.product.findUnique({
-        where: { slug },
+    if (!slug) return null;
+    return await prisma.product.findFirst({
+        where: { slug: { equals: slug, mode: 'insensitive' } },
         include: {
             category: { select: { name: true, slug: true } },
             subcategory: { select: { name: true, slug: true } },
