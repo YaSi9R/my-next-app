@@ -5,56 +5,57 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 // Placeholder images from the public directory
-import machine1 from "../../public/image.png";
-import machine2 from "../../public/image copy.png";
-import machine3 from "../../public/image copy1.png";
-import machine4 from "../../public/image copy2.png";
-import machine5 from "../../public/image1 (1).png";
-import machine6 from "../../public/image1 (2).png";
-import machine7 from "../../public/machine.png";
-import machine8 from "../../public/heroBanner.jpg";
+import machine1 from "../../public/MAIN PAGE PICK AND PLACE.png";
+import machine2 from "../../public/MAIN PAGE REFLOW.png";
+import machine3 from "../../public/MAIN PAGE SCREEN PRINTER.png";
+import machine4 from "../../public/MAIN PAGE SPI.png";
+import machine5 from "../../public/MAIN PAGE AOI.png";
+import machine6 from "../../public/SMT LINE.png";
+import machine7 from "../../public/MAIN PAGE BOARD HANDLING.png";
+import machine8 from "../../public/MAIN PAGE SPARE PARTS.png";
 
 const categories = [
     {
         title: "Pick & Place",
         image: machine1,
-        href: "/smt-machines/pick-and-place-machines",
+        href: "/smt-machines/pick-and-place",
     },
     {
-        title: "Feeders",
+        title: "Reflow Oven",
         image: machine2,
-        href: "/smt-parts/feeders-and-feeder-parts/yamaha", // Pointing to Yamaha parts hub for now
+        href: "/smt-machines/reflow-oven", // Pointing to Yamaha parts hub for now
     },
     {
-        title: "Inspection - AOI/SPI",
+        title: "Solder Paste Printer",
         image: machine3,
-        href: "/smt-machines/aoi", // General machines page
+        href: "/smt-machines/solder-paste-inspection", // General machines page
     },
     {
-        title: "Screen Printer",
+        title: "Solder Paste Inspection",
         image: machine4,
-        href: "/smt-machines/screen-printers",
+        href: "/smt-machines/solder-paste-inspection",
     },
     {
-        title: "Oven",
+        title: "Automated Optical Inspction",
         image: machine5,
-        href: "/smt-machines/reflow-ovens",
+        href: "/smt-machines/automated-optical-inspection",
     },
     {
-        title: "Soldering Systems",
+        title: "SMT Line",
         image: machine6,
-        href: "/smt-machines",
-    },
-    {
-        title: "PTH / Auto Insertion",
-        image: machine7,
-        href: "/smt-machines",
+        href: "/smt-line",
     },
     {
         title: "Board Handling",
-        image: machine8,
+        image: machine7,
         href: "/board-handling",
     },
+    {
+        title: "SMT Spare Parts",
+        image: machine8,
+        href: "/smt-parts",
+    }
+
 ];
 
 export default function CategoryGrid() {
