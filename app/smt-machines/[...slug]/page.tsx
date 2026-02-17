@@ -63,7 +63,7 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
         product = await getProductById(potentialId);
     }
 
-    if (product && (product as any).category?.slug === 'smt-machines') {
+    if (product && (product as any).category?.slug.toLowerCase() === 'smt-machines') {
         return <ProductDetail product={JSON.parse(JSON.stringify(product))} />;
     }
 
@@ -75,10 +75,12 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
 
     // Direct database lookups for each slug segment
     for (const s of slug) {
+        const normalizedSlug = s.toLowerCase();
+
         // Look up subcategory
         const subcategory = await prisma.subcategory.findFirst({
             where: {
-                slug: s,
+                slug: { equals: normalizedSlug },
                 category: { slug: 'smt-machines' }
             }
         });
@@ -91,7 +93,7 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
 
         // Look up subsubcategory
         const subsubcat = await prisma.subSubcategory.findFirst({
-            where: { slug: s }
+            where: { slug: { equals: normalizedSlug } }
         });
 
         if (subsubcat) {

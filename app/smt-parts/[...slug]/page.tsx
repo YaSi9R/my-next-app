@@ -59,7 +59,7 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
         product = await getProductById(potentialId);
     }
 
-    if (product && (product as any).category?.slug === 'smt-parts') {
+    if (product && (product as any).category?.slug.toLowerCase() === 'smt-parts') {
         return <ProductDetail product={JSON.parse(JSON.stringify(product))} />;
     }
 
@@ -70,9 +70,11 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
     let initialSubsubcategoryName: string | undefined;
 
     for (const s of slug) {
+        const normalizedSlug = s.toLowerCase();
+
         const subcategory = await prisma.subcategory.findFirst({
             where: {
-                slug: s,
+                slug: { equals: normalizedSlug },
                 category: { slug: 'smt-parts' }
             }
         });
@@ -84,7 +86,7 @@ export default async function SmtPartsDynamicPage({ params }: Props) {
         }
 
         const subsubcat = await prisma.subSubcategory.findFirst({
-            where: { slug: s }
+            where: { slug: { equals: normalizedSlug } }
         });
 
         if (subsubcat) {

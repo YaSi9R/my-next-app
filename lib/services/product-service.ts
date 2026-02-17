@@ -21,19 +21,31 @@ export async function getProducts(filters: ProductFilters = {}) {
     const where: any = {};
 
     if (categorySlug) {
-        const category = await prisma.category.findUnique({ where: { slug: categorySlug } });
+        const category = await prisma.category.findFirst({
+            where: {
+                slug: { equals: categorySlug.toLowerCase() }
+            }
+        });
         if (category) where.categoryId = category.id;
         else return { products: [], total: 0, page, limit, totalPages: 0 };
     }
 
     if (subcategorySlug) {
-        const subcategory = await prisma.subcategory.findFirst({ where: { slug: subcategorySlug } });
+        const subcategory = await prisma.subcategory.findFirst({
+            where: {
+                slug: { equals: subcategorySlug.toLowerCase() }
+            }
+        });
         if (subcategory) where.subcategoryId = subcategory.id;
         else return { products: [], total: 0, page, limit, totalPages: 0 };
     }
 
     if (subsubcategorySlug) {
-        const subsubcategory = await prisma.subSubcategory.findFirst({ where: { slug: subsubcategorySlug } });
+        const subsubcategory = await prisma.subSubcategory.findFirst({
+            where: {
+                slug: { equals: subsubcategorySlug.toLowerCase() }
+            }
+        });
         if (subsubcategory) where.subsubcategoryId = subsubcategory.id;
         else return { products: [], total: 0, page, limit, totalPages: 0 };
     }
