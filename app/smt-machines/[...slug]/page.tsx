@@ -70,36 +70,50 @@ export default async function SmtMachinesDynamicPage({ params }: Props) {
     // Case 2: Listing Page 
     let initialSubcategorySlug: string | undefined;
     let initialSubcategoryName: string | undefined;
+    let initialSubcategoryId: string | undefined;
     let initialSubsubcategorySlug: string | undefined;
     let initialSubsubcategoryName: string | undefined;
 
-    // Direct database lookups for each slug segment
+    // First pass: Find subcategory
     for (const s of slug) {
         const normalizedSlug = s.toLowerCase();
-
-        // Look up subcategory
         const subcategory = await prisma.subcategory.findFirst({
             where: {
                 slug: { equals: normalizedSlug, mode: 'insensitive' },
                 category: { slug: { equals: 'smt-machines', mode: 'insensitive' } }
             }
         });
-
         if (subcategory) {
             initialSubcategorySlug = subcategory.slug;
             initialSubcategoryName = subcategory.name;
-            continue;
+            initialSubcategoryId = subcategory.id;
+            break;
+        }
+    }
+
+    // Second pass: Find subsubcategory
+    for (const s of slug) {
+        const normalizedSlug = s.toLowerCase();
+        // Skip if it's the same as the subcategory (case-insensitive comparison)
+        if (normalizedSlug === initialSubcategorySlug?.toLowerCase()) continue;
+
+        const whereClause: any = {
+            slug: { equals: normalizedSlug, mode: 'insensitive' }
+        };
+        
+        // If we have a subcategory ID, ensure the subsubcategory belongs to it
+        if (initialSubcategoryId) {
+            whereClause.subcategoryId = initialSubcategoryId;
         }
 
-        // Look up subsubcategory
         const subsubcat = await prisma.subSubcategory.findFirst({
-            where: { slug: { equals: normalizedSlug, mode: 'insensitive' } }
+            where: whereClause
         });
 
         if (subsubcat) {
             initialSubsubcategorySlug = subsubcat.slug;
             initialSubsubcategoryName = subsubcat.name;
-            continue;
+            break;
         }
     }
 

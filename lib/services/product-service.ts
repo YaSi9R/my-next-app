@@ -20,34 +20,55 @@ export async function getProducts(filters: ProductFilters = {}) {
     const skip = (page - 1) * limit;
     const where: any = {};
 
+    let categoryId: string | null = null;
     if (categorySlug) {
         const category = await prisma.category.findFirst({
             where: {
                 slug: { equals: categorySlug, mode: 'insensitive' }
             }
         });
-        if (category) where.categoryId = category.id;
-        else return { products: [], total: 0, page, limit, totalPages: 0 };
+        if (category) {
+            categoryId = category.id;
+            where.categoryId = category.id;
+        } else {
+            return { products: [], total: 0, page, limit, totalPages: 0 };
+        }
     }
 
     if (subcategorySlug) {
+        const subcategoryWhere: any = {
+            slug: { equals: subcategorySlug, mode: 'insensitive' }
+        };
+        // If category is specified, ensure subcategory belongs to it
+        if (categoryId) {
+            subcategoryWhere.categoryId = categoryId;
+        }
         const subcategory = await prisma.subcategory.findFirst({
-            where: {
-                slug: { equals: subcategorySlug, mode: 'insensitive' }
-            }
+            where: subcategoryWhere
         });
-        if (subcategory) where.subcategoryId = subcategory.id;
-        else return { products: [], total: 0, page, limit, totalPages: 0 };
+        if (subcategory) {
+            where.subcategoryId = subcategory.id;
+        } else {
+            return { products: [], total: 0, page, limit, totalPages: 0 };
+        }
     }
 
     if (subsubcategorySlug) {
+        const subsubcatWhere: any = {
+            slug: { equals: subsubcategorySlug, mode: 'insensitive' }
+        };
+        // If subcategory is specified, ensure subsubcategory belongs to it
+        if (where.subcategoryId) {
+            subsubcatWhere.subcategoryId = where.subcategoryId;
+        }
         const subsubcategory = await prisma.subSubcategory.findFirst({
-            where: {
-                slug: { equals: subsubcategorySlug, mode: 'insensitive' }
-            }
+            where: subsubcatWhere
         });
-        if (subsubcategory) where.subsubcategoryId = subsubcategory.id;
-        else return { products: [], total: 0, page, limit, totalPages: 0 };
+        if (subsubcategory) {
+            where.subsubcategoryId = subsubcategory.id;
+        } else {
+            return { products: [], total: 0, page, limit, totalPages: 0 };
+        }
     }
 
     const [products, total] = await Promise.all([
