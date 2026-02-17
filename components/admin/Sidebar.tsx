@@ -5,16 +5,17 @@ import { usePathname } from "next/navigation";
 
 import logo from "@/public/TEKMART LOGO.png";
 import Image from "next/image";
-import { CircleGauge, ListChevronsDownUp, PackageSearch, Send, ShieldCheckIcon } from "lucide-react";
+import { CircleGauge, ListChevronsDownUp, PackageSearch, Send, ShieldCheckIcon, Settings } from "lucide-react";
 
 const menu = [
   { name: "Dashboard", path: "/admin", icon: CircleGauge },
   { name: "Products", path: "/admin/products", icon: PackageSearch },
-  
+
   { name: "Categories", path: "/admin/categories", icon: ListChevronsDownUp },
   // { name: "Subcategories", path: "/admin/subcategories" },
   { name: "Queries", path: "/admin/queries", icon: Send },
   { name: "Newsletters", path: "/admin/newsletters", icon: Send },
+  { name: "SMT Content", path: "/admin/smt-content", icon: Settings },
 ];
 
 interface SidebarProps {

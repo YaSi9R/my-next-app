@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, Sliders } from 'lucide-react';
 import Image from 'next/image';
 import image1 from "../../../public/entrylevelsmt.png"
+import AvailableConfig from '@/components/smt-line/AvailableConfig';
+
 export default function EntryLevelLinePage() {
     return (
         <div className="min-h-screen bg-[#e6e6e6]">
@@ -100,29 +102,7 @@ export default function EntryLevelLinePage() {
                         </section>
 
                         {/* Available Configurations */}
-                        <section>
-                            <h2 className="text-3xl font-bold text-[#022c75] mb-6 flex items-center gap-3">
-                                <Settings className="w-8 h-8 text-[#022c75]" />
-                                Available Configurations
-                            </h2>
-                            <div className="grid gap-6">
-                                {/* Option A */}
-                                <div className="bg-[#e6e6e6] rounded-xl p-6 shadow-sm border border-[2px] border-[#022c75]  transition-colors">
-                                    <h3 className="text-xl font-bold text-[#022c75] mb-2">Option A – Yamaha Core Configuration</h3>
-                                    <p className="text-[#022c75]">Single PnP optimized for stable 15K–20K CPH output.</p>
-                                </div>
-                                {/* Option B */}
-                                <div className="bg-[#e6e6e6] rounded-xl p-6 shadow-sm border border-[2px] border-[#022c75] hover:border-blue-200 transition-colors">
-                                    <h3 className="text-xl font-bold text-[#022c75] mb-2">Option B – Mixed Brand Optimized Configuration</h3>
-                                    <p className="text-[#022c75]">Cost-efficient combination of refurbished core machines.</p>
-                                </div>
-                                {/* Option C */}
-                                <div className="bg-[#e6e6e6] rounded-xl p-6 shadow-sm border border-[2px] border-[#022c75] hover:border-blue-200 transition-colors">
-                                    <h3 className="text-xl font-bold text-[#022c75] mb-2">Option C – Hybrid Configuration</h3>
-                                    <p className="text-[#022c75]">Used core machines with select new peripherals such as loaders or AOI systems.</p>
-                                </div>
-                            </div>
-                        </section>
+                        <AvailableConfig pageSlug="entry-level" />
 
                     </div>
 
