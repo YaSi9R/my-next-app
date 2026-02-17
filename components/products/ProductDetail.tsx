@@ -118,7 +118,7 @@ export default function ProductDetail({ product }: Props) {
                             {/* CTA Section */}
                             <div className="pt-8 border-t border-gray-100">
                                 <Link
-                                    href="/quote"
+                                    href={`/quote?product=${encodeURIComponent(product.name)}&subcategory=${encodeURIComponent(product.subcategory?.name || '')}`}
                                     className="block w-full bg-[#022c75] text-white text-center py-4 rounded-xl font-bold hover:bg-[#033a95] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 active:translate-y-0 capitalize tracking-wide"
                                 >
                                     Request Quote
