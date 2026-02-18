@@ -14,7 +14,7 @@ const images = [
   { src: machine1, alt: "SMT & PCB Manufacturing Equipment 1" },
   { src: machine2, alt: "SMT & PCB Manufacturing Equipment 2" },
   { src: machine3, alt: "SMT & PCB Manufacturing Equipment 1" },
-  
+
 ];
 
 export function HeroSlider() {
@@ -28,7 +28,7 @@ export function HeroSlider() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#e6e6e6] pt-12 pb-16 md:pt-20 md:pb-24">
+    <section className="relative overflow-hidden bg-[#e6e6e6] pt-6 pb-16 md:pt-20 md:pb-24">
       <div className="mx-auto max-w-7xl px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
@@ -42,9 +42,11 @@ export function HeroSlider() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-4xl md:text-4xl lg:text-5xl font-bold text-[#022c75] leading-tight tracking-tight"
+                className="text-4xl md:text-4xl lg:text-4xl font-bold text-[#022c75] leading-tight tracking-tight"
               >
-                Your Trusted Partner for SMT & PCB <br /> <span className="text-[#022c75] text-3xl">Manufacturing Solutions</span>
+                Leading Supplier of Refurbished SMT Machines & PCB Assembly Equipment in India
+                <br /> <span className="block text-lg mt-2 font-semibold ">Complete SMT Line Solutions for EMS & OEM Manufacturers
+                </span>
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -52,7 +54,7 @@ export function HeroSlider() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-md md:text-md text-[#022c75] leading-relaxed max-w-xl"
               >
-                We specialize in supplying used and refurbished SMT machines, new spare parts, and board handling equipment with comprehensive after-sales support for EMS and OEM manufacturers across India.
+                Tekmart India Exim Pvt. Ltd. is a trusted SMT equipment supplier in India specializing in refurbished and pre-owned SMT machines, genuine spare parts, board handling systems, and complete SMT line setup solutions. We support EMS and OEM manufacturers with cost-effective, quality-tested equipment and reliable after-sales technical support across India
               </motion.p>
             </div>
 
@@ -67,19 +69,27 @@ export function HeroSlider() {
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#022c75] flex items-center justify-center">
                   <CheckCircle2 className="h-3 w-3 text-[#e6e6e6]" />
                 </div>
-                <span className="text-[#022c75]/90 font-medium">Build & Expand Production Lines</span>
+                <span className="text-[#022c75]/90 font-medium"> Build & Upgrade Complete SMT Production Lines
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#022c75] flex items-center justify-center">
                   <CheckCircle2 className="h-3 w-3 text-[#e6e6e6]" />
                 </div>
-                <span className="text-[#022c75]/90 font-medium">Complete Equipment & Parts Solutions</span>
+                <span className="text-[#022c75]/90 font-medium">Supply of Pick & Place Machines, Reflow Ovens & Printers</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#022c75] flex items-center justify-center">
                   <CheckCircle2 className="h-3 w-3 text-[#e6e6e6]" />
                 </div>
-                <span className="text-[#022c75]/90 font-medium">Technical Expertise & Dependable Support</span>
+                <span className="text-[#022c75]/90 font-medium">Genuine SMT Spare Parts & Board Handling Equipment</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 h-5 w-5 rounded-full bg-[#022c75] flex items-center justify-center">
+                  <CheckCircle2 className="h-3 w-3 text-[#e6e6e6]" />
+                </div>
+                <span className="text-[#022c75]/90 font-medium">Installation, Commissioning & Long-Term Technical Support
+                </span>
               </div>
             </motion.div>
 
@@ -94,25 +104,25 @@ export function HeroSlider() {
               <Link
                 href="/quote"
                 className="bg-[#022c75] hover:bg-[#033a95]
-               text-white font-bold
-               px-8 py-4
+               text-[#e6e6e6] font-bold
+               px-6 py-4 sm:px-8
                rounded-xl shadow-lg hover:shadow-2xl
-               transition-all flex items-center gap-3 group"
+               transition-all flex items-center justify-center sm:justify-start gap-3 group whitespace-nowrap"
               >
-                Request Free Quote
+                Get Free SMT Consultation
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-transform" />
               </Link>
 
               {/* Secondary button */}
               <Link
-                href="/smt-line"
+                href="/smt-machines"
                 className="bg-[#022c75] hover:bg-[#022c75]/85
                text-[#e6e6e6]
                border border-[#022c75]/40
-               font-bold px-8 py-4
-               rounded-lg transition-all"
+               font-bold px-6 py-4 sm:px-8
+               rounded-lg transition-all text-center sm:text-left whitespace-nowrap"
               >
-                View Solutions
+                Explore SMT Solutions
               </Link>
             </motion.div>
 
@@ -121,9 +131,13 @@ export function HeroSlider() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-[#022c75] text-sm font-medium pt-4"
+              className="text-[#022c75] text-sm font-medium pt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 sm:whitespace-nowrap"
             >
-              ✓ No hidden costs  •  ✓ Free consultation  •  ✓ Instant quote
+              <span>✓ No hidden costs</span>
+              <span className="hidden sm:inline">•</span>
+              <span>✓ Free Technical Consultation</span>
+              <span className="hidden sm:inline">•</span>
+              <span>✓ Fast Quotation Turnaround</span>
             </motion.div>
           </div>
 

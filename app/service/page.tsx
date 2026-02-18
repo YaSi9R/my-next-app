@@ -13,12 +13,14 @@ export default function ServicesPage() {
                     <div className="grid lg:grid-cols-2 items-center gap-12">
 
                         <div>
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                                Structured SMT Service & <span className="text-[#022c75]">Technical Support</span>
+                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 ">
+                               SMT Service,Installation & Technical Support Across India
                             </h1>
 
                             <p className="text-lg md:text-xl text-[#022c75]/80 mb-10 leading-relaxed max-w-2xl">
-                                Installation, preventive maintenance, AMC coverage, and breakdown support for SMT machines and complete production lines — designed for long-term production reliability.
+                              Tekmart India provides structured installation, preventive maintenance, AMC coverage and breakdown assistance for refurbished SMT machines and complete SMT production lines.
+Our service approach is designed to ensure long-term operational reliability, reduced downtime and stable manufacturing performance for EMS and OEM manufacturers across India.
+
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4">
@@ -134,7 +136,8 @@ export default function ServicesPage() {
                             <div>
                                 <h2 className="text-3xl font-bold text-[#022c75] mb-2">Machine Installation & Line Integration</h2>
                                 <p className="text-lg text-[#022c75]">
-                                    We handle complete installation and commissioning to ensure stable performance from day one.
+                                  Complete installation and structured commissioning support to ensure stable SMT machine performance from day one.
+
                                 </p>
                             </div>
                         </div>
@@ -143,7 +146,7 @@ export default function ServicesPage() {
                             <h3 className="text-lg font-bold text-[#022c75] mb-4 uppercase tracking-wider text-sm">Scope Includes</h3>
                             <ul className="grid sm:grid-cols-2 gap-4">
                                 {[
-                                    "Machine positioning and leveling",
+                                    "Machine positioning and precision leveling",
                                     "Electrical and pneumatic verification",
                                     "Calibration and alignment",
                                     "Trial production validation",
@@ -169,7 +172,7 @@ export default function ServicesPage() {
                             <div>
                                 <h2 className="text-3xl font-bold text-[#022c75] mb-2">Preventive Maintenance & Health Checks</h2>
                                 <p className="text-lg text-[#022c75]">
-                                    Regular inspection and calibration programs to reduce downtime and maintain machine accuracy.
+                                   Scheduled inspection and calibration programs designed to reduce downtime and maintain placement accuracy across SMT production lines
                                 </p>
                             </div>
                         </div>
@@ -285,7 +288,7 @@ export default function ServicesPage() {
                             <div>
                                 <h2 className="text-3xl font-bold text-[#022c75] mb-2">Breakdown Troubleshooting & Technical Support</h2>
                                 <p className="text-lg text-[#022c75] font-semibold">
-                                    We provide structured troubleshooting support for Tekmart-supplied SMT equipment.
+                                    Structured fault diagnosis and technical assistance for Tekmart-supplied SMT machines and production lines.
                                 </p>
                             </div>
                         </div>

@@ -27,11 +27,10 @@ export default function CustomersPage() {
             <section className="bg-[#e6e6e6] py-6 md:py-10">
                 <div className="container mx-auto px-4 max-w-5xl text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-[#022c75] mb-6 tracking-tight">
-                        Our Clients
+                        Trusted by EMS & OEM Manufacturers Across India
                     </h1>
                     <p className="text-lg md:text-xl text-[#022c75] leading-relaxed max-w-3xl mx-auto">
-                        Tekmart supports manufacturers across India with SMT machines, spare parts,
-                        complete line configurations, and structured technical services.
+                       Tekmart delivers refurbished SMT machines, genuine spare parts and complete SMT production line solutions with structured technical support to manufacturers nationwide.
                     </p>
                 </div>
             </section>

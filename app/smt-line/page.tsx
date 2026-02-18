@@ -9,21 +9,20 @@ export default function SMTLinePage() {
             <div className="bg-[#e6e6e6] py-6 lg:py-10 relative overflow-hidden">
                 <div className="container mx-auto px-4 max-w-7xl relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
-                        <h1 className="text-4xl md:text-6xl font-bold mb-2 tracking-tight leading-tight text-[#022c75]">
-                            Complete SMT Lines Configured for <span className="text-[#022c75] text-4xl block">Every Production Scale</span>
+                        <h1 className="text-3xl md:text-5xl font-bold mb-2 tracking-tight leading-tight text-[#022c75]">
+                            Complete SMT Production Lines Configured for Every Manufacturing Scale
                         </h1>
-                        <p className="text-lg md:text-xl text-blue-100/90 leading-relaxed max-w-3xl mx-auto">
-                            Tekmart designs and configures complete SMT production lines combining refurbished core
-                            machines with select new peripherals. From compact 20,000 CPH setups to
-                            high-performance 60,000+ CPH systems, each line is structured around your production
-                            goals, space constraints, and investment strategy.
+                        <p className="text-lg md:text-xl text-[#022c75] leading-relaxed max-w-3xl mx-auto mb-4">
+                            Tekmart India designs and configures complete SMT production lines by integrating refurbished core machines with selected peripherals and board handling equipment.
+Each configuration is structured around your PCB complexity, target throughput (CPH), floor layout and investment strategy.
+
                         </p>
                     </div>
                 </div>
             </div>
 
             {/* Line Cards Section */}
-            <div className="container mx-auto px-4 max-w-7xl py-8 -mt-16 z-20 relative">
+            <div className="container mx-auto px-4 max-w-7xl py-8 -mt-16 z-20 relative mt-2">
                 <div className="grid md:grid-cols-3 gap-8">
                     {/* Entry Level Card */}
                     <div className="bg-[#022c75] rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full border  border-[#022c75]">
@@ -37,7 +36,7 @@ export default function SMTLinePage() {
                                 Up to 20,000 CPH
                             </div>
                             <p className="text-[#e6e6e6] mb-8 flex-1 leading-relaxed">
-                                Smart automation designed for new SMT setups, manual-to-automation upgrades, and budget-conscious expansion.
+                                Suitable for new manufacturing setups, automation upgrades and controlled production environments requiring scalable entry automation.
                             </p>
                             <Link
                                 href="/smt-line/entry-level"
@@ -64,7 +63,8 @@ export default function SMTLinePage() {
                                 Up to 40,000 CPH
                             </div>
                             <p className="text-[#022c75] mb-8 flex-1 leading-relaxed">
-                                Balanced throughput and flexibility for growing EMS and OEM manufacturers handling multiple SKUs.
+                                Balanced throughput configuration for growing EMS and OEM manufacturers handling multiple SKUs with improved efficiency and operational flexibility.
+
                             </p>
                             <Link
                                 href="/smt-line/mid-scale"
@@ -85,10 +85,11 @@ export default function SMTLinePage() {
                             </div>
                             <h3 className="text-2xl font-bold text-[#e6e6e6] mb-2">High Speed SMT Line</h3>
                             <div className="text-sm font-bold text-[#022c75] mb-4 bg-[#e6e6e6] inline-block px-3 py-1 rounded-full w-fit">
-                                40,000–60,000+ CPH
+                                50,000+ CPH
                             </div>
                             <p className="text-[#e6e6e6] mb-8 flex-1 leading-relaxed">
-                                Engineered for high-volume production environments requiring speed, precision, and operational stability.
+                                Configured for high-volume production environments demanding precision placement, feeder optimization and long-term operational stability.
+
                             </p>
                             <Link
                                 href="/smt-line/high-speed"
@@ -105,9 +106,10 @@ export default function SMTLinePage() {
             {/* Bottom Section */}
             <div className="container mx-auto px-4 max-w-4xl py-20 text-center">
                 <div className="bg-[#e6e6e6] rounded-3xl p-10 md:p-14 shadow-lg border border-[2px] border-[#022c75]">
-                    <h2 className="text-3xl font-bold text-[#022c75] mb-4">Not Sure Which Line Fits Your Production?</h2>
+                    <h2 className="text-3xl font-bold text-[#022c75] mb-4">Not Sure Which SMT Line Fits Your Production Requirements?
+</h2>
                     <p className="text-lg text-[#022c75] mb-8 max-w-2xl mx-auto">
-                        Speak with our technical team to receive a structured recommendation based on your PCB type, target output, and budget.
+                        Speak with our technical team to receive a structured recommendation based on your PCB type, target throughput, available floor space and investment strategy.
                     </p>
                     <Link
                         href="/quote"

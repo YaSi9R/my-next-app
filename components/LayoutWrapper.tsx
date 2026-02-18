@@ -26,8 +26,10 @@ export default function LayoutWrapper({
         <GlobalLoader />
       </Suspense>
       {!isAdminRoute && <Navbar />}
-      {children}
-      {!isAdminRoute && <Footer />}
+      <main className={!isAdminRoute ? "pb-32 md:pb-0" : ""}>
+        {children}
+        {!isAdminRoute && <Footer />}
+      </main>
       {!isAdminRoute && <BackToTop />}
       {!isAdminRoute && <FloatingContactBar />}
     </>

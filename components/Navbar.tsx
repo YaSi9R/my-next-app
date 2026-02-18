@@ -157,7 +157,10 @@ const Navbar = () => {
     return (
         <nav className="bg-[#e6e6e6] backdrop-blur-md text-[#022c75] sticky top-0 z-50 border-b border-gray-200 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-                <Link href="/" className="flex items-center" onClick={() => window.scrollTo(0, 0)}>
+                <Link href="/" className="flex items-center" onClick={() => {
+                    window.scrollTo(0, 0);
+                    setIsMobileMenuOpen(false);
+                }}>
                     <div className="h-20 md:h-20 flex items-center pb-2 ">
                         <Image src={logo} alt="Tekmart Logo" className=" h-full w-auto scale-170" priority />
                     </div>
@@ -241,7 +244,7 @@ const Navbar = () => {
                                 <GlobalLink
                                     href={item.href}
                                     className="flex-1 font-medium py-2"
-                                    onClick={() => !item.children && setIsMobileMenuOpen(false)}
+                                    onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     {item.name}
                                 </GlobalLink>
@@ -260,7 +263,7 @@ const Navbar = () => {
                                                 <GlobalLink
                                                     href={subItem.href}
                                                     className="flex-1 text-sm opacity-90 py-2"
-                                                    onClick={() => !subItem.children && setIsMobileMenuOpen(false)}
+                                                    onClick={() => setIsMobileMenuOpen(false)}
                                                 >
                                                     {subItem.name}
                                                 </GlobalLink>

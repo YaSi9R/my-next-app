@@ -277,11 +277,7 @@ export default function ProductBrowser({
                                             )}
 
                                             <div className="flex items-center justify-between">
-                                                {product.availability && (
-                                                    <span className="text-sm font-semibold text-[#e6e6e6] bg-[#022c75] px-1  rounded-lg">
-                                                        {product.availability}
-                                                    </span>
-                                                )}
+                                               
                                                 <span className="inline-flex items-center text-[#022c75] font-semibold text-sm group-hover:gap-2 transition-all">
                                                     View Details
                                                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />

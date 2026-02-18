@@ -49,29 +49,62 @@ export default function ContactPage() {
 
                     {/* Side Info */}
                     <div className="space-y-6">
-                        <div className="bg-white/10 backdrop-blur-md border border-[#022c75] rounded-[40px] p-8 text-white">
-                            <h3 className="text-xl font-bold mb-6 text-[#022c75]">Corporate Office</h3>
-                            <div className="space-y-6">
-                                <div className="flex gap-4">
-                                    <MapPin className="w-6 h-6 text-[#022c75] shrink-0" />
-                                    <p className="text-sm text-[#022c75] font-medium">Industrial Zone A, New Delhi, India</p>
-                                </div>
-                                <div className="flex gap-4">
-                                    <Phone className="w-6 h-6 text-[#022c75] shrink-0" />
-                                    <p className="text-sm text-[#022c75] font-medium">+91 1234 567 890</p>
-                                </div>
-                                <div className="flex gap-4">
-                                    <Mail className="w-6 h-6 text-[#022c75] shrink-0" />
-                                    <p className="text-sm text-[#022c75] font-medium">sales@tekmart.com</p>
-                                </div>
+                        <div className="bg-white border border-[#022c75] rounded-[30px] p-6 shadow-sm">
+                            <h3 className="text-lg font-bold mb-4 text-[#022c75]">Registered Office</h3>
+                            <div className="flex gap-3 text-[#022c75]">
+                                <MapPin className="w-5 h-5 shrink-0" />
+                                <p className="text-sm leading-relaxed">
+                                    M 304, Dharma Apartment<br />
+                                    IP Extension, Plot No. 2<br />
+                                    Patparganj, New Delhi – 110092<br />
+                                    Delhi, India
+                                </p>
                             </div>
                         </div>
 
-                        <div className="bg-[#033a95] rounded-[40px] p-8 text-white">
-                            <h3 className="text-xl font-bold mb-4">Support Hours</h3>
-                            <p className="text-sm text-blue-100 leading-relaxed font-medium">
-                                Our engineers are available Monday through Saturday, 9:00 AM to 6:00 PM IST for technical consultations.
-                            </p>
+                        <div className="bg-white border border-[#022c75] rounded-[30px] p-6 shadow-sm">
+                            <h3 className="text-lg font-bold mb-4 text-[#022c75]">Sales Office</h3>
+                            <div className="flex gap-3 text-[#022c75]">
+                                <MapPin className="w-5 h-5 shrink-0" />
+                                <p className="text-sm leading-relaxed">
+                                    260, Block BG-1<br />
+                                    Paschim Vihar<br />
+                                    New Delhi – 110063<br />
+                                    India
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-white border border-[#022c75] rounded-[30px] p-6 shadow-sm">
+                            <h3 className="text-lg font-bold mb-4 text-[#022c75]">Warehouse & Refurbishment Centre</h3>
+                            <div className="flex gap-3 text-[#022c75]">
+                                <MapPin className="w-5 h-5 shrink-0" />
+                                <p className="text-sm leading-relaxed">
+                                    Plot No. 1405<br />
+                                    Dheeraj Nagar Extension<br />
+                                    Faridabad – 121013<br />
+                                    Haryana, India
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="bg-white border border-[#022c75] rounded-[30px] p-6 shadow-sm">
+                            <h3 className="text-lg font-bold mb-4 text-[#022c75]">Contact Details</h3>
+                            <div className="space-y-4">
+                                <div className="flex gap-3 text-[#022c75]">
+                                    <Phone className="w-5 h-5 shrink-0" />
+                                    <div className="text-sm">
+                                        <p>+91 9220246692</p>
+                                        <p>+91 9811613022</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-3 text-[#022c75]">
+                                    <Mail className="w-5 h-5 shrink-0" />
+                                    <a href="mailto:sarthak@tekmartindia.com" className="text-sm hover:underline">
+                                        sarthak@tekmartindia.com
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

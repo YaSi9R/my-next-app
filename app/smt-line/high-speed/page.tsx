@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
-import image1 from "../../../public/highscalesmt.png";
+import image1 from "../../../public/HIGH SPEED LINE.png";
 import AvailableConfig from '@/components/smt-line/AvailableConfig';
 
 export default function HighSpeedLinePage() {
@@ -19,6 +19,7 @@ export default function HighSpeedLinePage() {
                         <div>
                             <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight leading-tight">
                                 High-Volume Production with <span className="text-[#022c75] text-4xl">Advanced Line Integration</span>
+                                <br /> <span className="text-xl font-bold block mt-2">50,000+ CPH • Automation Ready • Industrial Reliability</span>
                             </h1>
                             <div className="flex flex-wrap gap-3 mb-6">
                                 <span className="bg-[#022c75] text-[#e6e6e6] border border-[#022c75]/30 px-3 py-1 rounded-full text-sm font-semibold">
@@ -32,7 +33,7 @@ export default function HighSpeedLinePage() {
                                 </span>
                             </div>
                             <p className="text-lg text-[#022c75] leading-relaxed mb-8">
-                                Engineered for large-scale EMS operations, export-focused manufacturers, and industrial-grade production environments.
+                                Engineered for large-scale EMS operations and industrial-grade production environments requiring high placement speed, feeder optimization and continuous output stability.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <Link
@@ -77,11 +78,22 @@ export default function HighSpeedLinePage() {
                             </h2>
                             <div className="bg-[#e6e6e6] rounded-2xl p-8 shadow-sm border border-[#022c75] border-[2px]">
                                 <p className="text-[#022c75] leading-relaxed text-lg mb-8">
-                                    This configuration supports continuous high-volume output with enhanced process stability and inspection integration.
+                                    This high-speed SMT production line is configured for continuous high-volume manufacturing with enhanced process stability and inspection integration. Designed for demanding production environments where throughput, placement accuracy and operational reliability are critical.
                                 </p>
+                                <div className="mb-8">
+                                    <h4 className="font-bold text-[#022c75] mb-4">Each configuration is structured around:</h4>
+                                    <ul className="space-y-2">
+                                        {['High component density PCB assemblies', 'Continuous production cycles', 'Large feeder bank requirements', 'Multi-machine synchronization', 'Future expansion capability'].map((item) => (
+                                            <li key={item} className="flex items-center gap-2 text-[#022c75]">
+                                                <Check className="w-5 h-5 text-[#022c75]" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
 
                                 <div className="bg-[#e6e6e6] rounded-xl p-6 ">
-                                    <h3 className="font-bold text-[#022c75] mb-4 uppercase text-sm tracking-wider">Typical Line Structure</h3>
+                                    <h3 className="font-bold text-[#022c75] mb-4 uppercase text-sm tracking-wider">Typical SMT Line Structure</h3>
                                     <div className="flex flex-col md:flex-row flex-wrap items-center gap-3 text-sm font-medium text-[#e6e6e6]">
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Loader</span>
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
@@ -89,12 +101,15 @@ export default function HighSpeedLinePage() {
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Multi-Gantry Pick & Place</span>
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
-                                        <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Nitrogen Reflow (Optional)</span>
+                                        <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Reflow Oven</span>
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">SPI/AOI</span>
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Unloader</span>
                                     </div>
+                                    <p className="mt-6 text-sm text-[#022c75]/80 italic">
+                                        Inspection integration supports process stability and consistent quality output.
+                                    </p>
                                 </div>
                             </div>
                         </section>
@@ -116,22 +131,22 @@ export default function HighSpeedLinePage() {
                             <div className="p-6 space-y-6">
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Maximum Placement Speed</p>
-                                    <p className="text-lg font-bold text-[#022c75]">60,000+ CPH</p>
+                                    <p className="text-lg font-bold text-[#022c75]">50,000+ CPH</p>
                                 </div>
                                 <div className="h-px bg-[#022c75]/20"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Component Capability</p>
-                                    <p className="text-lg font-bold text-[#022c75]">0201 & Fine Pitch Support</p>
+                                    <p className="text-lg font-bold text-[#022c75]">0201 & fine-pitch support</p>
                                 </div>
                                 <div className="h-px bg-[#022c75]/20"></div>
                                 <div>
-                                    <p className="text-sm font-semibold text-[#022c75] mb-1">Process Options</p>
-                                    <p className="text-lg font-bold text-[#022c75]">Nitrogen Reflow Available</p>
+                                    <p className="text-sm font-semibold text-[#022c75] mb-1">Feeder Configuration</p>
+                                    <p className="text-lg font-bold text-[#022c75]">High-capacity dual-side feeder banks</p>
                                 </div>
                                 <div className="h-px bg-[#022c75]/20"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Automation Integration</p>
-                                    <p className="text-lg font-bold text-[#022c75]">Inspection & Data Monitoring Ready</p>
+                                    <p className="text-lg font-bold text-[#022c75]">Inspection & data monitoring ready</p>
                                 </div>
 
                                 <div className="pt-4">

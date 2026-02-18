@@ -24,23 +24,23 @@ import AboutSection from "@/components/homepage/AboutSection";
 
 const pillars = [
     {
-        title: "Unrivaled Expertise",
-        description: "Multi-decade experience in SMT line integration and machine lifecycle management.",
+        title: "Practical SMT Industry Experience",
+        description: "Hands-on exposure to SMT machine selection, line integration and production support across diverse manufacturing environments.",
         icon: Award,
     },
     {
-        title: "Global Reach",
-        description: "Seamless logistics and support network spanning India, Americas, and SE Asia.",
+        title: "Reliable Pan-India Equipment Supply",
+        description: "Structured procurement and coordinated logistics for refurbished SMT machines and genuine spare parts across India.",
         icon: Globe,
     },
     {
-        title: "Technical Mastery",
-        description: "Engineers certified in Yamaha, Fuji, Panasonic, and other industry-leading brands.",
+        title: "Technical Understanding of Leading Brands",
+        description: "Operational familiarity with Yamaha, Fuji, Panasonic and other major SMT equipment manufacturers.",
         icon: Settings,
     },
     {
-        title: "Customer Integrity",
-        description: "Transparent sourcing and genuine parts guarantee to ensure your production never stops.",
+        title: "Transparent & Structured Execution",
+        description: "Clear communication, defined scope and dependable on-site installation and maintenance support.",
         icon: HeartHandshake,
     },
 ];
@@ -71,8 +71,9 @@ export default function WhyTekmart() {
             <section className="py-12">
                 <div className="container mx-auto px-4">
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-sm font-bold text-[#022c75] uppercase tracking-widest mb-4">Core Differentiators</h2>
-                        <h3 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-6">Why Manufacturers Choose Us</h3>
+                        <h2 className="text-sm font-bold text-[#022c75] uppercase tracking-widest mb-4">CORE STRENGTHS
+</h2>
+                        <h3 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-6">Why Manufacturers Across India Work with Tekmart</h3>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -110,10 +111,12 @@ export default function WhyTekmart() {
                         >
                             <h2 className="text-sm font-bold text-[#022c75] uppercase tracking-widest mb-4">Service Ecosystem</h2>
                             <h3 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-8 leading-tight">
-                                Beyond Just Machines
+                                Beyond Equipment Supply
                             </h3>
                             <p className="text-lg text-[#022c75]/80 mb-8">
-                                Tekmart provides a complete lifecycle support ecosystem. We don't just sell machines; we integrate solutions, train operators, and provide 24/7 technical assistance to ensure peak manufacturing output.
+                               Tekmart India supports the complete lifecycle of SMT manufacturing — from machine selection and line integration to spare parts coordination and on-site technical support.
+We focus on structured execution that minimizes downtime and ensures stable production performance across India.
+
                             </p>
                             <div className="space-y-4">
                                 <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
@@ -121,8 +124,8 @@ export default function WhyTekmart() {
                                         <Zap className="text-[#022c75]" size={20} />
                                     </div>
                                     <div>
-                                        <h5 className="font-bold text-[#022c75]">Rapid Integration</h5>
-                                        <p className="text-sm text-[#022c75]/70">Minimizing downtime with expert SMT line deployment.</p>
+                                        <h5 className="font-bold text-[#022c75]">Efficient SMT Line Integration</h5>
+                                        <p className="text-sm text-[#022c75]/70">Structured deployment support to reduce installation time and production disruption.</p>
                                     </div>
                                 </div>
                                 <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
@@ -130,8 +133,8 @@ export default function WhyTekmart() {
                                         <Cpu className="text-[#022c75]" size={20} />
                                     </div>
                                     <div>
-                                        <h5 className="font-bold text-[#022c75]">Spare Parts Sovereignty</h5>
-                                        <p className="text-sm text-[#022c75]/70">Unmatched inventory of genuine SMT feeders, nozzles, and motors.</p>
+                                        <h5 className="font-bold text-[#022c75]">Reliable Spare Parts Support</h5>
+                                        <p className="text-sm text-[#022c75]/70">Coordinated access to genuine and compatible SMT feeders, nozzles, motors and critical components to maintain operational continuity. </p>
                                     </div>
                                 </div>
                             </div>
@@ -163,10 +166,11 @@ export default function WhyTekmart() {
                         className="bg-[#022c75] rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden"
                     >
                         <h2 className="text-3xl md:text-5xl font-bold text-[#e6e6e6] mb-8 relative z-10">
-                            Ready to Partner with Tekmart?
+                            Ready to Strengthen Your SMT Operations?
                         </h2>
                         <p className="text-[#e6e6e6] text-lg md:text-xl max-w-2xl mx-auto mb-12 relative z-10">
-                            Experience the reliability and excellence that has made us a trusted global leader in SMT solutions.
+                            Work with Tekmart India for refurbished SMT machines, genuine spare parts and dependable on-site support. Let’s align your production requirements with technically suitable and commercially balanced solutions.
+
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
                             <a
