@@ -9,16 +9,16 @@ import Link from "next/link";
 
 const features = [
     {
-        title: "SMT Solution Provider",
-        description: "Our professional SMT solutions are tailor-made to satisfy the unique needs of your market and audience.",
+        title: "Equipment Selection & Guidance",
+        description: "Practical recommendations based on PCB type, production volume and operational requirements.",
     },
     {
-        title: "SMT Products Supplier & Wholesaler",
-        description: "Cater to a broader market with our series of SMT products, including SMT machines, SMT parts, and SMT lines from reputable brands.",
+        title: "Refurbished Machines & Critical Spares",
+        description: "Quality-tested SMT machines and essential spare parts to support stable manufacturing operations.",
     },
     {
-        title: "SMT Production Line Integrator",
-        description: "Customize your cost-effective SMT production line with our SMT machines to raise your systems' efficiency, productivity, and profitability.",
+        title: "Complete Line Coordination",
+        description: "Support for machine compatibility, board handling integration and structured production line setup.",
     },
 ];
 
@@ -27,23 +27,17 @@ const AboutSection = () => {
         <section className="py-20 bg-[#e6e6e6] overflow-hidden">
             <div className="container mx-auto px-4 max-w-7xl">
                 {/* Header Section */}
-                <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
+                <div className="flex  lg:items-center justify-center gap-8 mb-16">
                     <div className="lg:max-w-3xl">
                         <h2 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-6">
-                            Meet TekMart, Your Robust SMT Partner
+                            Meet Tekmart India – Your Structured SMT Equipment Partner
+
                         </h2>
                         <p className="text-[#022c75]/80 leading-relaxed">
-                            Since 2000, TekMart has been a leading supplier of reliable SMT machines and SMT parts in India. Our dedication to providing global electronics manufacturing enterprises with all-in-one PCB assembly equipment solutions has resulted in many successful and long-term partnerships with leading brands worldwide.
+                            Tekmart India Exim Pvt. Ltd. supports EMS and OEM manufacturers with refurbished SMT machines, genuine spare parts and complete SMT line solutions. We focus on technically suitable equipment selection, transparent communication and reliable execution across India.
                         </p>
                     </div>
-                    <div className="flex-shrink-0">
-                        <Link
-                            href="/about/company"
-                            className="bg-[#022c75] hover:bg-[#0441ac] text-white font-bold py-4 px-10 rounded-full transition-all shadow-md hover:shadow-lg transform hover:-translate-y-1 inline-block"
-                        >
-                            Explore TekMart
-                        </Link>
-                    </div>
+                    
                 </div>
 
                 {/* Content Section */}
@@ -64,19 +58,19 @@ const AboutSection = () => {
                     {/* Right: Feature List */}
                     <div className="space-y-10">
                         {features.map((feature, index) => (
-                            <div key={index} className="flex gap-4">
+                            <div key={index} className="flex gap-1">
                                 <div className="flex-shrink-0 mt-1">
                                     <CheckCircle2 className="text-[#022c75]" size={24} />
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-[#022c75] mb-3">
+                                    <h3 className="text-xl font-bold text-[#022c75] ">
                                         {feature.title}
                                     </h3>
                                     <p className="text-[#022c75]/80 leading-relaxed text-sm">
                                         {feature.description}
                                     </p>
                                     {index < features.length - 1 && (
-                                        <div className="mt-8 border-b border-gray-100" />
+                                        <div className=" border-b border-gray-100" />
                                     )}
                                 </div>
                             </div>

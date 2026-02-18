@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, Sliders } from 'lucide-react';
 import Image from 'next/image';
-import image1 from "../../../public/entrylevelsmt.png"
+import image1 from "../../../public/ENTRY SMT LINE .png"
 import AvailableConfig from '@/components/smt-line/AvailableConfig';
 
 export default function EntryLevelLinePage() {
@@ -18,8 +18,8 @@ export default function EntryLevelLinePage() {
                     </Link>
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight leading-tight">
-                                Strategic Automation for <span className="text-[#022c75] text-4xl">Growing Manufacturers</span>
+                            <h1 className="text-3xl md:text-3xl font-bold mb-4 tracking-tight leading-tight">
+                                Entry Level SMT Production Line <span className="text-[#022c75] text-2xl">Stable Automation with Modular Scalability</span>
                             </h1>
                             <div className="flex flex-wrap gap-3 mb-6">
                                 <span className="bg-[#022c75] text-[#e6e6e6] border border-[#022c75]/30 px-3 py-1 rounded-full text-sm font-semibold">
@@ -33,20 +33,21 @@ export default function EntryLevelLinePage() {
                                 </span>
                             </div>
                             <p className="text-lg text-[#022c75] leading-relaxed mb-8">
-                                Designed for manufacturers entering SMT production or upgrading from manual assembly to structured automation without overcapitalizing.
+                                Suitable for low to medium production volumes while maintaining placement accuracy and consistent process stability.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <Link
                                     href="/quote"
-                                    className="inline-flex items-center justify-center px-6 py-3.5 bg-[#022c75] text-[#e6e6e6] rounded-xl font-bold hover:bg-[#022c75]/80 transition shadow-lg hover:shadow-[#022c75]/25"
+                                    className="inline-flex whitespace-nowrap
+ items-center justify-center px-4 py-2 bg-[#022c75] text-[#e6e6e6] rounded-xl font-bold hover:bg-[#022c75]/80 transition shadow-lg hover:shadow-[#022c75]/25"
                                 >
                                     Request Complete Line Proposal
                                 </Link>
                                 <Link
                                     href="/contact"
-                                    className="inline-flex items-center justify-center px-6 py-3.5 bg-[#e6e6e6] border border-[#022c75] border-[2px] text-[#022c75] rounded-xl font-bold hover:bg-white/20 transition backdrop-blur-sm"
+                                    className="inline-flex whitespace-nowrap items-center justify-center px-6 py-3.5 bg-[#e6e6e6] border border-[#022c75] border-[2px] text-[#022c75] rounded-xl font-bold hover:bg-white/20 transition backdrop-blur-sm"
                                 >
-                                    Schedule Consultation
+                                    Schedule Technical Consultation
                                 </Link>
                             </div>
                         </div>
@@ -79,11 +80,22 @@ export default function EntryLevelLinePage() {
                             </h2>
                             <div className="bg-[#e6e6e6] rounded-2xl p-8 shadow-sm border border-[#022c75] border-[2px]">
                                 <p className="text-[#022c75] leading-relaxed text-lg mb-8">
-                                    This configuration delivers controlled automation with scalable architecture. It is suitable for low to medium production volumes while maintaining placement accuracy and process stability.
+                                    This entry-level SMT production line provides stable automation with modular scalability. It is suitable for low to medium production volumes while maintaining placement accuracy and consistent process stability.
                                 </p>
+                                <div className="mb-8">
+                                    <h4 className="font-bold text-[#022c75] mb-4">Each configuration is structured around:</h4>
+                                    <ul className="space-y-2">
+                                        {['PCB complexity', 'Target throughput (CPH)', 'Available production floor space', 'Future expansion planning'].map((item) => (
+                                            <li key={item} className="flex items-center gap-2 text-[#022c75]">
+                                                <Check className="w-5 h-5 text-[#022c75]" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
 
                                 <div className="bg-[#e6e6e6] rounded-xl p-6 ">
-                                    <h3 className="font-bold text-[#022c75] mb-4 uppercase text-sm tracking-wider">Typical Line Structure</h3>
+                                    <h3 className="font-bold text-[#022c75] mb-4 uppercase text-sm tracking-wider">Typical SMT Line Structure</h3>
                                     <div className="flex flex-col md:flex-row flex-wrap items-center gap-3 text-sm font-medium text-[#e6e6e6]">
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Loader</span>
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
@@ -97,6 +109,9 @@ export default function EntryLevelLinePage() {
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Unloader</span>
                                     </div>
+                                    <p className="mt-6 text-sm text-[#022c75]/80 italic">
+                                        Peripheral selection and layout adjustments can be configured based on operational requirements.
+                                    </p>
                                 </div>
                             </div>
                         </section>
@@ -123,12 +138,12 @@ export default function EntryLevelLinePage() {
                                 <div className="h-px bg-gray-100"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Component Capability</p>
-                                    <p className="text-lg font-bold text-[#022c75]">0402 standard / 0201 optional</p>
+                                    <p className="text-lg font-bold text-[#022c75]">0402 standard</p>
                                 </div>
                                 <div className="h-px bg-gray-100"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">PCB Size Support</p>
-                                    <p className="text-lg font-bold text-[#022c75]">Standard industrial ranges</p>
+                                    <p className="text-lg font-bold text-[#022c75]">Standard industrial PCB size ranges</p>
                                 </div>
                                 <div className="h-px bg-gray-100"></div>
                                 <div>

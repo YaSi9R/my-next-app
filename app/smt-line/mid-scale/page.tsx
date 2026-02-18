@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, Activity } from 'lucide-react';
 import Image from 'next/image';
-import image1 from "../../../public/midlevelsmt.png";
+import image1 from "../../../public/MID SMT LINE .png";
 import AvailableConfig from '@/components/smt-line/AvailableConfig';
 
 export default function MidLevelLinePage() {
@@ -19,6 +19,7 @@ export default function MidLevelLinePage() {
                         <div>
                             <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight leading-tight">
                                 Balanced Throughput for <span className="text-[#022c75] text-4xl">Structured Growth</span>
+                                <br /> <span className="text-xl font-bold block mt-2">Up to 40,000 CPH • Multi-SKU Flexibility • Expandable Architecture</span>
                             </h1>
                             <div className="flex flex-wrap gap-3 mb-6">
                                 <span className="bg-[#022c75] text-[#e6e6e6] border border-[#022c75]/30 px-3 py-1 rounded-full text-sm font-semibold">
@@ -32,7 +33,7 @@ export default function MidLevelLinePage() {
                                 </span>
                             </div>
                             <p className="text-lg text-[#022c75] leading-relaxed mb-8">
-                                Designed for growing EMS and OEM manufacturers requiring higher placement speed and improved feeder capacity.
+                                Designed for growing EMS and OEM manufacturers requiring higher placement speed, improved feeder capacity and stable production across multiple PCB assemblies.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <Link
@@ -77,11 +78,22 @@ export default function MidLevelLinePage() {
                             </h2>
                             <div className="bg-[#e6e6e6] rounded-2xl p-8 shadow-sm border border-[#022c75] border-[2px]">
                                 <p className="text-[#022c75] leading-relaxed text-lg mb-8">
-                                    This configuration supports increased throughput while maintaining flexibility across multiple PCB assemblies.
+                                    This mid-level SMT production line increases throughput while maintaining process flexibility and placement accuracy. It is structured for manufacturers handling multiple SKUs, moderate-to-high volume batches and evolving production requirements.
                                 </p>
+                                <div className="mb-8">
+                                    <h4 className="font-bold text-[#022c75] mb-4">Each configuration is planned around:</h4>
+                                    <ul className="space-y-2">
+                                        {['PCB complexity and component density', 'Target CPH output', 'Feeder capacity requirements', 'Floor space availability', 'Future expansion strategy'].map((item) => (
+                                            <li key={item} className="flex items-center gap-2 text-[#022c75]">
+                                                <Check className="w-5 h-5 text-[#022c75]" />
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
 
                                 <div className="bg-[#e6e6e6] rounded-xl p-6 ">
-                                    <h3 className="font-bold text-[#022c75] mb-4 uppercase text-sm tracking-wider">Typical Line Structure</h3>
+                                    <h3 className="font-bold text-[#022c75] mb-4 uppercase text-sm tracking-wider">Typical SMT Line Structure</h3>
                                     <div className="flex flex-col md:flex-row flex-wrap items-center gap-3 text-sm font-medium text-[#e6e6e6]">
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Loader</span>
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
@@ -95,6 +107,9 @@ export default function MidLevelLinePage() {
                                         <ArrowRight className="w-4 h-4 text-[#022c75] rotate-90 md:rotate-0" />
                                         <span className="bg-[#022c75] px-3 py-2 rounded-lg shadow-sm border">Unloader</span>
                                     </div>
+                                    <p className="mt-6 text-sm text-[#022c75]/80 italic">
+                                        Dual gantry architecture improves placement efficiency and supports balanced feeder distribution.
+                                    </p>
                                 </div>
                             </div>
                         </section>
@@ -126,7 +141,7 @@ export default function MidLevelLinePage() {
                                 <div className="h-px bg-[#022c75]/20"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Feeder Configuration</p>
-                                    <p className="text-lg font-bold text-[#022c75]">Dual-side bank</p>
+                                    <p className="text-lg font-bold text-[#022c75]">Dual-side feeder bank</p>
                                 </div>
                                 <div className="h-px bg-[#022c75]/20"></div>
                                 <div>

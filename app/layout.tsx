@@ -8,7 +8,7 @@ import { Poppins } from "next/font/google";
 import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata: Metadata = {
-  title: "Tekmart",
+  title: "Tekmart India",
   description: "Your One Stop for All Your Needs",
 };
 

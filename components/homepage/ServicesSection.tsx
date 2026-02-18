@@ -9,23 +9,23 @@ import image4 from "../../public/4.png"
 const services = [
     {
         image:image1,
-        title: "Used SMT Machine & Parts Reclaiming",
-        description: "Make more room on your inventory and your budget as we purchase your surplus SMT machines and parts.",
+        title: "Feeders & Feeder Components",
+        description: "Original and compatible feeders along with critical feeder parts to maintain accurate component placement and stable production flow.",
     },
     {
         image:image2,
-        title: "Drop Shipping Service",
-        description: "Enjoy fast purchasing with guaranteed safe and quick deliveries with our partner logistics companies bringing your products directly to your doorstep.",
+        title: "Nozzles & Placement Heads",
+        description: "Precision nozzles and head assemblies designed for performance consistency across major SMT machine brands.",
     },
     {
         image:image3,
-        title: "Machine Maintenance",
-        description: "You can rest assured about after-sales problems as we offer preventive maintenance services on the SMT machines upon request.",
+        title: "Motors, Boards & Motion Components",
+        description: "Servo motors, driver boards and electronic control components that support reliable machine operation.",
     },
     {
         image:image4,
-        title: "Technical Support",
-        description: "Equipped with expert technicians with robust product experience, our support team is ready to tackle your equipment concerns.",
+        title: "Critical Replacement Parts Availability",
+        description: "Access to essential SMT components with structured sourcing support to reduce unexpected downtime risks.",
     },
 ];
 
@@ -35,10 +35,12 @@ const ServicesSection = () => {
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="text-center mb-16 px-4">
                     <h2 className="text-3xl md:text-5xl font-bold text-[#022c75] mb-4">
-                        Unparalleled Services Get You all Covered
+                        Reliable SMT Spare Parts Supply for Continuous Production
+
                     </h2>
                     <p className="text-[#022c75]/80 max-w-4xl mx-auto text-sm md:text-base leading-relaxed">
-                        More than a source for premium SMT machines and parts, TekMart offers a scope of services that brings more value to your brand.
+                        Production downtime often begins with unavailable spare parts. Tekmart India supports manufacturers with structured access to critical SMT feeders, nozzles, motors and electronic components to ensure operational continuity across India.
+
                     </p>
                 </div>
 

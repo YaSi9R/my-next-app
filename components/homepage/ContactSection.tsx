@@ -105,7 +105,7 @@ const ContactSection = () => {
                             Request a Quote
                         </h2>
                         <p className="text-[#022c75] max-w-2xl mx-auto">
-                            Submit your technical requirements and our specialized engineers will provide a customized solution and formal quote within 24 hours.
+                            Submit your requirements to receive a formal quote within 24 hours.
                         </p>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -117,7 +117,7 @@ const ContactSection = () => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-[#e6e6e6] mb-1">Our Location</h4>
-                                    <p className="text-[#e6e6e6] text-sm">Industrial Zone A, New Delhi, India</p>
+                                    <p className="text-[#e6e6e6] text-sm">M 304, Dharma Apartment, IP Extension, Patparganj, New Delhi - 110092</p>
                                 </div>
                             </div>
                             <div className="bg-[#022c75] backdrop-blur-md p-8 rounded-2xl shadow-sm border border-[#e6e6e6]/20 flex items-start gap-4">
@@ -126,8 +126,8 @@ const ContactSection = () => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-[#e6e6e6] mb-1">Call Us</h4>
-                                    <p className="text-[#e6e6e6] text-sm">+91 1234 567 890</p>
-                                    <p className="text-[#e6e6e6] text-sm">Mon-Fri: 9:00 AM - 6:00 PM</p>
+                                    <p className="text-[#e6e6e6] text-sm">+91 9220246692</p>
+                                    <p className="text-[#e6e6e6] text-sm">+91 9811613022</p>
                                 </div>
                             </div>
                             <div className="bg-[#022c75] backdrop-blur-md p-8 rounded-2xl shadow-sm border border-[#e6e6e6]/20 flex items-start gap-4">
@@ -136,8 +136,7 @@ const ContactSection = () => {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-[#e6e6e6] mb-1">Email Us</h4>
-                                    <p className="text-[#e6e6e6] text-sm">sales@tekmart.com</p>
-                                    <p className="text-[#e6e6e6] text-sm">support@tekmart.com</p>
+                                    <p className="text-[#e6e6e6] text-sm">sarthak@tekmartindia.com</p>
                                 </div>
                             </div>
                             <div className="bg-[#022c75] backdrop-blur-md p-8 rounded-2xl shadow-sm border border-[#e6e6e6]/20 flex items-start gap-4">
@@ -145,8 +144,8 @@ const ContactSection = () => {
                                     <MapPin size={24} className="text-[#022c75]" />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-[#e6e6e6] mb-1">Refurbishment Centre</h4>
-                                    <p className="text-[#e6e6e6] text-sm">Plot No.1405, Dheeraj Nagar Extension Faridabad, Haryana 121013</p>
+                                    <h4 className="font-bold text-[#e6e6e6] mb-1">Warehouse & Refurbishment Centre</h4>
+                                    <p className="text-[#e6e6e6] text-sm">Plot No. 1405, Dheeraj Nagar Extension, Faridabad – 121013, Haryana, India</p>
                                 </div>
                             </div>
                         </div>
