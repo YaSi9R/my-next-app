@@ -1,4 +1,5 @@
 "use client"
+import { Suspense } from "react";
 import { HeroSlider } from "@/components/homepage/HeroSlider";
 import CategoryGrid from "@/components/homepage/CategoryGrid";
 import ProductsSection from "@/components/homepage/ProductsSection";
@@ -41,11 +42,13 @@ export default function Home() {
       <BrandSlider />
       <ServicesSection />
       {/* CTA Banner */}
-    
+
       <div className="h-[80px] bg-[#022c75]"></div>
 
 
-      <ContactSection />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ContactSection />
+      </Suspense>
 
 
       <main className="container mx-auto py-16 px-4">
