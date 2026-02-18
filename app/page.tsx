@@ -1,4 +1,5 @@
-"use client";
+"use client"
+import { Suspense } from "react";
 import { HeroSlider } from "@/components/homepage/HeroSlider";
 import CategoryGrid from "@/components/homepage/CategoryGrid";
 import ProductsSection from "@/components/homepage/ProductsSection";
@@ -10,7 +11,7 @@ import AboutSection from "@/components/homepage/AboutSection";
 import ContactSection from "@/components/homepage/ContactSection";
 import heroBanner from "../public/heroBanner.jpg";
 import Image from "next/image";
-import { useEffect, Suspense } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const getData = async () => {
@@ -45,7 +46,7 @@ export default function Home() {
       <div className="h-[80px] bg-[#022c75]"></div>
 
 
-      <Suspense fallback={null}>
+      <Suspense fallback={<div>Loading...</div>}>
         <ContactSection />
       </Suspense>
 

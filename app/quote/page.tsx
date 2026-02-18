@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 
 import React, { Suspense } from 'react';
 import ContactSection from '@/components/homepage/ContactSection';
