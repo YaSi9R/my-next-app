@@ -118,6 +118,44 @@ export async function DELETE(
   try {
     const { id } = await context.params;
 
+    // 1. Fetch product to get images
+    const product = await prisma.product.findUnique({
+      where: { id },
+      select: { images: true },
+    });
+
+    if (product && product.images && product.images.length > 0) {
+      const apiKey = process.env.IMAGE_UPLOAD_API_KEY;
+      const uploadServer = process.env.IMAGE_UPLOAD_SERVER;
+
+      if (apiKey && uploadServer) {
+        // 2. Delete images from external server
+        await Promise.all(
+          product.images.map(async (imageUrl) => {
+            try {
+              // Extract filename from URL (assumes last part of path)
+              const fileName = imageUrl.split("/").pop();
+              if (!fileName) return;
+
+              await fetch(`${uploadServer}`, {
+                method: "DELETE",
+                headers: {
+                  "x-api-key": apiKey,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ file_name: fileName }),
+              });
+            } catch (err) {
+              // console.error(`Failed to delete image ${imageUrl}:`, err);
+            }
+          })
+        );
+      } else {
+        // console.warn("Skipping image deletion: Missing server configuration");
+      }
+    }
+
+    // 3. Delete product from DB
     await prisma.product.delete({
       where: { id },
     });
