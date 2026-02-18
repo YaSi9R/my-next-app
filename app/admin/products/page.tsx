@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import slugify from "slugify";
 import TableShimmer from "@/components/admin/TableShimmer";
+import { uploadImage, deleteImage } from "@/services/uploadService";
 
 
 interface Category {
@@ -48,6 +49,7 @@ export default function ProductsPage() {
   const [subsubcategories, setSubSubcategories] = useState<SubSubcategory[]>([]);
   const [featuresInput, setFeaturesInput] = useState("");
   const [loadingData, setLoadingData] = useState(true);
+  const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
 
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -65,84 +67,67 @@ export default function ProductsPage() {
     features: [],
   });
 
-  const handleImageUpload = async (
+  const handleImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
-  ): Promise<void> => {
+  ): void => {
     const input = e.target;
     const files = input.files;
 
     if (!files || files.length === 0) return;
 
-    if (form.images.length >= 4) {
+    const totalImages = form.images.length + filesToUpload.length;
+    if (totalImages >= 4) {
       alert("Maximum 4 images allowed");
       return;
     }
 
     const selectedFiles: File[] = Array.from(files).slice(
       0,
-      4 - form.images.length,
+      4 - totalImages,
     );
 
-    try {
-      const uploadedUrls: string[] = [];
+    const validFiles: File[] = [];
 
-      for (const file of selectedFiles) {
-        // ✅ Validate file type
-        if (!file.type.startsWith("image/")) {
-          alert("Only image files are allowed");
-          continue;
-        }
-
-        // ✅ Validate file size (20MB max)
-        if (file.size > MAX_FILE_SIZE) {
-          alert(`File ${file.name} exceeds 20MB limit`);
-          continue;
-        }
-
-        const data = new FormData();
-        data.append("file", file);
-
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: data,
-        });
-
-        if (!res.ok) {
-          throw new Error("Upload failed");
-        }
-
-        const result = (await res.json()) as { url?: string };
-
-        if (!result.url) {
-          throw new Error("Invalid upload response");
-        }
-
-        uploadedUrls.push(result.url);
+    for (const file of selectedFiles) {
+      // ✅ Validate file type
+      if (!file.type.startsWith("image/")) {
+        alert("Only image files are allowed");
+        continue;
       }
 
-      if (uploadedUrls.length > 0) {
-        setForm((prev) => ({
-          ...prev,
-          images: [...prev.images, ...uploadedUrls],
-        }));
+      // ✅ Validate file size (20MB max)
+      if (file.size > MAX_FILE_SIZE) {
+        alert(`File ${file.name} exceeds 20MB limit`);
+        continue;
       }
-
-      // Reset input (TS safe)
-      input.value = "";
-    } catch (error) {
-      console.error("Image upload error:", error);
-      alert("Image upload failed");
+      validFiles.push(file);
     }
+
+    if (validFiles.length > 0) {
+      setFilesToUpload(prev => [...prev, ...validFiles]);
+    }
+
+    // Reset input (TS safe)
+    input.value = "";
   };
 
   const removeImage = (index: number) => {
-    const updated = [...form.images];
-    updated.splice(index, 1);
-
-    setForm({
-      ...form,
-      images: updated,
-    });
+    // Check if index refers to existing images or new files
+    if (index < form.images.length) {
+      // Remove from existing images
+      const updated = [...form.images];
+      updated.splice(index, 1);
+      setForm({
+        ...form,
+        images: updated,
+      });
+    } else {
+      // Remove from new files
+      const newFileIndex = index - form.images.length;
+      const updated = [...filesToUpload];
+      updated.splice(newFileIndex, 1);
+      setFilesToUpload(updated);
+    }
   };
 
   const addSpecification = () => {
@@ -208,22 +193,38 @@ export default function ProductsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const slug = slugify(form.name, { lower: true, strict: true });
-
-    const payload = {
-      ...form,
-      slug,
-      subsubcategoryId: form.subsubcategoryId || null, // Ensure empty string becomes null for Prisma
-      specifications: form.specifications.filter(
-        (s: any) => s.label && s.value,
-      ),
-      features: featuresInput
-        .split(",")
-        .map((f) => f.trim())
-        .filter((f) => f.length > 0),
-    };
+    let uploadedImageUrls: string[] = [];
 
     try {
+      // 1. Upload new files if any
+      if (filesToUpload.length > 0) {
+        for (const file of filesToUpload) {
+          const res = await uploadImage(file);
+          if (res.url) {
+            uploadedImageUrls.push(res.url);
+          }
+        }
+      }
+
+      // Combine existing and new images
+      const finalImages = [...form.images, ...uploadedImageUrls];
+
+      const slug = slugify(form.name, { lower: true, strict: true });
+
+      const payload = {
+        ...form,
+        images: finalImages,
+        slug,
+        subsubcategoryId: form.subsubcategoryId || null, // Ensure empty string becomes null for Prisma
+        specifications: form.specifications.filter(
+          (s: any) => s.label && s.value,
+        ),
+        features: featuresInput
+          .split(",")
+          .map((f) => f.trim())
+          .filter((f) => f.length > 0),
+      };
+
       const url = editingId ? `/api/products/${editingId}` : "/api/products";
       const method = editingId ? "PUT" : "POST";
 
@@ -244,11 +245,23 @@ export default function ProductsPage() {
     } catch (error: any) {
       console.error("Submission error:", error);
       alert(error.message || "An error occurred during submission");
+
+      // Rollback: Delete uploaded images if save failed
+      if (uploadedImageUrls.length > 0) {
+        console.log("Rolling back uploaded images...");
+        for (const url of uploadedImageUrls) {
+          const fileName = url.split("/").pop();
+          if (fileName) {
+            await deleteImage(fileName).catch(e => console.error("Rollback failed for", fileName, e));
+          }
+        }
+      }
     }
   };
 
   const resetForm = () => {
     setEditingId(null);
+    setFilesToUpload([]);
     setForm({
       name: "",
       condition: "New",
@@ -384,10 +397,12 @@ export default function ProductsPage() {
 
             {/* Preview */}
             <div className="flex gap-4 flex-wrap">
+              {/* Existing Images */}
               {form.images.map((img, index) => (
-                <div key={index} className="relative">
+                <div key={`existing-${index}`} className="relative">
                   <img
                     src={img}
+                    alt={`Existing ${index}`}
                     className="w-24 h-24 object-cover rounded border"
                   />
 
@@ -400,6 +415,30 @@ export default function ProductsPage() {
                   </button>
                 </div>
               ))}
+
+              {/* Pending Uploads */}
+              {filesToUpload.map((file, index) => {
+                const previewUrl = URL.createObjectURL(file);
+                return (
+                  <div key={`pending-${index}`} className="relative">
+                    <img
+                      src={previewUrl}
+                      alt={`Pending ${index}`}
+                      className="w-24 h-24 object-cover rounded border opacity-70"
+                      onLoad={() => URL.revokeObjectURL(previewUrl)} // Cleanup on load
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => removeImage(form.images.length + index)}
+                      className="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
+                    >
+                      X
+                    </button>
+                    <span className="absolute bottom-0 left-0 right-0 bg-black/50 text-white text-[10px] text-center">Pending</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -529,6 +568,7 @@ export default function ProductsPage() {
                       <button
                         onClick={() => {
                           setEditingId(p.id!);
+                          setFilesToUpload([]); // Clear any pending files
                           setForm({
                             ...p,
                             specifications: (p as any).specifications || [
