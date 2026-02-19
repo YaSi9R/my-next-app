@@ -105,7 +105,7 @@ export function HeroSlider() {
                 href="/quote"
                 className="bg-[#022c75] hover:bg-[#033a95]
                text-[#e6e6e6] font-bold
-               px-6 py-4 sm:px-8
+                py-4 sm:px-8
                rounded-xl shadow-lg hover:shadow-2xl
                transition-all flex items-center justify-center sm:justify-start gap-3 group whitespace-nowrap"
               >
