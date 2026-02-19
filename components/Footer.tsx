@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import logo from "../public/TEKMART LOGO.png";
 import { FaWhatsapp } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { Send } from "lucide-react";
 import WeChatModal from './WeChatModal';
 import indiamartlog from "../public/download.png"
@@ -65,6 +66,12 @@ const Footer = () => {
                                     <li>• Installation & Technical Support Across India</li>
                                 </ul>
                             </div>
+                            <div className='space-y-2'><p className='font-bold'>GST - 07AACCT5172H1ZA</p>
+                                <p className='font-bold'>PAN - AACCT5172H</p>
+                                <p className='font-bold'>TAN - DELT08222E</p>
+                                <p className='font-bold'>IEC CODE - 0507000102</p>    
+                            </div>
+
                         </div>
 
                         {/* Column 2: Contact & Explore */}
@@ -158,27 +165,32 @@ const Footer = () => {
                             </form>
 
                             <div className="flex flex-wrap gap-2">
+                                {/* Phone */}
+                                <a href="tel:+919220246692" className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform ">
+                                    <FaPhoneAlt className="w-10 h-8 text-[#022c75]" />
+                                </a>
+
                                 {/* LinkedIn */}
-                                <a href="https://www.linkedin.com/company/tekmart-india/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-[#022c75]/10 flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
-                                    <Image src={linkedinlogo} alt="linkedinlogo" className="w-6 h-6 object-contain" />
+                                <a href="https://www.linkedin.com/company/tekmart-india/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full    flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
+                                    <Image src={linkedinlogo} alt="linkedinlogo" className="w-10 h-10 object-contain" />
                                 </a>
 
                                 {/* IndiaMART */}
-                                <a href="https://www.indiamart.com/tekmartindia/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-[#022c75]/10 flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
-                                    <Image src={indiamartlog} alt="indiamartlog" className="w-6 h-6 object-contain" />
+                                <a href="https://www.indiamart.com/tekmartindia/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
+                                    <Image src={indiamartlog} alt="indiamartlog" className="w-10 h-10 object-contain" />
                                 </a>
 
                                 {/* WeChat - Click to open Modal */}
                                 <button
                                     onClick={() => setIsWeChatModalOpen(true)}
-                                    className="w-10 h-10 rounded-full bg-white border border-[#022c75]/10 flex items-center justify-center hover:scale-110 transition-transform shadow-sm cursor-pointer"
+                                    className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform shadow-sm cursor-pointer"
                                 >
-                                    <Image src={wechatlogo} alt="wechatlogo" className="w-6 h-6 object-contain" />
+                                    <Image src={wechatlogo} alt="wechatlogo" className="w-10 h-10 object-contain" />
                                 </button>
 
                                 {/* WhatsApp */}
-                                <a href="https://wa.me/919220246692" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white border border-[#022c75]/10 flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
-                                    <FaWhatsapp className="w-6 h-6 text-white bg-[#25D366]" />
+                                <a href="https://wa.me/919220246692" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
+                                    <FaWhatsapp className="w-10 h-10 text-white bg-[#25D366]" />
                                 </a>
                             </div>
                         </div>
@@ -186,8 +198,14 @@ const Footer = () => {
 
                     <div className="border-t border-[#022c75]/20 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                         <p className="text-xs font-bold text-[#022c75]">© 2026 Tekmart India Exim Pvt. Ltd. All Rights Reserved.</p>
-                        <p className="text-[10px] md:text-xs font-bold text-[#022c75]/80 uppercase tracking-widest">
-                            SMT Machines | SMT Spare Parts | SMT Production Line Solutions | India
+                        <p className="text-[10px] md:text-xs font-bold text-[#022c75]/80 uppercase tracking-widest space-x-2">
+                            <Link href="/smt-machines" className="hover:text-blue-700">SMT Machines</Link>
+                            <span>|</span>
+                            <Link href="/smt-parts" className="hover:text-blue-700">SMT Spare Parts</Link>
+                            <span>|</span>
+                            <Link href="/smt-line" className="hover:text-blue-700">SMT Production Line Solutions</Link>
+                            <span>|</span>
+                            <Link href="/contact" className="hover:text-blue-700">India</Link>
                         </p>
                     </div>
                 </div>

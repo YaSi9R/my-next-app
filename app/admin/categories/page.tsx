@@ -1,7 +1,7 @@
 "use client";
 
 import ShimmerSection from "@/components/admin/TableShimmer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import slugify from "slugify";
 
 interface Category {
@@ -41,6 +41,16 @@ export default function CategoryManagementPage() {
 
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
   const [selectedSubcategoryId, setSelectedSubcategoryId] = useState("");
+
+  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+  const subcategoryFormRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const fetchData = async () => {
     setLoadingData(true);
@@ -100,7 +110,7 @@ export default function CategoryManagementPage() {
     const method = editingSubcategoryId ? "PUT" : "POST";
     const url = editingSubcategoryId ? `/api/subcategories/${editingSubcategoryId}` : "/api/subcategories";
 
-    await fetch(url, {
+    const res = await fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -109,14 +119,21 @@ export default function CategoryManagementPage() {
       }),
     });
 
-    setSubcategoryName("");
-    setEditingSubcategoryId(null);
-    fetchData();
+    if (res.ok) {
+      setMessage({ type: 'success', text: `Subcategory ${editingSubcategoryId ? 'updated' : 'added'} successfully!` });
+      setSubcategoryName("");
+      setEditingSubcategoryId(null);
+      fetchData();
+    } else {
+      const data = await res.json();
+      setMessage({ type: 'error', text: data.error || "Failed to save subcategory" });
+    }
   };
 
   const handleEditSubcategory = (sub: Subcategory) => {
     setSubcategoryName(sub.name);
     setEditingSubcategoryId(sub.id);
+    subcategoryFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   const handleDeleteSubcategory = async (id: string) => {
@@ -173,6 +190,12 @@ export default function CategoryManagementPage() {
   return (
     <div className="space-y-10">
       <h1 className="text-3xl font-bold text-[#022c75]">Category Management</h1>
+
+      {message && (
+        <div className={`p-4 rounded-lg shadow-md fixed top-24 right-4 z-50 animate-bounce ${message.type === 'success' ? 'bg-green-100 text-green-800 border-l-4 border-green-500' : 'bg-red-100 text-red-800 border-l-4 border-red-500'}`}>
+          {message.text}
+        </div>
+      )}
 
       {/* CATEGORY SECTION */}
       {
@@ -264,7 +287,11 @@ export default function CategoryManagementPage() {
 
             {selectedCategoryId ? (
               <>
-                <form onSubmit={handleAddSubcategory} className="flex flex-col md:flex-row gap-4 mb-6">
+                <form
+                  ref={subcategoryFormRef}
+                  onSubmit={handleAddSubcategory}
+                  className="flex flex-col md:flex-row gap-4 mb-6"
+                >
                   <input
                     type="text"
                     required

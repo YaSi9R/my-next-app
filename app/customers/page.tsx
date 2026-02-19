@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-
+import customers from "../../public/customers_logo.png";
 // Placeholder logo data
 const clients = [
     { id: 1, name: 'Client 1', logo: '/client-logos/logo1.svg' },
@@ -37,23 +37,8 @@ export default function CustomersPage() {
 
            
             <section className="py-20 bg-[#e6e6e6]">
-                <div className="container mx-auto px-4 max-w-7xl">
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-x-12 gap-y-16 items-center justify-items-center">
-                        {clients.map((client) => (
-                            <div
-                                key={client.id}
-                                className="w-full flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-500 opacity-80 hover:opacity-100 p-4"
-                            >
-                                <Image
-                                    src={client.logo}
-                                    alt={`${client.name} logo`}
-                                    width={160}
-                                    height={80}
-                                    className="max-h-16 w-auto object-contain"
-                                />
-                            </div>
-                        ))}
-                    </div>
+                <div className=" flex container mx-auto px-4 max-w-7xl justify-center items-center">
+                    <Image src={customers} alt="customers" width={1000} height={1000} />
                 </div>
             </section>
 
