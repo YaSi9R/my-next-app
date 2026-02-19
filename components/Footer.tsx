@@ -176,7 +176,7 @@ const Footer = () => {
                                 </a>
 
                                 {/* IndiaMART */}
-                                <a href="https://www.indiamart.com/tekmartindia/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
+                                <a href="https://www.indiamart.com/tekmartindiaexim/profile.html?srsltid=AfmBOoqE7E12McyVreF6noBX-V2AJUP3CTLXa1hamVfp8_yCfTBGwkV-" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
                                     <Image src={indiamartlog} alt="indiamartlog" className="w-10 h-10 object-contain" />
                                 </a>
 
