@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, Sliders } from 'lucide-react';
 import Image from 'next/image';
-import image1 from "../../../public/ENTRY SMT LINE .png"
+import image1 from "../../../public/entry-level-image.png"
 import AvailableConfig from '@/components/smt-line/AvailableConfig';
 
 export default function EntryLevelLinePage() {
@@ -18,8 +18,9 @@ export default function EntryLevelLinePage() {
                     </Link>
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         <div>
-                            <h1 className="text-3xl md:text-3xl font-bold mb-4 tracking-tight leading-tight">
-                                Entry Level SMT Production Line <span className="text-[#022c75] text-2xl">Stable Automation with Modular Scalability</span>
+                            <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight leading-tight">
+                                Entry Level SMT Production Line <span className="text-[#022c75] text-4xl">Stable Automation</span>
+                                <br /> <span className="text-xl font-bold block mt-2">Up to 20,000 CPH • Compact Layout • Modular Scalability</span>
                             </h1>
                             <div className="flex flex-wrap gap-3 mb-6">
                                 <span className="bg-[#022c75] text-[#e6e6e6] border border-[#022c75]/30 px-3 py-1 rounded-full text-sm font-semibold">
@@ -29,7 +30,7 @@ export default function EntryLevelLinePage() {
                                     Compact Layout
                                 </span>
                                 <span className="bg-[#022c75] text-[#e6e6e6] border border-[#022c75]/30 px-3 py-1 rounded-full text-sm font-semibold">
-                                    Hybrid Configurable
+                                    Modular Scalability
                                 </span>
                             </div>
                             <p className="text-lg text-[#022c75] leading-relaxed mb-8">
@@ -38,8 +39,8 @@ export default function EntryLevelLinePage() {
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <Link
                                     href="/quote"
-                                    className="inline-flex whitespace-nowrap
- items-center justify-center px-4 py-2 bg-[#022c75] text-[#e6e6e6] rounded-xl font-bold hover:bg-[#022c75]/80 transition shadow-lg hover:shadow-[#022c75]/25"
+                                    className="inline-flex 
+ items-center justify-center px-6 py-3.5 bg-[#022c75] text-[#e6e6e6] rounded-xl font-bold hover:bg-[#022c75]/80 transition shadow-lg hover:shadow-[#022c75]/25"
                                 >
                                     Request Complete Line Proposal
                                 </Link>
@@ -47,19 +48,19 @@ export default function EntryLevelLinePage() {
                                     href="/contact"
                                     className="inline-flex whitespace-nowrap items-center justify-center px-6 py-3.5 bg-[#e6e6e6] border border-[#022c75] border-[2px] text-[#022c75] rounded-xl font-bold hover:bg-white/20 transition backdrop-blur-sm"
                                 >
-                                    Schedule Technical Consultation
+                                    Schedule Consultation
                                 </Link>
                             </div>
                         </div>
-                        <div className="relative hidden lg:block">
+                        <div className="relative  lg:block">
 
-                            <div className="relative border border-white/10 rounded-2xl p-6 ">
+                            <div className="relative border border-white/10 rounded-2xl p-6 scale-120">
                                 {/* Placeholder for Line Diagram or Image */}
                                 <Image
                                     src={image1}
                                     alt="Entry Level SMT Line"
-                                    width={500}
-                                    height={500}
+                                    width={700}
+                                    height={700}
                                 />
                             </div>
                         </div>
@@ -135,17 +136,17 @@ export default function EntryLevelLinePage() {
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Maximum Placement Speed</p>
                                     <p className="text-lg font-bold text-[#022c75]">Up to 20,000 CPH</p>
                                 </div>
-                                <div className="h-px bg-gray-100"></div>
+                                <div className="h-px bg-[#022c75]/20"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Component Capability</p>
                                     <p className="text-lg font-bold text-[#022c75]">0402 standard</p>
                                 </div>
-                                <div className="h-px bg-gray-100"></div>
+                                <div className="h-px bg-[#022c75]/20"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">PCB Size Support</p>
                                     <p className="text-lg font-bold text-[#022c75]">Standard industrial PCB size ranges</p>
                                 </div>
-                                <div className="h-px bg-gray-100"></div>
+                                <div className="h-px bg-[#022c75]/20"></div>
                                 <div>
                                     <p className="text-sm font-semibold text-[#022c75] mb-1">Line Footprint</p>
                                     <p className="text-lg font-bold text-[#022c75]">Compact and space-efficient</p>
@@ -168,7 +169,7 @@ export default function EntryLevelLinePage() {
             {/* Closing CTA */}
             <div className="bg-[#e6e6e6] border-t border-gray-200 py-16">
                 <div className="container mx-auto px-4 max-w-4xl text-center">
-                    <h2 className="text-3xl font-bold text-[#022c75] mb-6">Ready to Configure Your SMT Line?</h2>
+                    <h2 className="text-3xl font-bold text-[#022c75] mb-6">Build Your SMT Production Line with Confidence.</h2>
                     <p className="text-lg text-[#022c75] mb-8">Get a structured proposal tailored to your production plan.</p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
                         <Link

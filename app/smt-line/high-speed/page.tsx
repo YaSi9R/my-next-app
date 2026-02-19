@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
-import image1 from "../../../public/HIGH SPEED LINE.png";
+import image1 from "../../../public/high-level-new-image.png";
 import AvailableConfig from '@/components/smt-line/AvailableConfig';
 
 export default function HighSpeedLinePage() {
@@ -50,14 +50,14 @@ export default function HighSpeedLinePage() {
                                 </Link>
                             </div>
                         </div>
-                        <div className="relative hidden lg:block">
-                            <div className="relative border border-white/10 rounded-2xl p-6 ">
+                        <div className="relative lg:block">
+                            <div className="relative border border-white/10 rounded-2xl p-6 scale-130">
                                 {/* Placeholder for Line Diagram or Image */}
                                 <Image
                                     src={image1}
                                     alt="Entry Level SMT Line"
-                                    width={500}
-                                    height={500}
+                                    width={700}
+                                    height={700}
                                 />
                             </div>
                         </div>

@@ -10,6 +10,13 @@ export async function PUT(
     const { id } = await context.params;
     const { name } = await req.json();
 
+    if (!name) {
+      return NextResponse.json(
+        { error: "Name is required" },
+        { status: 400 }
+      );
+    }
+
     const updated = await prisma.subcategory.update({
       where: { id },
       data: {
@@ -17,6 +24,13 @@ export async function PUT(
         slug: slugify(name, { lower: true, strict: true }),
       },
     });
+
+    const { revalidatePath } = await import("next/cache");
+    revalidatePath("/");
+    revalidatePath("/smt-machines");
+    revalidatePath("/smt-parts");
+    revalidatePath("/board-handling");
+    revalidatePath("/api/navigation");
 
     return NextResponse.json(updated);
   } catch (error) {

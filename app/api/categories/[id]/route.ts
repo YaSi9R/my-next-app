@@ -26,6 +26,13 @@ export async function PUT(
       },
     });
 
+    const { revalidatePath } = await import("next/cache");
+    revalidatePath("/");
+    revalidatePath("/smt-machines");
+    revalidatePath("/smt-parts");
+    revalidatePath("/board-handling");
+    revalidatePath("/api/navigation");
+
     return NextResponse.json(updated);
   } catch (error) {
     console.error("Update Category Error:", error);
