@@ -58,6 +58,21 @@ export default function AdminDashboard() {
           </p>
         </div>
 
+        {/* SETTINGS CARD */}
+        <div
+          onClick={() => router.push("/admin/settings")}
+          className="bg-[#e6e6e6] p-6 md:p-8 rounded-2xl shadow-lg cursor-pointer 
+                     hover:shadow-2xl hover:-translate-y-1 
+                     transition-all duration-300 border border-2 text-[#022c75]"
+        >
+          <h2 className="text-2xl font-semibold text-[#022c75] mb-2">
+            Contact Links Settings
+          </h2>
+          <p className="text-[#022c75]">
+            Manage contact links, phone numbers, and social media.
+          </p>
+        </div>
+
       </div>
     </div>
   );

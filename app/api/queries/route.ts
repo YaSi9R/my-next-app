@@ -23,6 +23,22 @@ export async function POST(req: Request) {
       },
     });
 
+    // Send email notification
+    try {
+      const { sendQueryEmail } = await import("@/lib/mail");
+      await sendQueryEmail({
+        name,
+        email,
+        phone,
+        company,
+        interest,
+        message,
+      });
+    } catch (emailError) {
+      console.error("Failed to send query email:", emailError);
+      // We don't return an error to the user since the query was successfully saved to the DB
+    }
+
     return NextResponse.json(
       { message: "Query submitted successfully", query },
       { status: 201 }
