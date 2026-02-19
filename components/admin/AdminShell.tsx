@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Topbar from "./Topbar";
+import { Toaster } from "react-hot-toast";
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 <main className="p-4 md:p-6 flex-1 overflow-x-hidden">
                     {children}
                 </main>
+                <Toaster position="top-right" />
             </div>
 
             {/* Mobile Overlay */}

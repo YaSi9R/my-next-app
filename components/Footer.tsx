@@ -17,7 +17,29 @@ const Footer = () => {
     const [email, setEmail] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [isWeChatModalOpen, setIsWeChatModalOpen] = useState(false);
+    const [contactLinks, setContactLinks] = useState({
+        whatsapp: "919220246692",
+        linkedin: "https://www.linkedin.com/company/tekmart-india/",
+        indiamart: "https://www.indiamart.com/tekmartindiaexim/profile.html?srsltid=AfmBOoqE7E12McyVreF6noBX-V2AJUP3CTLXa1hamVfp8_yCfTBGwkV-",
+        phone: "+91 9220246692",
+        phone2: "+91 9811613022"
+    });
     const router = useRouter();
+
+    React.useEffect(() => {
+        const fetchContactLinks = async () => {
+            try {
+                const res = await fetch("/api/page-sections?pageSlug=global&sectionId=contact-links");
+                const data = await res.json();
+                if (data && data.content) {
+                    setContactLinks(data.content);
+                }
+            } catch (error) {
+                console.error("Error fetching contact links:", error);
+            }
+        };
+        fetchContactLinks();
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -69,7 +91,7 @@ const Footer = () => {
                             <div className='space-y-2'><p className='font-bold'>GST - 07AACCT5172H1ZA</p>
                                 <p className='font-bold'>PAN - AACCT5172H</p>
                                 <p className='font-bold'>TAN - DELT08222E</p>
-                                <p className='font-bold'>IEC CODE - 0507000102</p>    
+                                <p className='font-bold'>IEC CODE - 0507000102</p>
                             </div>
 
                         </div>
@@ -86,8 +108,8 @@ const Footer = () => {
                                             </svg>
                                         </div>
                                         <div>
-                                            <p>+91 9220246692</p>
-                                            <p>+91 9811613022</p>
+                                            <p>{contactLinks.phone}</p>
+                                            <p>{contactLinks.phone2}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
@@ -166,17 +188,17 @@ const Footer = () => {
 
                             <div className="flex flex-wrap gap-2">
                                 {/* Phone */}
-                                <a href="tel:+919220246692" className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform ">
+                                <a href={`tel:${contactLinks.phone.replace(/\s+/g, '')}`} className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform ">
                                     <FaPhoneAlt className="w-10 h-8 text-[#022c75]" />
                                 </a>
 
                                 {/* LinkedIn */}
-                                <a href="https://www.linkedin.com/company/tekmart-india/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full    flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
+                                <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full    flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
                                     <Image src={linkedinlogo} alt="linkedinlogo" className="w-10 h-10 object-contain" />
                                 </a>
 
                                 {/* IndiaMART */}
-                                <a href="https://www.indiamart.com/tekmartindiaexim/profile.html?srsltid=AfmBOoqE7E12McyVreF6noBX-V2AJUP3CTLXa1hamVfp8_yCfTBGwkV-" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
+                                <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
                                     <Image src={indiamartlog} alt="indiamartlog" className="w-10 h-10 object-contain" />
                                 </a>
 
@@ -189,7 +211,7 @@ const Footer = () => {
                                 </button>
 
                                 {/* WhatsApp */}
-                                <a href="https://wa.me/919220246692" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
+                                <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
                                     <FaWhatsapp className="w-10 h-10 text-white bg-[#25D366]" />
                                 </a>
                             </div>

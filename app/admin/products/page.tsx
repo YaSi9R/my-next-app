@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import slugify from "slugify";
 import TableShimmer from "@/components/admin/TableShimmer";
 import { uploadImage, deleteImage } from "@/services/uploadService";
+import { toast } from "react-hot-toast";
 
 
 interface Category {
@@ -77,7 +78,7 @@ export default function ProductsPage() {
 
     const totalImages = form.images.length + filesToUpload.length;
     if (totalImages >= 4) {
-      alert("Maximum 4 images allowed");
+      toast.error("Maximum 4 images allowed");
       return;
     }
 
@@ -91,13 +92,13 @@ export default function ProductsPage() {
     for (const file of selectedFiles) {
       // ✅ Validate file type
       if (!file.type.startsWith("image/")) {
-        alert("Only image files are allowed");
+        toast.error("Only image files are allowed");
         continue;
       }
 
       // ✅ Validate file size (20MB max)
       if (file.size > MAX_FILE_SIZE) {
-        alert(`File ${file.name} exceeds 20MB limit`);
+        toast.error(`File ${file.name} exceeds 20MB limit`);
         continue;
       }
       validFiles.push(file);
@@ -239,12 +240,12 @@ export default function ProductsPage() {
         throw new Error(errData.error || "Failed to save product");
       }
 
-      alert(editingId ? "Product updated successfully!" : "Product added successfully!");
+      toast.success(editingId ? "Product updated successfully!" : "Product added successfully!");
       resetForm();
       fetchData();
     } catch (error: any) {
       console.error("Submission error:", error);
-      alert(error.message || "An error occurred during submission");
+      toast.error(error.message || "An error occurred during submission");
 
       // Rollback: Delete uploaded images if save failed
       if (uploadedImageUrls.length > 0) {
