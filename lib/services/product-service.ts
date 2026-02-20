@@ -4,6 +4,8 @@ export interface ProductFilters {
     categorySlug?: string;
     subcategorySlug?: string;
     subsubcategorySlug?: string;
+    categoryId?: string;
+    subcategoryId?: string;
     productSlug?: string;
     page?: number;
     limit?: number;
@@ -14,6 +16,8 @@ export async function getProducts(filters: ProductFilters = {}) {
         categorySlug,
         subcategorySlug,
         subsubcategorySlug,
+        categoryId,
+        subcategoryId,
         productSlug,
         page = 1,
         limit = 50,
@@ -29,9 +33,17 @@ export async function getProducts(filters: ProductFilters = {}) {
         where.slug = { equals: productSlug, mode: 'insensitive' };
     }
 
-    // Category filtering
-    let categoryId: string | null = null;
-    if (categorySlug) {
+    if (categoryId) {
+        where.categoryId = categoryId;
+    }
+
+    if (subcategoryId) {
+        where.subcategoryId = subcategoryId;
+    }
+
+    // Category filtering (by slug)
+    let internalCategoryId: string | null = categoryId || null;
+    if (categorySlug && !categoryId) {
         const category = await prisma.category.findFirst({
             where: {
                 slug: { equals: categorySlug, mode: 'insensitive' }
@@ -39,8 +51,8 @@ export async function getProducts(filters: ProductFilters = {}) {
         });
 
         if (category) {
-            categoryId = category.id;
             where.categoryId = category.id;
+            internalCategoryId = category.id;
             console.log('[ProductService] Category found:', category.name, '(', category.id, ')');
         } else {
             console.log('[ProductService] Category not found for slug:', categorySlug);
@@ -50,16 +62,16 @@ export async function getProducts(filters: ProductFilters = {}) {
         }
     }
 
-    // Subcategory filtering
-    let subcategoryId: string | null = null;
-    if (subcategorySlug) {
+    // Subcategory filtering (by slug)
+    let internalSubcategoryId: string | null = subcategoryId || null;
+    if (subcategorySlug && !subcategoryId) {
         const subcategoryWhere: any = {
             slug: { equals: subcategorySlug, mode: 'insensitive' }
         };
 
         // Only filter by category if we have one
-        if (categoryId) {
-            subcategoryWhere.categoryId = categoryId;
+        if (internalCategoryId) {
+            subcategoryWhere.categoryId = internalCategoryId;
         }
 
         const subcategory = await prisma.subcategory.findFirst({
@@ -67,7 +79,7 @@ export async function getProducts(filters: ProductFilters = {}) {
         });
 
         if (subcategory) {
-            subcategoryId = subcategory.id;
+            internalSubcategoryId = subcategory.id;
             where.subcategoryId = subcategory.id;
             console.log('[ProductService] Subcategory found:', subcategory.name, '(', subcategory.id, ')');
         } else {
@@ -85,8 +97,8 @@ export async function getProducts(filters: ProductFilters = {}) {
         };
 
         // Only filter by subcategory if we have one
-        if (subcategoryId) {
-            subsubcatWhere.subcategoryId = subcategoryId;
+        if (internalSubcategoryId) {
+            subsubcatWhere.subcategoryId = internalSubcategoryId;
         }
 
         const subsubcategory = await prisma.subSubcategory.findFirst({

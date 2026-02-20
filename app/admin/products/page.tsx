@@ -54,6 +54,14 @@ export default function ProductsPage() {
 
   const [editingId, setEditingId] = useState<string | null>(null);
 
+  // Pagination & Filtering state
+  const [filterCategoryId, setFilterCategoryId] = useState("");
+  const [filterSubcategoryId, setFilterSubcategoryId] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const ITEMS_PER_PAGE = 30;
+
   const [form, setForm] = useState<Product>({
     name: "",
     condition: "New",
@@ -167,14 +175,26 @@ export default function ProductsPage() {
   const fetchData = async () => {
     setLoadingData(true);
     try {
+      // Build query string for products with pagination and filters
+      const params = new URLSearchParams({
+        page: currentPage.toString(),
+        limit: ITEMS_PER_PAGE.toString(),
+      });
+      if (filterCategoryId) params.append("categoryId", filterCategoryId);
+      if (filterSubcategoryId) params.append("subcategoryId", filterSubcategoryId);
+
       const [p, c, s, ss] = await Promise.all([
-        fetch("/api/products"),
+        fetch(`/api/products?${params.toString()}`),
         fetch("/api/categories"),
         fetch("/api/subcategories"),
         fetch("/api/subsubcategories"),
       ]);
-      const list = await p.json();
-      setProducts(list.products || []);
+
+      const productData = await p.json();
+      setProducts(productData.products || []);
+      setTotalProducts(productData.total || 0);
+      setTotalPages(productData.totalPages || 1);
+
       setCategories(await c.json());
       setSubcategories(await s.json());
       setSubSubcategories(await ss.json());
@@ -187,7 +207,18 @@ export default function ProductsPage() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentPage, filterCategoryId, filterSubcategoryId]);
+
+  const handleFilterCategoryChange = (val: string) => {
+    setFilterCategoryId(val);
+    setFilterSubcategoryId(""); // Reset subcategory when category changes
+    setCurrentPage(1); // Reset to first page
+  };
+
+  const handleFilterSubcategoryChange = (val: string) => {
+    setFilterSubcategoryId(val);
+    setCurrentPage(1); // Reset to first page
+  };
 
   // ================= SUBMIT =================
 
@@ -289,6 +320,35 @@ export default function ProductsPage() {
     });
 
     fetchData();
+  };
+
+  const handleClone = async (product: Product) => {
+    try {
+      // Create a copy of the product and modify it
+      const { id, ...rest } = product;
+      const clonePayload = {
+        ...rest,
+        name: `${rest.name} 2`,
+        // The API generates the slug from the name, so we don't need to manually modify slug if we just send the name
+      };
+
+      const res = await fetch("/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(clonePayload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to clone product");
+      }
+
+      toast.success("Product cloned successfully!");
+      fetchData();
+    } catch (error: any) {
+      console.error("Cloning error:", error);
+      toast.error(error.message || "An error occurred during cloning");
+    }
   };
 
   // ================= FILTER SUBCATEGORIES =================
@@ -544,67 +604,159 @@ export default function ProductsPage() {
       {/* ================= TABLE ================= */}
 
       <div className="bg-[#e6e6e6] p-4 md:p-6 rounded-xl shadow text-[#022c75] overflow-x-auto border border-2 border-[#022c75]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <h2 className="text-xl font-semibold">Product List ({totalProducts})</h2>
+
+          <div className="flex flex-wrap gap-3">
+            <select
+              value={filterCategoryId}
+              onChange={(e) => handleFilterCategoryChange(e.target.value)}
+              className="border rounded p-2 text-sm bg-white min-w-[150px]"
+            >
+              <option value="">All Categories</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={filterSubcategoryId}
+              onChange={(e) => handleFilterSubcategoryChange(e.target.value)}
+              className="border rounded p-2 text-sm bg-white min-w-[150px]"
+              disabled={!filterCategoryId}
+            >
+              <option value="">All Subcategories</option>
+              {subcategories
+                .filter((s) => s.categoryId === filterCategoryId)
+                .map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+            </select>
+
+            {(filterCategoryId || filterSubcategoryId) && (
+              <button
+                onClick={() => {
+                  setFilterCategoryId("");
+                  setFilterSubcategoryId("");
+                  setCurrentPage(1);
+                }}
+                className="text-sm text-red-500 hover:underline"
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
+        </div>
+
         {
           loadingData ? <TableShimmer /> :
-            <table className="w-full min-w-[800px]">
-              <thead>
-                <tr className="border-b text-left">
-                  <th className="py-3">Name</th>
-                  <th>Category</th>
-                  <th>Subcategory</th>
-                  <th>Condition</th>
-                  <th>Availability</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((p) => (
-                  <tr key={p.id} className="border-b">
-                    <td className="py-3 font-semibold">{p.name}</td>
-                    <td>{(p as any).category?.name || "N/A"}</td>
-                    <td>{(p as any).subcategory?.name || "N/A"}</td>
-                    <td>{p.condition}</td>
-                    <td>{p.availability}</td>
-                    <td className="space-x-3">
-                      <button
-                        onClick={() => {
-                          setEditingId(p.id!);
-                          setFilesToUpload([]); // Clear any pending files
-                          setForm({
-                            ...p,
-                            specifications: (p as any).specifications || [
-                              { label: "", value: "" },
-                            ],
-                            features: Array.isArray(p.features) ? p.features : [],
-                          });
-                          setFeaturesInput(
-                            Array.isArray(p.features) ? p.features.join(", ") : "",
-                          );
-                        }}
-                        className="text-[#022c75]"
-                      >
-                        Edit
-                      </button>
-
-                      <button
-                        onClick={() => handleDelete(p.id!)}
-                        className="text-red-500 hover:text-red-700"
-                      >
-                        Delete
-                      </button>
-                    </td>
+            <>
+              <table className="w-full min-w-[800px]">
+                <thead>
+                  <tr className="border-b text-left">
+                    <th className="py-3 px-4">Name</th>
+                    <th className="px-4">Category</th>
+                    <th className="px-4">Subcategory</th>
+                    <th className="px-4">Condition</th>
+                    <th className="px-4">Availability</th>
+                    <th className="px-4">Actions</th>
                   </tr>
-                ))}
+                </thead>
+                <tbody>
+                  {products.map((p) => (
+                    <tr key={p.id} className="border-b hover:bg-gray-50 transition-colors">
+                      <td className="py-3 px-4 font-semibold">{p.name}</td>
+                      <td className="px-4">{(p as any).category?.name || "N/A"}</td>
+                      <td className="px-4">{(p as any).subcategory?.name || "N/A"}</td>
+                      <td className="px-4">{p.condition}</td>
+                      <td className="px-4">{p.availability}</td>
+                      <td className="px-4">
+                        <div className="flex flex-wrap gap-x-4 gap-y-2 py-2">
+                          <button
+                            onClick={() => {
+                              setEditingId(p.id!);
+                              setFilesToUpload([]); // Clear any pending files
+                              setForm({
+                                ...p,
+                                specifications: (p as any).specifications || [
+                                  { label: "", value: "" },
+                                ],
+                                features: Array.isArray(p.features) ? p.features : [],
+                              });
+                              setFeaturesInput(
+                                Array.isArray(p.features) ? p.features.join(", ") : "",
+                              );
+                            }}
+                            className="text-[#022c75] hover:underline"
+                          >
+                            Edit
+                          </button>
 
-                {products.length === 0 && (
-                  <tr>
-                    <td colSpan={4} className="text-center py-6 text-[#022c75]">
-                      No products found
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                          <button
+                            onClick={() => handleClone(p)}
+                            className="text-green-600 hover:text-green-800 hover:underline"
+                          >
+                            Clone
+                          </button>
+
+                          <button
+                            onClick={() => handleDelete(p.id!)}
+                            className="text-red-500 hover:text-red-700 hover:underline"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+
+                  {products.length === 0 && (
+                    <tr>
+                      <td colSpan={6} className="text-center py-6 text-[#022c75]">
+                        No products found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="mt-6 flex items-center justify-between border-t border-gray-300 pt-4">
+                  <div className="text-sm text-[#022c75]">
+                    Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{" "}
+                    {Math.min(currentPage * ITEMS_PER_PAGE, totalProducts)} of{" "}
+                    {totalProducts} products
+                  </div>
+
+                  <div className="flex gap-2">
+                    <button
+                      disabled={currentPage === 1}
+                      onClick={() => setCurrentPage((prev) => prev - 1)}
+                      className="px-4 py-2 border rounded bg-white disabled:opacity-50 text-[#022c75] hover:bg-gray-100 transition-colors"
+                    >
+                      Previous
+                    </button>
+
+                    <div className="flex items-center px-4 font-medium">
+                      Page {currentPage} of {totalPages}
+                    </div>
+
+                    <button
+                      disabled={currentPage === totalPages}
+                      onClick={() => setCurrentPage((prev) => prev + 1)}
+                      className="px-4 py-2 border rounded bg-white disabled:opacity-50 text-[#022c75] hover:bg-gray-100 transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
         }
       </div>
     </div>
