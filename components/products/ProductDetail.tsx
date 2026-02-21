@@ -115,6 +115,7 @@ export default function ProductDetail({ product }: Props) {
                                     dangerouslySetInnerHTML={{ __html: product.longDescription }}
                                 />
                             </div>
+                            
 
                             {/* CTA Section */}
                             <div className="pt-8 border-t border-gray-100">
