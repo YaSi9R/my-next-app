@@ -81,3 +81,27 @@ body {
 .animate-progress {
   animation: progress 2s infinite ease-in-out;
 }
+
+/* Rich Text Content Styles (Fallback for missing @tailwindcss/typography) */
+.prose ul {
+  list-style-type: disc !important;
+  margin-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.prose ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.prose li {
+  margin-bottom: 0.25rem !important;
+  display: list-item !important;
+}
+
+.prose p {
+  margin-bottom: 1rem !important;
+}
