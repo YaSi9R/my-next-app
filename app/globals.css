@@ -105,3 +105,44 @@ body {
 .prose p {
   margin-bottom: 1rem !important;
 }
+
+.prose strong,
+.prose b {
+  font-weight: 700 !important;
+}
+
+.prose em,
+.prose i {
+  font-style: italic !important;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-weight: 700 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.25 !important;
+}
+
+.prose h1 {
+  font-size: 1.5rem !important;
+}
+
+.prose h2 {
+  font-size: 1.25rem !important;
+}
+
+.prose h3 {
+  font-size: 1.125rem !important;
+}
+
+.prose h4 {
+  font-size: 1rem !important;
+}
+
+.prose a {
+  color: #2563eb !important;
+  text-decoration: underline !important;
+}

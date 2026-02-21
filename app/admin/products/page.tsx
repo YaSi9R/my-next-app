@@ -10,6 +10,25 @@ import "react-quill-new/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
+const quillModules = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "clean"],
+  ],
+};
+
+const quillFormats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "list",
+  "link",
+];
+
 
 interface Category {
   id: string;
@@ -245,11 +264,17 @@ export default function ProductsPage() {
       // Combine existing and new images
       const finalImages = [...form.images, ...uploadedImageUrls];
 
+      // Clean &nbsp; and non-breaking space characters from longDescription
+      const cleanLongDescription = (form.longDescription || "")
+        .replace(/&nbsp;/g, " ")
+        .replace(/\u00a0/g, " ");
+
       const slug = slugify(form.name, { lower: true, strict: true });
 
       const payload = {
         ...form,
         images: finalImages,
+        longDescription: cleanLongDescription,
         slug,
         subsubcategoryId: form.subsubcategoryId || null, // Ensure empty string becomes null for Prisma
         specifications: form.specifications.filter(
@@ -308,7 +333,7 @@ export default function ProductsPage() {
       categoryId: "",
       subcategoryId: "",
       subsubcategoryId: "",
-      specifications: [],
+      specifications: [{ label: "", value: "" }],
       features: [],
     });
     setFeaturesInput("");
@@ -529,10 +554,13 @@ export default function ProductsPage() {
           <div className="md:col-span-2 space-y-2">
             <label className="font-medium">Long Description</label>
             <ReactQuill
+              key={editingId || "new-product"}
               theme="snow"
               value={form.longDescription}
               onChange={(value) => setForm({ ...form, longDescription: value })}
-              className="bg-[#e6e6e6] rounded"
+              modules={quillModules}
+              formats={quillFormats}
+              className="bg-white rounded"
             />
           </div>
 
@@ -680,14 +708,16 @@ export default function ProductsPage() {
                         <div className="flex flex-wrap gap-x-4 gap-y-2 py-2">
                           <button
                             onClick={() => {
+                              window.scrollTo({ top: 0, behavior: "smooth" });
                               setEditingId(p.id!);
                               setFilesToUpload([]); // Clear any pending files
                               setForm({
                                 ...p,
-                                specifications: (p as any).specifications || [
+                                specifications: (p as any).specifications?.length > 0 ? (p as any).specifications : [
                                   { label: "", value: "" },
                                 ],
                                 features: Array.isArray(p.features) ? p.features : [],
+                                subsubcategoryId: p.subsubcategoryId || "", // Ensure it's a string for the select value
                               });
                               setFeaturesInput(
                                 Array.isArray(p.features) ? p.features.join(", ") : "",
