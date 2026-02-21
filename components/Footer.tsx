@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from "../public/TEKMART LOGO.png";
-import { FaWhatsapp } from "react-icons/fa";
+import whatsappIcon from "../public/whatsapp-real-icon.png";
 import { FaPhoneAlt } from "react-icons/fa";
 import { Send } from "lucide-react";
 import WeChatModal from './WeChatModal';
-import indiamartlog from "../public/download.png"
-import linkedinlogo from "../public/linkedin.png"
-import wechatlogo from "../public/wechat.png"
+import indiamartlog from "../public/indiamartlogo.png"
+import linkedinlogo from "../public/linkedinlogo.png"
+import wechatlogo from "../public/wechatrealicon.png"
 
 const Footer = () => {
     const [email, setEmail] = useState("");
@@ -188,31 +188,39 @@ const Footer = () => {
 
                             <div className="flex flex-wrap gap-2">
                                 {/* Phone */}
-                                <a href={`tel:${contactLinks.phone.replace(/\s+/g, '')}`} className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform ">
-                                    <FaPhoneAlt className="w-10 h-8 text-[#022c75]" />
+                                <a href={`tel:${contactLinks.phone.replace(/\s+/g, '')}`} className="relative w-10 h-10 rounded-full flex items-center justify-center scale-90 transition-transform bg-[#e6e6e6]">
+                                    <FaPhoneAlt className="w-8 h-8 text-[#022c75]" />
                                 </a>
 
                                 {/* LinkedIn */}
-                                <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full    flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
-                                    <Image src={linkedinlogo} alt="linkedinlogo" className="w-10 h-10 object-contain" />
+                                <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="relative w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform ">
+                                    <div className="w-8 h-8 relative">
+                                        <Image src={linkedinlogo} alt="LinkedIn" fill  />
+                                    </div>
                                 </a>
 
                                 {/* IndiaMART */}
-                                <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
-                                    <Image src={indiamartlog} alt="indiamartlog" className="w-10 h-10 object-contain" />
+                                <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="relative w-10 h-10 rounded-full flex items-center justify-center scale-120 transition-transform ">
+                                    <div className="w-8 h-8 relative">
+                                        <Image src={indiamartlog} alt="IndiaMART" fill  />
+                                    </div>
                                 </a>
 
                                 {/* WeChat - Click to open Modal */}
                                 <button
                                     onClick={() => setIsWeChatModalOpen(true)}
-                                    className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform shadow-sm cursor-pointer"
+                                    className="relative w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform  cursor-pointer"
                                 >
-                                    <Image src={wechatlogo} alt="wechatlogo" className="w-10 h-10 object-contain" />
+                                    <div className="w-8 h-8 relative">
+                                        <Image src={wechatlogo} alt="WeChat" fill  />
+                                    </div>
                                 </button>
 
                                 {/* WhatsApp */}
-                                <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full  flex items-center justify-center hover:scale-110 transition-transform shadow-sm">
-                                    <FaWhatsapp className="w-10 h-10 text-white bg-[#25D366]" />
+                                <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="relative w-10 h-10 rounded-full flex items-center justify-center scale-110 transition-transform ">
+                                    <div className="w-8 h-8 relative">
+                                        <Image src={whatsappIcon} alt="WhatsApp" fill  />
+                                    </div>
                                 </a>
                             </div>
                         </div>

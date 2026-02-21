@@ -29,7 +29,7 @@ const categories = [
     {
         title: "Solder Paste Printer",
         image: machine3,
-        href: "/smt-machines/solder-paste-inspection", // General machines page
+        href: "/smt-machines/solder-paste-printer", 
     },
     {
         title: "Solder Paste Inspection",

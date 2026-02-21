@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaWhatsapp } from "react-icons/fa";
+import whatsappIcon from "../public/whatsapp-real-icon.png";
 import { FaPhoneAlt } from "react-icons/fa"; import WeChatModal from './WeChatModal';
-import linkedinlogo from "../public/linkedin.png";
-import indiamartlog from "../public/download.png";
-import wechatlogo from "../public/wechat.png";
+import linkedinlogo from "../public/linkedinlogo.png";
+import indiamartlog from "../public/indiamartlogo.png";
+import wechatlogo from "../public/wechatrealicon.png";
 
 const FloatingContactBar = () => {
     const [isWeChatModalOpen, setIsWeChatModalOpen] = useState(false);
@@ -39,37 +39,39 @@ const FloatingContactBar = () => {
             <div className="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-50 flex-col bg-[#e6e6e6] shadow-lg border border-gray-200" style={{ borderTopLeftRadius: '4px', borderBottomLeftRadius: '4px' }}>
 
                 {/* Phone */}
-                <a href={`tel:${contactLinks.phone.replace(/\s+/g, '')}`} className="flex items-center justify-center w-12 h-12 hover:bg-[#e6e6e6] group transition-colors border-b border-gray-100">
-                    <FaPhoneAlt className="w-7 h-7 text-[#022c75] group-hover:scale-110 transition-transform" />
+                <a href={`tel:${contactLinks.phone.replace(/\s+/g, '')}`} className="flex items-center justify-center w-12 h-12 hover:bg-gray-100 group transition-colors border-b border-gray-100">
+                    <FaPhoneAlt className="w-8 h-8 text-[#022c75] scale-90 transition-transform" />
                 </a>
 
                 {/* LinkedIn */}
-                <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 hover:bg-[#e6e6e6] group transition-colors border-b border-gray-100">
-                    <div className="w-10 h-10 relative group-hover:scale-110 transition-transform">
-                        <Image src={linkedinlogo} alt="LinkedIn" fill className="object-contain" />
+                <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 hover:bg-gray-100 group transition-colors border-b border-gray-100">
+                    <div className="w-8 h-8 relative hover:scale-110 transition-transform">
+                        <Image src={linkedinlogo} alt="LinkedIn" fill />
                     </div>
                 </a>
 
                 {/* IndiaMART */}
-                <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 hover:bg-[#e6e6e6] group transition-colors border-b border-gray-100">
-                    <div className="w-10 h-10 relative group-hover:scale-110 transition-transform">
-                        <Image src={indiamartlog} alt="IndiaMART" fill className="object-contain" />
+                <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 hover:bg-gray-100 group transition-colors border-b border-gray-100">
+                    <div className="w-8 h-8 relative scale-120 transition-transform">
+                        <Image src={indiamartlog} alt="IndiaMART" fill />
                     </div>
                 </a>
 
                 {/* WeChat */}
                 <button
                     onClick={() => setIsWeChatModalOpen(true)}
-                    className="flex items-center justify-center w-12 h-12 hover:bg-[#e6e6e6] group transition-colors border-b border-gray-100 cursor-pointer"
+                    className="flex items-center justify-center w-12 h-12 hover:bg-gray-100 group transition-colors border-b border-gray-100 cursor-pointer"
                 >
-                    <div className="w-10 h-10 relative group-hover:scale-110 transition-transform">
-                        <Image src={wechatlogo} alt="WeChat" fill className="object-contain" />
+                    <div className="w-8 h-8 relative hover:scale-110 transition-transform">
+                        <Image src={wechatlogo} alt="WeChat" fill />
                     </div>
                 </button>
 
                 {/* WhatsApp */}
-                <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 hover:bg-[#e6e6e6] group transition-colors">
-                    <FaWhatsapp className="w-10 h-10 text-white bg-[#25D366] group-hover:scale-110 transition-transform" />
+                <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-12 h-12 hover:bg-gray-100 group transition-colors">
+                    <div className="w-8 h-8 relative scale-110 transition-transform">
+                        <Image src={whatsappIcon} alt="WhatsApp" fill />
+                    </div>
                 </a>
 
             </div>
@@ -79,41 +81,38 @@ const FloatingContactBar = () => {
                 <div className="grid grid-cols-5 h-14 relative z-[101]">
                     {/* Phone */}
                     <a href={`tel:${contactLinks.phone.replace(/\s+/g, '')}`} className="flex flex-col items-center justify-center h-full hover:bg-gray-50 transition-colors group">
-                        <FaPhoneAlt className="w-8 h-[30px] text-[#022c75] group-hover:scale-110 transition-transform" />
-
+                        <FaPhoneAlt className="w-8 h-8 text-[#022c75] scale-90 transition-transform" />
                     </a>
 
                     {/* LinkedIn */}
-                    <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full hover:bg-gray-50 transition-colors group">
-                        <div className="w-8 h-8 relative group-hover:scale-110 transition-transform">
-                            <Image src={linkedinlogo} alt="LinkedIn" fill className="object-contain" />
+                    <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full hover:bg-white transition-colors group">
+                        <div className="w-8 h-8 relative hover:scale-110 transition-transform">
+                            <Image src={linkedinlogo} alt="LinkedIn" fill />
                         </div>
-
                     </a>
 
                     {/* IndiaMART */}
-                    <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full hover:bg-gray-50 transition-colors group">
-                        <div className="w-8 h-8 relative group-hover:scale-110 transition-transform">
-                            <Image src={indiamartlog} alt="IndiaMART" fill className="object-contain" />
+                    <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-full hover:bg-white transition-colors group">
+                        <div className="w-8 h-8 relative scale-120 transition-transform">
+                            <Image src={indiamartlog} alt="IndiaMART" fill />
                         </div>
-
                     </a>
 
                     {/* WeChat */}
                     <button
                         onClick={() => setIsWeChatModalOpen(true)}
-                        className="flex flex-col items-center justify-center h-full hover:bg-gray-50 transition-colors group cursor-pointer"
+                        className="flex flex-col items-center justify-center h-full hover:bg-white transition-colors group cursor-pointer"
                     >
-                        <div className="w-8 h-8 relative group-hover:scale-110 transition-transform">
-                            <Image src={wechatlogo} alt="WeChat" fill className="object-contain" />
+                        <div className="w-8 h-8 relative hover:scale-110 transition-transform">
+                            <Image src={wechatlogo} alt="WeChat" fill />
                         </div>
-
                     </button>
 
                     {/* WhatsApp */}
-                     <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center h-full hover:bg-[#e6e6e6] group transition-colors">
-                        <FaWhatsapp className="w-8 h-8 text-white bg-[#25D366] group-hover:scale-110 transition-transform" />
-
+                    <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center h-full hover:bg-white transition-colors group">
+                        <div className="w-8 h-8 relative scale-110 transition-transform">
+                            <Image src={whatsappIcon} alt="WhatsApp" fill />
+                        </div>
                     </a>
                 </div>
             </div>
