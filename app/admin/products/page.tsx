@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import slugify from "slugify";
 import TableShimmer from "@/components/admin/TableShimmer";
 import { uploadImage, deleteImage } from "@/services/uploadService";
 import { toast } from "react-hot-toast";
+import dynamic from "next/dynamic";
+import "react-quill-new/dist/quill.snow.css";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 
 interface Category {
@@ -522,17 +526,15 @@ export default function ProductsPage() {
             className="border rounded p-2 md:col-span-2"
           />
 
-          <textarea
-            placeholder="Long Description"
-            value={form.longDescription}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                longDescription: e.target.value,
-              })
-            }
-            className="border rounded p-2 md:col-span-2"
-          />
+          <div className="md:col-span-2 space-y-2">
+            <label className="font-medium">Long Description</label>
+            <ReactQuill
+              theme="snow"
+              value={form.longDescription}
+              onChange={(value) => setForm({ ...form, longDescription: value })}
+              className="bg-[#e6e6e6] rounded"
+            />
+          </div>
 
           {/* <textarea
             placeholder='Specifications JSON (Example: [{"label":"Speed","value":"50k CPH"}])'

@@ -106,13 +106,14 @@ export default function ProductDetail({ product }: Props) {
                                 </span>
                             </div>
 
-                            {/* Optional: Add year if available in data but it's not in current schema. Keeping it dormant or using createdAt */}
+                          
 
                             <div className="prose prose-blue max-w-none mb-8">
                                 <h3 className="text-lg font-bold text-[#022c75] mb-2">Description</h3>
-                                <p className="text-[#022c75] leading-relaxed">
-                                    {product.longDescription}
-                                </p>
+                                <div
+                                    className="text-[#022c75] leading-relaxed"
+                                    dangerouslySetInnerHTML={{ __html: product.longDescription }}
+                                />
                             </div>
 
                             {/* CTA Section */}
