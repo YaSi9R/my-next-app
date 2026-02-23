@@ -12,6 +12,7 @@ import WeChatModal from './WeChatModal';
 import indiamartlog from "../public/indiamartlogo.png"
 import linkedinlogo from "../public/linkedinlogo.png"
 import wechatlogo from "../public/wechatrealicon.png"
+import isoLogo from "../public/isoimage.png"
 
 const Footer = () => {
     const [email, setEmail] = useState("");
@@ -76,24 +77,29 @@ const Footer = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
                         {/* Column 1: Company Logo & Identity */}
-                        <div className="space-y-6">
-                            <div className="-mt-12 -ml-4">
-                                <Image src={logo} alt="TEKMART Logo" className="w-48 h-48 object-contain" />
-                            </div>
-                            <div className="-mt-8 space-y-4">
-                                <ul className="space-y-2 text-sm font-medium opacity-90">
-                                    <li>• Refurbished SMT Machines</li>
-                                    <li>• Genuine SMT Spare Parts</li>
-                                    <li>• Complete SMT Production Lines</li>
-                                    <li>• Installation & Technical Support Across India</li>
-                                </ul>
-                            </div>
-                            <div className='space-y-2'><p className='font-bold'>GST - 07AACCT5172H1ZA</p>
-                                <p className='font-bold'>PAN - AACCT5172H</p>
-                                <p className='font-bold'>TAN - DELT08222E</p>
-                                <p className='font-bold'>IEC CODE - 0507000102</p>
-                            </div>
+                        <div className="flex flex-row items-center gap-4">
+                            {/* ISO Logo on the left */}
 
+
+                            <div className="space-y-6 flex-1">
+                                <div className="-mt-12 ">
+                                    <Image src={logo} alt="TEKMART Logo" className="w-48 h-48 object-contain" />
+                                </div>
+                                <div className="-mt-8 space-y-4">
+                                    <ul className="space-y-2 text-sm font-medium opacity-90">
+                                        <li>• Refurbished SMT Machines</li>
+                                        <li>• Genuine SMT Spare Parts</li>
+                                        <li>• Complete SMT Production Lines</li>
+                                        <li>• Installation & Technical Support Across India</li>
+                                    </ul>
+                                </div>
+                                <div className='space-y-2'>
+                                    <p className='font-bold'>GST - 07AACCT5172H1ZA</p>
+                                    <p className='font-bold'>PAN - AACCT5172H</p>
+                                    <p className='font-bold'>TAN - DELT08222E</p>
+                                    <p className='font-bold'>IEC CODE - 0507000102</p>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Column 2: Contact & Explore */}
@@ -162,7 +168,7 @@ const Footer = () => {
                         </div>
 
                         {/* Column 4: Stay Updated */}
-                        <div>
+                        <div >
                             <h3 className="text-[#022c75] font-bold text-lg mb-6 uppercase tracking-wider border-b border-[#022c75]/20 pb-2">Stay Updated</h3>
                             <p className="text-sm font-medium mb-6 opacity-90">
                                 Get updates on available SMT machines, spare parts and production line solutions.
@@ -195,14 +201,14 @@ const Footer = () => {
                                 {/* LinkedIn */}
                                 <a href={contactLinks.linkedin} target="_blank" rel="noopener noreferrer" className="relative w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform ">
                                     <div className="w-8 h-8 relative">
-                                        <Image src={linkedinlogo} alt="LinkedIn" fill  />
+                                        <Image src={linkedinlogo} alt="LinkedIn" fill />
                                     </div>
                                 </a>
 
                                 {/* IndiaMART */}
                                 <a href={contactLinks.indiamart} target="_blank" rel="noopener noreferrer" className="relative w-10 h-10 rounded-full flex items-center justify-center scale-120 transition-transform ">
                                     <div className="w-8 h-8 relative">
-                                        <Image src={indiamartlog} alt="IndiaMART" fill  />
+                                        <Image src={indiamartlog} alt="IndiaMART" fill />
                                     </div>
                                 </a>
 
@@ -212,16 +218,23 @@ const Footer = () => {
                                     className="relative w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform  cursor-pointer"
                                 >
                                     <div className="w-8 h-8 relative">
-                                        <Image src={wechatlogo} alt="WeChat" fill  />
+                                        <Image src={wechatlogo} alt="WeChat" fill />
                                     </div>
                                 </button>
 
                                 {/* WhatsApp */}
                                 <a href={`https://wa.me/${contactLinks.whatsapp}`} target="_blank" rel="noopener noreferrer" className="relative w-10 h-10 rounded-full flex items-center justify-center scale-110 transition-transform ">
                                     <div className="w-8 h-8 relative">
-                                        <Image src={whatsappIcon} alt="WhatsApp" fill  />
+                                        <Image src={whatsappIcon} alt="WhatsApp" fill />
                                     </div>
                                 </a>
+                            </div>
+                            <div className="w-28 mx-auto mt-6">
+                                <Image
+                                    src={isoLogo}
+                                    alt="ISO Certified Company"
+                                    className="w-full object-contain"
+                                />
                             </div>
                         </div>
                     </div>
