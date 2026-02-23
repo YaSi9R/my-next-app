@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Check, CircuitBoard, Layers, Zap, ArrowRight, Settings, Sliders } from 'lucide-react';
 import Image from 'next/image';
-import image1 from "../../../public/entry-level-image.png"
+import image1 from "../../../public/entrylevelsmtphoto.png"
 import AvailableConfig from '@/components/smt-line/AvailableConfig';
 
 export default function EntryLevelLinePage() {
@@ -54,7 +54,7 @@ export default function EntryLevelLinePage() {
                         </div>
                         <div className="relative  lg:block">
 
-                            <div className="relative border border-white/10 rounded-2xl p-6 scale-120">
+                            <div className="relative border border-white/10 rounded-2xl p-6 scale-110">
                                 {/* Placeholder for Line Diagram or Image */}
                                 <Image
                                     src={image1}

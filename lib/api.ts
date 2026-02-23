@@ -15,6 +15,7 @@ export type Product = {
     category: { name: string; slug: string };
     subcategory: { name: string; slug: string };
     subsubcategory?: { name: string; slug: string };
+    featuredOnFirstPage?: boolean;
     createdAt: string;
     updatedAt: string;
 };

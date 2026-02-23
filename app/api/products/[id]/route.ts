@@ -60,6 +60,7 @@ export async function PUT(
       subsubcategoryId,
       specifications,
       features,
+      featuredOnFirstPage,
     } = body;
 
     if (!name) {
@@ -87,6 +88,7 @@ export async function PUT(
         subsubcategoryId,
         specifications,
         features,
+        featuredOnFirstPage: typeof featuredOnFirstPage === 'boolean' ? featuredOnFirstPage : false,
       },
     });
 

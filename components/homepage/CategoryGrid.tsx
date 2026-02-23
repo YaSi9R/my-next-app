@@ -10,7 +10,7 @@ import machine2 from "../../public/heller-1809-mark-5-reflow-oven.png";
 import machine3 from "../../public/MAIN PAGE SCREEN PRINTER.png";
 import machine4 from "../../public/MAIN PAGE SPI.png";
 import machine5 from "../../public/MAIN PAGE AOI.png";
-import machine6 from "../../public/smt-assembly-line.png";
+import machine6 from "../../public/entrylevelsmtphoto.png";
 import machine7 from "../../public/MAIN PAGE BOARD HANDLING.png";
 import machine8 from "../../public/MAIN PAGE SPARE PARTS.png";
 // chchhf

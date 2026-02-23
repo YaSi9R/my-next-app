@@ -20,6 +20,7 @@ export async function POST(req: Request) {
       subsubcategoryId, // Optional
       specifications,
       features,
+      featuredOnFirstPage,
     } = body;
 
     if (!name || !categoryId || !subcategoryId) {
@@ -48,6 +49,7 @@ export async function POST(req: Request) {
         subsubcategoryId,
         specifications,
         features,
+        featuredOnFirstPage: featuredOnFirstPage || false,
       },
     });
 

@@ -124,9 +124,10 @@ export async function getProducts(filters: ProductFilters = {}) {
             where,
             skip,
             take: limit,
-            orderBy: {
-                createdAt: "desc",
-            },
+            orderBy: [
+                { featuredOnFirstPage: "desc" },
+                { createdAt: "desc" },
+            ],
             include: {
                 category: { select: { name: true, slug: true } },
                 subcategory: { select: { name: true, slug: true } },

@@ -63,6 +63,7 @@ interface Product {
     value: string;
   }[];
   features: string[];
+  featuredOnFirstPage?: boolean;
 }
 const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
@@ -97,6 +98,7 @@ export default function ProductsPage() {
     subsubcategoryId: "",
     specifications: [{ label: "", value: "" }],
     features: [],
+    featuredOnFirstPage: false,
   });
 
   const handleImageUpload = (
@@ -335,6 +337,7 @@ export default function ProductsPage() {
       subsubcategoryId: "",
       specifications: [{ label: "", value: "" }],
       features: [],
+      featuredOnFirstPage: false,
     });
     setFeaturesInput("");
   };
@@ -625,6 +628,19 @@ export default function ProductsPage() {
             className="border rounded p-2 md:col-span-2"
           />
 
+          <div className="md:col-span-2 flex items-center gap-2 bg-white/50 p-2 rounded border border-[#022c75]/20">
+            <input
+              type="checkbox"
+              id="featuredOnFirstPage"
+              checked={form.featuredOnFirstPage}
+              onChange={(e) => setForm({ ...form, featuredOnFirstPage: e.target.checked })}
+              className="w-4 h-4 cursor-pointer"
+            />
+            <label htmlFor="featuredOnFirstPage" className="cursor-pointer font-medium text-sm">
+              Show on First Page (Max 12 featured products will be shown first)
+            </label>
+          </div>
+
           <button className="bg-[#022c75] text-white py-2 rounded md:col-span-2">
             {editingId ? "Update Product" : "Add Product"}
           </button>
@@ -693,6 +709,7 @@ export default function ProductsPage() {
                     <th className="px-4">Subcategory</th>
                     <th className="px-4">Condition</th>
                     <th className="px-4">Availability</th>
+                    <th className="px-4">Featured</th>
                     <th className="px-4">Actions</th>
                   </tr>
                 </thead>
@@ -704,6 +721,15 @@ export default function ProductsPage() {
                       <td className="px-4">{(p as any).subcategory?.name || "N/A"}</td>
                       <td className="px-4">{p.condition}</td>
                       <td className="px-4">{p.availability}</td>
+                      <td className="px-4">
+                        {p.featuredOnFirstPage ? (
+                          <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded-full font-semibold border border-yellow-200">
+                            Featured
+                          </span>
+                        ) : (
+                          <span className="text-gray-400 text-xs">-</span>
+                        )}
+                      </td>
                       <td className="px-4">
                         <div className="flex flex-wrap gap-x-4 gap-y-2 py-2">
                           <button
