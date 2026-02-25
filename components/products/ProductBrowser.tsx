@@ -230,7 +230,7 @@ export default function ProductBrowser({
                         <>
                             <div className="mb-6">
                                 <p className="text-[#022c75] font-semibold">
-                                    Showing <span className="font-bold text-[#022c75]">{products.length}</span> results
+                                    Showing <span className="font-bold text-[#022c75]">{products.length}</span> of <span className="font-bold text-[#022c75]">{total}</span> results
                                 </p>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -277,7 +277,7 @@ export default function ProductBrowser({
                                             )}
 
                                             <div className="flex items-center justify-between">
-                                               
+
                                                 <span className="inline-flex items-center text-[#022c75] font-semibold text-sm group-hover:gap-2 transition-all">
                                                     View Details
                                                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />

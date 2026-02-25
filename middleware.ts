@@ -8,7 +8,7 @@ if (!process.env.JWT_SECRET) {
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function proxy(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get("adminToken")?.value;
   const pathname = req.nextUrl.pathname;
   const method = req.method;

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import slugify from "slugify";
+import BulkUploadModal from "@/components/admin/BulkUploadModal";
 import TableShimmer from "@/components/admin/TableShimmer";
 import { uploadImage, deleteImage } from "@/services/uploadService";
 import { toast } from "react-hot-toast";
@@ -196,6 +197,8 @@ export default function ProductsPage() {
   };
 
   // ================= FETCH =================
+
+  const [showBulkModal, setShowBulkModal] = useState(false);
 
   const fetchData = async () => {
     setLoadingData(true);
@@ -397,7 +400,25 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-[#022c75] mb-6">Products</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-[#022c75]">Products</h1>
+        <button
+          onClick={() => setShowBulkModal(true)}
+          className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 font-semibold"
+        >
+          Bulk Upload
+        </button>
+      </div>
+
+      {showBulkModal && (
+        <BulkUploadModal
+          onClose={() => setShowBulkModal(false)}
+          onSuccess={() => {
+            fetchData();
+            setShowBulkModal(false);
+          }}
+        />
+      )}
 
       {/* ================= FORM ================= */}
 
