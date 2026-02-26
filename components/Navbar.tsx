@@ -181,7 +181,7 @@ const Navbar = () => {
                                 <div className="absolute left-0 top-full pt-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top translate-y-2 group-hover:translate-y-0 z-[60]">
                                     <div className="bg-[#e6e6e6] backdrop-blur-sm text-[#022c75] rounded-xl shadow-2xl border border-gray-100 py-2 font-semibold">
                                         {item.children.map((subItem) => (
-                                            <div key={subItem.name} className="relative group/sub px-1 hover:z-50 font-semibold">
+                                            <div key={subItem.href} className="relative group/sub px-1 hover:z-50 font-semibold">
                                                 <GlobalLink
                                                     href={subItem.href}
                                                     className="flex items-center justify-between px-2 font-semibold py-2.5 hover:bg-[#022c75] hover:text-[#e6e6e6] rounded-lg transition-colors group-hover/sub:text-[#022c75]"
@@ -193,7 +193,7 @@ const Navbar = () => {
                                                 {subItem.children && (
                                                     <div className="absolute left-full ml-2 top-0 w-64 bg-[#e6e6e6] text-[#022c75] rounded-lg shadow-xl opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-200 border border-gray-200 z-50">
                                                         {subItem.children.map((nestedItem) => (
-                                                            <div key={nestedItem.name} className="px-2">
+                                                            <div key={nestedItem.href} className="px-2">
                                                                 <GlobalLink
                                                                     href={nestedItem.href}
                                                                     className="block px-3 py-2.5 hover:bg-[#022c75] hover:text-[#e6e6e6] rounded-lg transition-colors text-[12.5px] font-semibold"
@@ -258,7 +258,7 @@ const Navbar = () => {
                             {item.children && openMobileMenus.includes(item.name) && (
                                 <div className="ml-4 mt-2 space-y-2 border-l-2 border-blue-700 pl-4">
                                     {item.children.map((subItem) => (
-                                        <div key={subItem.name}>
+                                        <div key={subItem.href}>
                                             <div className="flex items-center justify-between">
                                                 <GlobalLink
                                                     href={subItem.href}

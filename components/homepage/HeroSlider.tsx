@@ -42,9 +42,9 @@ export function HeroSlider() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-4xl md:text-4xl lg:text-4xl font-bold text-[#022c75] leading-tight tracking-tight"
+                className="text-4xl md:text-4xl lg:text-3xl font-bold text-[#022c75] leading-tight tracking-tight"
               >
-                Leading Supplier of Refurbished SMT Machines & PCB Assembly Equipment in India
+               Leading Supplier of SMT Machines, PCB Assembly Equipment, Spares & Consumables in India.
                 <br /> <span className="block text-lg mt-2 font-semibold ">Complete SMT Line Solutions for EMS & OEM Manufacturers
                 </span>
               </motion.h1>

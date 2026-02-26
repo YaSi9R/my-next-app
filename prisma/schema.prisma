@@ -26,7 +26,7 @@ model Category {
 model Subcategory {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String
-  slug String
+  slug String @unique
 
   categoryId String   @db.ObjectId
   category   Category @relation(fields: [categoryId], references: [id])
@@ -38,7 +38,7 @@ model Subcategory {
 model SubSubcategory {
   id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String
-  slug String
+  slug String @unique
 
   subcategoryId String      @db.ObjectId
   subcategory   Subcategory @relation(fields: [subcategoryId], references: [id])
