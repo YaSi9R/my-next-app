@@ -133,8 +133,8 @@ export async function POST(req: Request) {
                     data: {
                         name: nameStr,
                         slug: `${baseSlug}-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-                        condition: Condition ? String(Condition).trim() : "New",
-                        availability: Availability ? String(Availability).trim() : "In Stock",
+                        condition: Condition ? String(Condition).trim() : "",
+                        availability: Availability ? String(Availability).trim() : "",
                         shortDescription: shortDescription ? String(shortDescription).trim() : "",
                         longDescription: longDescription ? formatDescription(String(longDescription)) : "",
                         images: imageUrls,
