@@ -105,7 +105,6 @@ export async function POST(req: Request) {
                     }
                 }
 
-                // 4. Handle Images
                 let imageUrls: string[] = [];
                 if (Images) {
                     const urls = String(Images).split(",").map((u: string) => u.trim()).filter(Boolean);
